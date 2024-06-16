@@ -101,16 +101,19 @@ public class PlayerController : MonoBehaviour
     {
         input.Jump.performed += ctx => Jump();
         input.Attack.started += ctx => Attack();
+        input.Block.started += ctx => Block();
     }
 
     // ---------- //
     // ANIMATIONS //
     // ---------- //
 
-    public const string IDLE = "Idle";
-    public const string WALK = "Walk";
-    public const string ATTACK1 = "Attack 1";
-    public const string ATTACK2 = "Attack 2";
+    public const string IDLE = "Null";
+    public const string WALK = "Null";
+    public const string SWINGACROSS = "Sword Swing Across";
+    public const string SWINGDOWN = "Sword Swing Down";
+    public const string SWINGBACK = "Sword Swing Across Back";
+    public const string BLOCK = "Sword Block";
 
     string currentAnimationState;
 
@@ -127,12 +130,16 @@ public class PlayerController : MonoBehaviour
     void SetAnimations()
     {
         // If player is not attacking
-        if(!attacking)
+        if(!attacking && !blocking)
         {
-            if(_PlayerVelocity.x == 0 &&_PlayerVelocity.z == 0)
-            { ChangeAnimationState(IDLE); }
+            if (_PlayerVelocity.x == 0 &&_PlayerVelocity.z == 0)
+            { 
+                ChangeAnimationState(IDLE); 
+            }
             else
-            { ChangeAnimationState(WALK); }
+            { 
+                ChangeAnimationState(WALK); 
+            }
         }
     }
 
@@ -152,6 +159,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip hitSound;
 
     bool attacking = false;
+
+    bool blocking = false;
     bool readyToAttack = true;
     int attackCount;
 
@@ -162,6 +171,8 @@ public class PlayerController : MonoBehaviour
         readyToAttack = false;
         attacking = true;
 
+        blocking = false;
+
         Invoke(nameof(ResetAttack), attackSpeed);
         Invoke(nameof(AttackRaycast), attackDelay);
 
@@ -170,12 +181,12 @@ public class PlayerController : MonoBehaviour
 
         if(attackCount == 0)
         {
-            ChangeAnimationState(ATTACK1);
+            ChangeAnimationState(SWINGACROSS);
             attackCount++;
         }
         else
         {
-            ChangeAnimationState(ATTACK2);
+            ChangeAnimationState(SWINGBACK);
             attackCount = 0;
         }
     }
@@ -204,5 +215,19 @@ public class PlayerController : MonoBehaviour
 
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
+    }
+
+    void Block()
+    {
+        if (!blocking)
+        {
+            blocking = true;
+
+            ChangeAnimationState(BLOCK);
+        }
+        else
+        {
+            blocking = false;
+        }
     }
 }
