@@ -71,6 +71,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lock Camera"",
+                    ""type"": ""Button"",
+                    ""id"": ""b79d88ef-21c2-4a95-9d34-e7e1f33bfab2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16b0e0eb-3cb5-46d2-a12e-7418c66d72dc"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lock Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -191,6 +211,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
         m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
         m_Main_Block = m_Main.FindAction("Block", throwIfNotFound: true);
+        m_Main_LockCamera = m_Main.FindAction("Lock Camera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -255,6 +276,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Look;
     private readonly InputAction m_Main_Attack;
     private readonly InputAction m_Main_Block;
+    private readonly InputAction m_Main_LockCamera;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -264,6 +286,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Main_Look;
         public InputAction @Attack => m_Wrapper.m_Main_Attack;
         public InputAction @Block => m_Wrapper.m_Main_Block;
+        public InputAction @LockCamera => m_Wrapper.m_Main_LockCamera;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -288,6 +311,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
+                @LockCamera.started -= m_Wrapper.m_MainActionsCallbackInterface.OnLockCamera;
+                @LockCamera.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnLockCamera;
+                @LockCamera.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnLockCamera;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -307,6 +333,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @LockCamera.started += instance.OnLockCamera;
+                @LockCamera.performed += instance.OnLockCamera;
+                @LockCamera.canceled += instance.OnLockCamera;
             }
         }
     }
@@ -327,5 +356,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnLockCamera(InputAction.CallbackContext context);
     }
 }

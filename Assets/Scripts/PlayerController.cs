@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     PlayerInput.MainActions input;
 
     CharacterController controller;
+
+    [SerializeField] GameObject weaponBasis;
+
     Animator animator;
     AudioSource audioSource;
 
@@ -24,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [Header("Camera")]
     public Camera cam;
     public float sensitivity;
+
+    bool cameraLocked = false;
 
     float xRotation = 0f;
 
@@ -60,15 +65,19 @@ public class PlayerController : MonoBehaviour
 
     void MoveInput(Vector2 input)
     {
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
+        if (!attacking)
+        {
+            Vector3 moveDirection = Vector3.zero;
+            moveDirection.x = input.x;
+            moveDirection.z = input.y;
 
-        controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+            controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+        }
         _PlayerVelocity.y += gravity * Time.deltaTime;
         if(isGrounded && _PlayerVelocity.y < 0)
-            _PlayerVelocity.y = -2f;
-        controller.Move(_PlayerVelocity * Time.deltaTime);
+           _PlayerVelocity.y = -2f;
+         controller.Move(_PlayerVelocity * Time.deltaTime);
+        
     }
 
     void LookInput(Vector3 input)
@@ -79,9 +88,18 @@ public class PlayerController : MonoBehaviour
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
 
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        if (cameraLocked)
+        {
+            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+            transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+        }
+        else
+        {
+            weaponBasis.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+
+            weaponBasis.transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+        }
     }
 
     void OnEnable() 
@@ -102,6 +120,7 @@ public class PlayerController : MonoBehaviour
         input.Jump.performed += ctx => Jump();
         input.Attack.started += ctx => Attack();
         input.Block.started += ctx => Block();
+        input.LockCamera.started += ctx => LockCamera();
     }
 
     // ---------- //
@@ -229,5 +248,18 @@ public class PlayerController : MonoBehaviour
         {
             blocking = false;
         }
+    }
+
+    void LockCamera()
+    {
+        if (!cameraLocked)
+        {
+            cameraLocked = true;
+        }
+        else
+        {
+            cameraLocked = false;
+        }
+
     }
 }
