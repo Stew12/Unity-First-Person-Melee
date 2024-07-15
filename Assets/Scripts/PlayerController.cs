@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
+    [SerializeField] GameObject weaponBasis;
+
     CharacterController controller;
     Animator animator;
     AudioSource audioSource;
@@ -17,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public Image momentumBarUI;
 
     [Header("Controller")]
-    public float moveSpeed = 5;
+    public float moveSpeed = 2.5f;
     public float moveSpeedDefault;
     public float gravity = -9.8f;
     public float jumpHeight = 1.2f;
@@ -28,7 +30,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera")]
     public Camera cam;
-    public float sensitivity;
+
+    bool cameraLocked = false;
+
+    public float sensitivity ;
 
     float xRotation = 0f;
 
@@ -46,9 +51,9 @@ public class PlayerController : MonoBehaviour
     /* Attacking variables */
     [Header("Attacking")]
     public float attackDistance = 3f;
-    public float attackDelay = 0.4f;
+    public float attackDelay = 1.7f;
     public float attackDelayDefault;
-    public float attackSpeed = 1f;
+    private float attackSpeed = 0.4f;
     public int attackDamage = 1;
     public LayerMask attackLayer;
 
@@ -65,12 +70,12 @@ public class PlayerController : MonoBehaviour
     /* Momentum bar variables */
     [Header("Momentum Bar")]
     public float currMomentumValue;
-    public float maxMomentum = 2.5f;
-    public float momumtumIncrease = 0.15f;
-    [SerializeField] private bool momentumDecreasing = false;
+    public float maxMomentum = 1.2f;
+    public float momumtumIncrease = 0.1f;
+    private bool momentumDecreasing = false;
     public float maxTimeBeforeMomentumDecrease = 2f;
     private float timeBeforeMomentumDecrease;
-    public float momentumDecreaseSpeed = 1;
+    public float momentumDecreaseSpeed = 0.1f;
 
     void Awake()
     { 
@@ -158,11 +163,6 @@ public class PlayerController : MonoBehaviour
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
 
-<<<<<<< Updated upstream
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
-=======
         if (!cameraLocked)
         {
             cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
@@ -170,7 +170,6 @@ public class PlayerController : MonoBehaviour
 
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
         
->>>>>>> Stashed changes
     }
 
     void OnEnable() 
@@ -312,8 +311,6 @@ public class PlayerController : MonoBehaviour
             blocking = false;
         }
     }
-<<<<<<< Updated upstream
-=======
 
     void LockCamera()
     {
@@ -341,5 +338,4 @@ public class PlayerController : MonoBehaviour
     }
 
     
->>>>>>> Stashed changes
 }
