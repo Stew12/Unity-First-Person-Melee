@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,8 +14,11 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     AudioSource audioSource;
 
+    public Image momentumBarUI;
+
     [Header("Controller")]
     public float moveSpeed = 5;
+    public float moveSpeedDefault;
     public float gravity = -9.8f;
     public float jumpHeight = 1.2f;
 
@@ -27,6 +32,46 @@ public class PlayerController : MonoBehaviour
 
     float xRotation = 0f;
 
+    /* Animation variables */
+    [Header("Animation")]
+    public const string IDLE = "Null";
+    public const string WALK = "Null";
+    public const string SWINGACROSS = "Sword Swing Across";
+    public const string SWINGDOWN = "Sword Swing Down";
+    public const string SWINGBACK = "Sword Swing Across Back";
+    public const string BLOCK = "Sword Block";
+
+    string currentAnimationState;
+
+    /* Attacking variables */
+    [Header("Attacking")]
+    public float attackDistance = 3f;
+    public float attackDelay = 0.4f;
+    public float attackDelayDefault;
+    public float attackSpeed = 1f;
+    public int attackDamage = 1;
+    public LayerMask attackLayer;
+
+    public GameObject hitEffect;
+    public AudioClip swordSwing;
+    public AudioClip hitSound;
+
+    bool attacking = false;
+
+    bool blocking = false;
+    bool readyToAttack = true;
+    int attackCount;    
+
+    /* Momentum bar variables */
+    [Header("Momentum Bar")]
+    public float currMomentumValue;
+    public float maxMomentum = 2.5f;
+    public float momumtumIncrease = 0.15f;
+    [SerializeField] private bool momentumDecreasing = false;
+    public float maxTimeBeforeMomentumDecrease = 2f;
+    private float timeBeforeMomentumDecrease;
+    public float momentumDecreaseSpeed = 1;
+
     void Awake()
     { 
         controller = GetComponent<CharacterController>();
@@ -39,6 +84,12 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        momentumBarUI.fillAmount = 0;
+
+        moveSpeedDefault = moveSpeed;
+        attackDelayDefault = attackDelay;
+       // animator.speed += 2;
     }
 
     void Update()
@@ -50,13 +101,41 @@ public class PlayerController : MonoBehaviour
         { Attack(); }
 
         SetAnimations();
+
+        
     }
 
     void FixedUpdate() 
-    { MoveInput(input.Movement.ReadValue<Vector2>()); }
+    { 
+        MoveInput(input.Movement.ReadValue<Vector2>());
+    }
 
     void LateUpdate() 
-    { LookInput(input.Look.ReadValue<Vector2>()); }
+    { 
+        LookInput(input.Look.ReadValue<Vector2>()); 
+
+        momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
+
+        timeBeforeMomentumDecrease -= Time.deltaTime;
+
+        if (timeBeforeMomentumDecrease <= 0)
+        {
+            if (currMomentumValue >= 0)
+            {
+                currMomentumValue -= Time.deltaTime * momentumDecreaseSpeed;
+                
+                if (attackDelay < attackDelayDefault)
+                    attackDelay += Time.deltaTime * momentumDecreaseSpeed;
+                
+                if (moveSpeed > moveSpeedDefault)
+                    moveSpeed -= Time.deltaTime * (2 * momentumDecreaseSpeed);
+            }
+            else
+            {
+                currMomentumValue = 0;
+            }
+        } 
+    }
 
     void MoveInput(Vector2 input)
     {
@@ -79,9 +158,19 @@ public class PlayerController : MonoBehaviour
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
 
+<<<<<<< Updated upstream
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+=======
+        if (!cameraLocked)
+        {
+            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        }
+
+            transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+        
+>>>>>>> Stashed changes
     }
 
     void OnEnable() 
@@ -107,15 +196,6 @@ public class PlayerController : MonoBehaviour
     // ---------- //
     // ANIMATIONS //
     // ---------- //
-
-    public const string IDLE = "Null";
-    public const string WALK = "Null";
-    public const string SWINGACROSS = "Sword Swing Across";
-    public const string SWINGDOWN = "Sword Swing Down";
-    public const string SWINGBACK = "Sword Swing Across Back";
-    public const string BLOCK = "Sword Block";
-
-    string currentAnimationState;
 
     public void ChangeAnimationState(string newState) 
     {
@@ -147,23 +227,6 @@ public class PlayerController : MonoBehaviour
     // ATTACKING BEHAVIOUR //
     // ------------------- //
 
-    [Header("Attacking")]
-    public float attackDistance = 3f;
-    public float attackDelay = 0.4f;
-    public float attackSpeed = 1f;
-    public int attackDamage = 1;
-    public LayerMask attackLayer;
-
-    public GameObject hitEffect;
-    public AudioClip swordSwing;
-    public AudioClip hitSound;
-
-    bool attacking = false;
-
-    bool blocking = false;
-    bool readyToAttack = true;
-    int attackCount;
-
     public void Attack()
     {
         if(!readyToAttack || attacking) return;
@@ -173,10 +236,10 @@ public class PlayerController : MonoBehaviour
 
         blocking = false;
 
-        Invoke(nameof(ResetAttack), attackSpeed);
-        Invoke(nameof(AttackRaycast), attackDelay);
+        Invoke(nameof(ResetAttack), attackDelay);
+        Invoke(nameof(AttackRaycast), attackSpeed);
 
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
         audioSource.PlayOneShot(swordSwing);
 
         if(attackCount == 0)
@@ -199,13 +262,32 @@ public class PlayerController : MonoBehaviour
 
     void AttackRaycast()
     {
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+        GameObject weapon = weaponBasis.transform.parent.gameObject;
+
+        if(Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
         { 
             HitTarget(hit.point);
 
+            /* Enemy hit by melee */
             if(hit.transform.TryGetComponent<Actor>(out Actor T))
-            { T.TakeDamage(attackDamage); }
+            { 
+                timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
+
+                T.TakeDamage(attackDamage); 
+                
+                momentumDecreasing = false;
+
+                /* Momentum increases upon hitting an enemy */
+                momentumIncrease();
+            }
         } 
+    }
+
+    IEnumerator MomentumDecreaseTime()
+    {
+        yield return new WaitForSeconds(timeBeforeMomentumDecrease);
+
+        momentumDecreasing = true;
     }
 
     void HitTarget(Vector3 pos)
@@ -230,4 +312,34 @@ public class PlayerController : MonoBehaviour
             blocking = false;
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    void LockCamera()
+    {
+        if (!cameraLocked)
+        {
+            cameraLocked = true;
+            //transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, 0);
+            cam.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            cameraLocked = false;          
+        }
+    }
+
+    void momentumIncrease()
+    {
+        if (currMomentumValue < maxMomentum)
+        {
+            currMomentumValue += momumtumIncrease;
+
+            attackDelay -= momumtumIncrease;
+            moveSpeed += 2 * momumtumIncrease;
+        }
+    }
+
+    
+>>>>>>> Stashed changes
 }
