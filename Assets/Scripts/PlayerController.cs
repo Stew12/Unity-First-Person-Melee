@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera")]
     public Camera cam;
+    public Camera VHSCam;
 
     bool cameraLocked = false;
 
@@ -109,6 +110,9 @@ public class PlayerController : MonoBehaviour
         playerInput = new PlayerInput();
         input = playerInput.Main;
         AssignInputs();
+
+        cam.gameObject.SetActive(true);
+        VHSCam.gameObject.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -393,6 +397,9 @@ public class PlayerController : MonoBehaviour
             camcorderEnabled = true;
             cameraBorder.SetActive(true);
 
+            cam.gameObject.SetActive(false);
+            VHSCam.gameObject.SetActive(true);
+
             cam.fieldOfView = camZoomedOutPOV;
 
             if (recording)
@@ -407,6 +414,9 @@ public class PlayerController : MonoBehaviour
         {
             camcorderEnabled = false;
             cameraBorder.SetActive(false);
+
+            cam.gameObject.SetActive(true);
+            VHSCam.gameObject.SetActive(false);
 
             cam.fieldOfView = camNormalPOV;
 
