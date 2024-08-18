@@ -196,8 +196,9 @@ public class PlayerController : MonoBehaviour
 
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
-
+        
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        VHSCam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
         

@@ -18,22 +18,22 @@ MonoBehaviour:
     value: 1
   NoiseLimit:
     overrideState: 1
-    value: 500
+    value: 0.1
   DistortionOffset:
     overrideState: 1
-    value: 200
+    value: 500
   NoiseScale:
     overrideState: 1
-    value: 100
+    value: 500
   speed:
     overrideState: 1
     value: 500
   NoisePower:
     overrideState: 1
-    value: 500
+    value: 100
   NoiseStrength:
     overrideState: 1
-    value: 500
+    value: 100
   RGBSeparation:
     overrideState: 1
     value: {x: -0.2, y: -0.1, z: -0.3}
@@ -43,6 +43,34 @@ MonoBehaviour:
   Debug:
     overrideState: 1
     value: 0
+--- !u!114 &-5608395105801233121
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65e486e4de6e5448a8fbb43dc8756a0, type: 3}
+  m_Name: Grain
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  colored:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 0.974
+  size:
+    overrideState: 1
+    value: 0.35
+  lumContrib:
+    overrideState: 0
+    value: 0.8
 --- !u!114 &-4759624085835839542
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -87,6 +115,7 @@ MonoBehaviour:
   - {fileID: -7907728853315855072}
   - {fileID: 3166224332094195203}
   - {fileID: 4519341767269590335}
+  - {fileID: -5608395105801233121}
 --- !u!114 &3166224332094195203
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -105,7 +134,7 @@ MonoBehaviour:
     value: 1
   Pixels:
     overrideState: 1
-    value: 283
+    value: 260
 --- !u!114 &3479625771317219067
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -155,4 +184,4 @@ MonoBehaviour:
     value: -103
   Threshold:
     overrideState: 1
-    value: 0.5
+    value: 0.372
