@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Input")]
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
@@ -16,7 +18,10 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     AudioSource audioSource;
 
+    [Header("UI")]
+    public Image healthBarUI;
     public Image momentumBarUI;
+    public Image dragonPointBar;
 
     [Header("Controller")]
     public float moveSpeed = 2.5f;
@@ -60,26 +65,44 @@ public class PlayerController : MonoBehaviour
     public GameObject hitEffect;
     public AudioClip swordSwing;
     public AudioClip hitSound;
-
+    
     bool attacking = false;
 
-    bool blocking = false;
-    bool readyToAttack = true;
-    int attackCount;    
+    private bool readyToAttack = true;
+    private int attackCount;    
 
-    [Header("Debug")]
+    [Header("Blocking/Parrying")]
+    public GameObject blockAndParryHitbox;
+    public bool blocking = false;
 
-    public bool stopWhenAttacking = false;
+    [Header("Knock Back")]
+    private bool knockedBack;
+    private Transform attackingEntityPos;
+    public float knockBackSpeed = 3f;
 
     /* Momentum bar variables */
     [Header("Momentum Bar")]
     public float currMomentumValue;
     public float maxMomentum = 1.2f;
     public float momumtumIncrease = 0.1f;
+    public float parryMomentumIncrease = 0.4f;
     private bool momentumDecreasing = false;
     public float maxTimeBeforeMomentumDecrease = 2f;
     private float timeBeforeMomentumDecrease;
     public float momentumDecreaseSpeed = 0.1f;
+
+    [Header("Timing")]
+    public float maxDontTakeDamageTime = 0.8f;
+    [SerializeField] float dontTakeDamageTime = 0;
+    public float maxKnockBackTime = 0.45f;
+    [SerializeField] float knockBackTime = 0;
+
+    public float maxParryWindowTime = 0.3f;
+    public float parryWindowTime = 0;
+
+    [Header("Debug")]
+
+    public bool stopWhenAttacking = false;
 
     void Awake()
     { 
@@ -94,21 +117,46 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        healthBarUI.fillAmount = 1;
         momentumBarUI.fillAmount = 0;
 
         moveSpeedDefault = moveSpeed;
         attackDelayDefault = attackDelay;
        // animator.speed += 2;
+
+       blockAndParryHitbox.SetActive(false);
+       GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
     }
 
     void Update()
     {
         isGrounded = controller.isGrounded;
-
-        
-
         SetAnimations();
 
+        if (dontTakeDamageTime > 0)
+        {
+            dontTakeDamageTime -= Time.deltaTime;
+        }
+        else
+        {
+            GetComponent<PlayerCollisions>().canTakeDamage = true;
+        }
+
+        if (knockBackTime > 0)
+        {
+            knockBackTime -= Time.deltaTime;
+
+            transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
+        }
+        else
+        {
+            knockedBack = false;
+        }
+
+        if (parryWindowTime > 0)
+        {
+            parryWindowTime -= Time.deltaTime;
+        }
         
     }
 
@@ -120,6 +168,8 @@ public class PlayerController : MonoBehaviour
     void LateUpdate() 
     { 
         LookInput(input.Look.ReadValue<Vector2>()); 
+
+        healthBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentHealth / (float)GetComponent<PlayerValues>().maxHealth;
 
         momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
 
@@ -142,11 +192,20 @@ public class PlayerController : MonoBehaviour
                 currMomentumValue = 0;
             }
         } 
+
+        if (blocking)
+        {
+            blockAndParryHitbox.SetActive(true);
+        }
+        else
+        {
+            blockAndParryHitbox.SetActive(false);
+        }
     }
 
     void MoveInput(Vector2 input)
     {
-        if (!attacking || !stopWhenAttacking)
+        if ((!attacking || !stopWhenAttacking) && !knockedBack)
         {
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
@@ -183,18 +242,18 @@ public class PlayerController : MonoBehaviour
     void OnDisable()
     { input.Disable(); }
 
-    void Jump()
-    {
-        // Adds force to the player rigidbody to jump
-        if (isGrounded)
-            _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-    }
-
     void AssignInputs()
     {
         input.Jump.performed += ctx => Jump();
         input.Attack.started += ctx => Attack();
         input.Block.started += ctx => Block();
+    }
+
+    private void Jump()
+    {
+        // Adds force to the player rigidbody to jump
+        if (isGrounded)
+            _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
     }
 
     // ---------- //
@@ -234,7 +293,7 @@ public class PlayerController : MonoBehaviour
     public void Attack()
     {
         if(!readyToAttack || attacking) return;
-
+        
         readyToAttack = false;
         attacking = true;
 
@@ -287,6 +346,62 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
+    void Block()
+    {
+        if (!blocking)
+        {
+            blocking = true;
+
+            parryWindowTime = maxParryWindowTime;
+
+            ChangeAnimationState(BLOCK);
+        }
+        else
+        {
+            blocking = false;
+        }
+    }
+
+    public void StopBlocking()
+    {
+        ChangeAnimationState(IDLE);
+        blocking = false;
+    }
+
+    public void ParryMomentumIncrease()
+    {
+        currMomentumValue += parryMomentumIncrease;
+
+        // Don't go higher than the max
+        if (currMomentumValue > maxMomentum)
+        {
+            currMomentumValue = maxMomentum;
+        }
+    }
+
+    public void KnockBack(Transform attackingEntityPos)
+    {
+        this.attackingEntityPos = attackingEntityPos;
+        knockedBack = true;
+        knockBackTime = maxKnockBackTime;
+    }
+
+    public void DontTakeDamage()
+    {
+        dontTakeDamageTime = maxDontTakeDamageTime;
+    }
+
+    void momentumIncrease()
+    {
+        if (currMomentumValue < maxMomentum)
+        {
+            currMomentumValue += momumtumIncrease;
+
+            attackDelay -= momumtumIncrease;
+            moveSpeed += 2 * momumtumIncrease;
+        }
+    }
+
     IEnumerator MomentumDecreaseTime()
     {
         yield return new WaitForSeconds(timeBeforeMomentumDecrease);
@@ -301,45 +416,6 @@ public class PlayerController : MonoBehaviour
 
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
-    }
-
-    void Block()
-    {
-        if (!blocking)
-        {
-            blocking = true;
-
-            ChangeAnimationState(BLOCK);
-        }
-        else
-        {
-            blocking = false;
-        }
-    }
-
-    void LockCamera()
-    {
-        if (!cameraLocked)
-        {
-            cameraLocked = true;
-            //transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, 0);
-            cam.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-        else
-        {
-            cameraLocked = false;          
-        }
-    }
-
-    void momentumIncrease()
-    {
-        if (currMomentumValue < maxMomentum)
-        {
-            currMomentumValue += momumtumIncrease;
-
-            attackDelay -= momumtumIncrease;
-            moveSpeed += 2 * momumtumIncrease;
-        }
     }
 
     
