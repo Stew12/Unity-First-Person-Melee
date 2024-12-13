@@ -9,4 +9,10 @@ public class DetectionRadius : MonoBehaviour
         // Make the enemy start chasing the player
         transform.parent.gameObject.GetComponent<Enemy>().ChasePlayer();
     }
+
+    public void PlayerExited()
+    {
+        // Make the enemy return to roaming
+        transform.parent.gameObject.GetComponent<Enemy>().Roam();
+    }
 }

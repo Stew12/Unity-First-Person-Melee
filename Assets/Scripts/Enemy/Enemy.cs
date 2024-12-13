@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     
 
     [Header("Components")]
-    public SphereCollider detectionRadius;
+    //public SphereCollider detectionRadius;
     private SpriteRenderer spriteRenderer;
 
     [Header("Timing")]
@@ -144,14 +144,14 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void TakeDamage(int amount)
+    public void Roam()
     {
-        currentHealth -= amount;
-
-        if(currentHealth <= 0)
-        { Death(); }
+        if (enemyState != EnemyState.ATTACKING)
+        {
+            enemyState = EnemyState.ROAMING;
+        }
     }
-    
+
     public void ChasePlayer()
     {
         if (enemyState != EnemyState.ATTACKING)
@@ -185,6 +185,14 @@ public class Enemy : MonoBehaviour
     {
         //the enemy moves quickly towards the player
         transform.position += new Vector3(transform.forward.x * attackMoveTowardsSpeed * Time.deltaTime, 0, transform.forward.z * attackMoveTowardsSpeed * Time.deltaTime); 
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+
+        if(currentHealth <= 0)
+        { Death(); }
     }
 
     void Death()

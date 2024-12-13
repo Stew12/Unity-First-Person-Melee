@@ -18,4 +18,19 @@ public class PlayerCollisions : MonoBehaviour
             break;
         }
     }
+
+    private void OnTriggerExit(Collider col)
+    {
+        switch (col.tag)
+        {
+            case "Detection Radius Exit":
+                Debug.Log("Exited detection radius...");
+                col.GetComponent<DetectionRadius>().PlayerExited();
+            break;
+
+            default:
+
+            break;
+        }
+    }
 }
