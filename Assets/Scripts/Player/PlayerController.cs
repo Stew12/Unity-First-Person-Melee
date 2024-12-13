@@ -67,6 +67,10 @@ public class PlayerController : MonoBehaviour
     bool readyToAttack = true;
     int attackCount;    
 
+    [Header("Debug")]
+
+    public bool stopWhenAttacking = false;
+
     /* Momentum bar variables */
     [Header("Momentum Bar")]
     public float currMomentumValue;
@@ -101,9 +105,7 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = controller.isGrounded;
 
-        // Repeat Inputs
-        if(input.Attack.IsPressed())
-        { Attack(); }
+        
 
         SetAnimations();
 
@@ -144,15 +146,18 @@ public class PlayerController : MonoBehaviour
 
     void MoveInput(Vector2 input)
     {
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
+        if (!attacking || !stopWhenAttacking)
+        {
+            Vector3 moveDirection = Vector3.zero;
+            moveDirection.x = input.x;
+            moveDirection.z = input.y;
 
-        controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
-        _PlayerVelocity.y += gravity * Time.deltaTime;
-        if(isGrounded && _PlayerVelocity.y < 0)
-            _PlayerVelocity.y = -2f;
-        controller.Move(_PlayerVelocity * Time.deltaTime);
+            controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+            _PlayerVelocity.y += gravity * Time.deltaTime;
+            if(isGrounded && _PlayerVelocity.y < 0)
+                _PlayerVelocity.y = -2f;
+            controller.Move(_PlayerVelocity * Time.deltaTime);
+        }
     }
 
     void LookInput(Vector3 input)
@@ -268,7 +273,7 @@ public class PlayerController : MonoBehaviour
             HitTarget(hit.point);
 
             /* Enemy hit by melee */
-            if(hit.transform.TryGetComponent<Actor>(out Actor T))
+            if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
             { 
                 timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
 
