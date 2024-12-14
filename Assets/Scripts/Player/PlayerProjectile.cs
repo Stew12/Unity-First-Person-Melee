@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile : MonoBehaviour
+public class PlayerProjectile : MonoBehaviour
 {
-    [HideInInspector] public Enemy enemyCasterClass;
+    //[HideInInspector] public Transform playerPos;
+
+    private Vector3 trajectory;
 
     [SerializeField] private float projectileSpeed = 4;
     public float projectileDamage;
-    [SerializeField] private float rangeTime;
-
-    private Vector3 trajectory;
+    [SerializeField] private float rangeTime = 5;
 
     // Start is called before the first frame update
     void Start()
     {
+        Transform cameraPos = Camera.main.transform;
+
         //Point towards player pos upon spawning
-        trajectory = new Vector3(enemyCasterClass.gameObject.transform.forward.x * projectileSpeed * Time.deltaTime, enemyCasterClass.gameObject.transform.forward.y * projectileSpeed * Time.deltaTime, enemyCasterClass.gameObject.transform.forward.z *  projectileSpeed * Time.deltaTime);
+        trajectory = new Vector3(cameraPos.forward.x * projectileSpeed * Time.deltaTime, cameraPos.forward.y * projectileSpeed * Time.deltaTime, cameraPos.forward.z *  projectileSpeed * Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -26,7 +28,6 @@ public class EnemyProjectile : MonoBehaviour
 
         if (rangeTime <= 0)
         {
-            EnemyCasterCanFire();
             Destroy(gameObject);
         }
         else
@@ -34,10 +35,5 @@ public class EnemyProjectile : MonoBehaviour
             //Continue in that same direction even if player moves away
             transform.position += trajectory;
         }
-    }
-
-    public void EnemyCasterCanFire()
-    {
-        enemyCasterClass.canFireProjectile = true;
     }
 }

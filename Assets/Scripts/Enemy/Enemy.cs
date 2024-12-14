@@ -94,8 +94,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-
-        Debug.Log(canFireProjectile);
         if (!knockedBack)
         {
             if (!waiting)

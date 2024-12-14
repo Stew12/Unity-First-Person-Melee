@@ -177,6 +177,7 @@ MonoBehaviour:
   aggroAttackDistance: 10
   enemyAttackProcess: 0
   enemyAttacking: 0
+  canFireProjectile: 1
   enemyProjectile: {fileID: 4709784309882851825, guid: 556ab20b6a9323d4f8104c84f363959a,
     type: 3}
   knockBackSpeed: 3

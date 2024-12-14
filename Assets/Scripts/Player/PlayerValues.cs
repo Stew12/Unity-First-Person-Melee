@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerValues : MonoBehaviour
 {
+    [Header("Stats")]
     public int maxHealth = 100;
-    public int currentHealth;
+    [HideInInspector] public int currentHealth;
     public int maxDragonPoints;
-    public int currentDragonPoints;
+    [HideInInspector] public int currentDragonPoints;
 
     
 
@@ -18,9 +19,4 @@ public class PlayerValues : MonoBehaviour
         currentDragonPoints = maxDragonPoints;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

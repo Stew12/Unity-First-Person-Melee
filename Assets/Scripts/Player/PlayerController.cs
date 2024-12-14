@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Rendering;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     public Image healthBarUI;
     public Image momentumBarUI;
-    public Image dragonPointBar;
+    public Image dragonPointBarUI;
 
     [Header("Controller")]
     public float moveSpeed = 2.5f;
@@ -89,14 +90,20 @@ public class PlayerController : MonoBehaviour
     private float timeBeforeMomentumDecrease;
     public float momentumDecreaseSpeed = 0.1f;
 
+    [Header("Dragon Spell")]
+    [SerializeField] private DragonSpells dragonSpellSelected;
+    public GameObject fireBall;
+
     [Header("Timing")]
     public float maxDontTakeDamageTime = 0.8f;
-    [SerializeField] float dontTakeDamageTime = 0;
+    private float dontTakeDamageTime = 0;
     public float maxKnockBackTime = 0.45f;
-    [SerializeField] float knockBackTime = 0;
+    private float knockBackTime = 0;
 
     public float maxParryWindowTime = 0.3f;
-    public float parryWindowTime = 0;
+    [HideInInspector] public float parryWindowTime = 0;
+
+    
 
     [Header("Debug")]
 
@@ -117,6 +124,7 @@ public class PlayerController : MonoBehaviour
 
         healthBarUI.fillAmount = 1;
         momentumBarUI.fillAmount = 0;
+        dragonPointBarUI.fillAmount = 1;
 
         moveSpeedDefault = moveSpeed;
         attackDelayDefault = attackDelay;
@@ -173,6 +181,8 @@ public class PlayerController : MonoBehaviour
         healthBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentHealth / (float)GetComponent<PlayerValues>().maxHealth;
 
         momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
+
+        dragonPointBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentDragonPoints / (float)GetComponent<PlayerValues>().maxDragonPoints;
 
         timeBeforeMomentumDecrease -= Time.deltaTime;
 
@@ -248,6 +258,7 @@ public class PlayerController : MonoBehaviour
         input.Jump.performed += ctx => Jump();
         input.Attack.started += ctx => Attack();
         input.Block.started += ctx => Block();
+        input.Cast.performed += ctx => Cast();
     }
 
     private void Jump()
@@ -380,6 +391,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Cast()
+    {
+        //TODO spell casted depends on which spell is currently selected
+
+        if (GetComponent<PlayerValues>().currentDragonPoints > 0)
+        {
+            GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
+        }
+        else
+        {
+
+        }
+        
+    }
+
     public void KnockBack(Transform attackingEntityPos)
     {
         this.attackingEntityPos = attackingEntityPos;
@@ -403,12 +429,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator MomentumDecreaseTime()
+    /* IEnumerator MomentumDecreaseTime()
     {
         yield return new WaitForSeconds(timeBeforeMomentumDecrease);
 
         momentumDecreasing = true;
-    }
+    } */
 
     void HitTarget(Vector3 pos)
     {
