@@ -144,7 +144,10 @@ public class PlayerController : MonoBehaviour
         {
             knockBackTime -= Time.deltaTime;
 
-            transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
+            if (attackingEntityPos != null)
+            {
+                transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
+            }
         }
         else
         {

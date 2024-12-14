@@ -16,11 +16,11 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         {
             //SKELETON CHASE BEHAVIOR: PURSUE PLAYER 
             case EnemyType.SKELETON:
-               FollowPlayerBasic(enemyType, enemyClass, enemyGameObject);
+               FollowPlayerBasic(enemyClass, enemyGameObject);
             break;
 
             case EnemyType.SORCERESS:
-
+                //Do Nothing (doesn't chase player)
             break;
 
             default:
@@ -29,19 +29,24 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
         }
 
+        if (enemyClass.distanceFromPlayer <= enemyClass.aggroAttackDistance && enemyClass.attackCoolDownTime <= 0)
+        {
+            enemyClass.enemyState = EnemyState.ATTACKING;
+        }
+
     }
 
-    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
+    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile)
     {
         switch (enemyType)
         {
             //SKELETON ATTACKS: RUSH AT PLAYER 
             case EnemyType.SKELETON:
-               BasicAttack(enemyType, enemyClass, enemyGameObject);
+               BasicPhysicalAttack(enemyClass, enemyGameObject);
             break;
 
             case EnemyType.SORCERESS:
-
+                BasicRangedAttack(enemyClass, enemyGameObject, projectile);
             break;
 
             default:
@@ -51,20 +56,25 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     }
 
     //Pursues the player at a designated speed
-    private void FollowPlayerBasic(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
+    private void FollowPlayerBasic(Enemy enemyClass, GameObject enemyGameObject)
     {
          //When chasing, move towards player on X and Z axis
         enemyGameObject.transform.position += new Vector3(enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime); 
-
-        if (enemyClass.distanceFromPlayer <= enemyClass.aggroAttackDistance && enemyClass.attackCoolDownTime <= 0)
-        {
-            enemyClass.enemyState = EnemyState.ATTACKING;
-        }
     }
 
     //the enemy moves quickly towards the player
-    private void BasicAttack(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
+    private void BasicPhysicalAttack(Enemy enemyClass, GameObject enemyGameObject)
     {
         enemyGameObject.transform.position += new Vector3(enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime); 
+    }
+
+    private void BasicRangedAttack(Enemy enemyClass, GameObject enemyGameObject, GameObject projectile)
+    {
+        if (enemyClass.canFireProjectile)
+        {
+            enemyClass.canFireProjectile = false;
+            GameObject spawnedProjectile = Instantiate(projectile, enemyGameObject.transform);
+            spawnedProjectile.GetComponent<EnemyProjectile>().enemyCasterClass = enemyClass;
+        }
     }
 }

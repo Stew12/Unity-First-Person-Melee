@@ -28,12 +28,13 @@ public class PlayerCollisions : MonoBehaviour
                 //Take damage from enemy
                 if (canTakeDamage)
                 {
-                    /* if (GetComponent<PlayerController>().attacking)
-                    { */
-                        //TODO: make it that player can't parry enemy while they're winding up
-                        if (!attackParried && GetComponent<PlayerController>().attacking && col.GetComponent<Enemy>().attackDuration > 0)
+                    //TODO: make it that player can't parry enemy while they're winding up
+                        
+                    //if (col.GetComponent<Enemy>().enemyAttacking)
+                    //{
+                        if (!attackParried)
                         {
-                            TakeDamage(col);
+                            TakeDamage(col, true);
                         }
                         else 
                         {
@@ -58,6 +59,21 @@ public class PlayerCollisions : MonoBehaviour
 
             break;
 
+            case "Enemy Projectile":
+                if (canTakeDamage)
+                {
+                    col.GetComponent<EnemyProjectile>().EnemyCasterCanFire();
+
+                    //Projectiles can be blocked, but not parried
+                    TakeDamage(col, true);
+                    canTakeDamage = false;
+
+                    GetComponent<PlayerController>().DontTakeDamage();
+
+                    Destroy(col.gameObject);
+                }
+            break;
+
             case "Detection Radius Enter":
                 Debug.Log("Entered detection radius!");
                 col.GetComponent<DetectionRadius>().PlayerEntered();
@@ -69,16 +85,20 @@ public class PlayerCollisions : MonoBehaviour
         }
     }
 
-    private void TakeDamage(Collider enemy)
+    private void TakeDamage(Collider enemy, bool canBlock)
     {   
+
+
         // If attack is not blocked or parried, take full damage, if blocked, take a percentage of the damage,
-        if (!attackBlocked)
+        if (!attackBlocked || !canBlock)
         {
-            GetComponent<PlayerValues>().currentHealth -= (int)enemy.GetComponent<Enemy>().attackDamage;
+            //Full damage
+            GetComponent<PlayerValues>().currentHealth -= CalculateDamage(enemy, false);
         }
         else
         {
-            GetComponent<PlayerValues>().currentHealth -= (int)(enemy.GetComponent<Enemy>().attackDamage * blockDefenseFactor);
+            //Blocked damage
+            GetComponent<PlayerValues>().currentHealth -= CalculateDamage(enemy, true);
             attackBlocked = false;
             GetComponent<PlayerController>().StopBlocking();
         }
@@ -89,6 +109,33 @@ public class PlayerCollisions : MonoBehaviour
 
         //Knock player backward (relative to the enemy, not the player)
         GetComponent<PlayerController>().KnockBack(enemy.gameObject.transform);
+    }
+
+    private int CalculateDamage(Collider harmfulEntity, bool blocked)
+    {
+        int totalDamage = 0;
+
+        switch (harmfulEntity.tag)
+        {
+            case "Enemy":
+                totalDamage = (int)harmfulEntity.GetComponent<Enemy>().attackDamage;
+            break;
+
+            case "Enemy Projectile":
+                totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
+            break;
+
+            default:
+                Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");
+            break;
+        }
+
+        if (blocked)
+        {
+            totalDamage = (int)(totalDamage * blockDefenseFactor);
+        }
+
+        return totalDamage;
     }
 
     IEnumerator HurtFlashDisappear(float waitTime)

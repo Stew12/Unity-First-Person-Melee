@@ -45,13 +45,14 @@ public class Enemy : MonoBehaviour
     public float aggroAttackDistance;
     public bool enemyAttackProcess = false;
     public bool enemyAttacking = false;
+    public bool canFireProjectile = true;
     
 
     [Header("Components")]
     //public SphereCollider detectionRadius;
     private SpriteRenderer spriteRenderer;
-
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
+    public GameObject enemyProjectile;
 
     [Header("Knock Back")]
     private bool knockedBack;
@@ -93,6 +94,8 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log(canFireProjectile);
         if (!knockedBack)
         {
             if (!waiting)
@@ -129,7 +132,7 @@ public class Enemy : MonoBehaviour
                             if (attackDuration > 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile);
                             }
                             else if (attackDuration <= 0)
                             {
