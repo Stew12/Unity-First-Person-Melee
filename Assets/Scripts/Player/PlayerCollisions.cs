@@ -28,25 +28,29 @@ public class PlayerCollisions : MonoBehaviour
                 //Take damage from enemy
                 if (canTakeDamage)
                 {
-                    if (!attackParried)
-                    {
-                        TakeDamage(col);
-                    }
-                    else 
-                    {
-                        attackParried = false;
+                    /* if (GetComponent<PlayerController>().attacking)
+                    { */
+                        //TODO: make it that player can't parry enemy while they're winding up
+                        if (!attackParried && GetComponent<PlayerController>().attacking && col.GetComponent<Enemy>().attackDuration > 0)
+                        {
+                            TakeDamage(col);
+                        }
+                        else 
+                        {
+                            attackParried = false;
 
-                        //Larger momentum increase when parrying.
-                        GetComponent<PlayerController>().ParryMomentumIncrease();
+                            //Larger momentum increase when parrying.
+                            GetComponent<PlayerController>().ParryMomentumIncrease();
 
-                        //Knock ENEMY backward (relative to the player)
-                        col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
-                    }
-                    
+                            //Knock ENEMY backward (relative to the player)
+                            col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
+                        }
+                        
 
-                    canTakeDamage = false;
+                        canTakeDamage = false;
 
-                    GetComponent<PlayerController>().DontTakeDamage();
+                        GetComponent<PlayerController>().DontTakeDamage();
+                    //}
 
                 }
 

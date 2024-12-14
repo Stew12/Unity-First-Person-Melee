@@ -3,8 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+public enum EnemyType
+    {
+        SKELETON,
+        SORCERESS,
+        WRAITH,
+        IMP,
+        MIMIC,
+        SHADOW,
+        TENTACLES,
+        ZOMBIE
+    }
+
+    public enum EnemyState
+    {
+        ROAMING,
+        CHASING,
+        ATTACKING
+    }
+
 public class Enemy : MonoBehaviour
 {
+
+    [Header("Enemy Type")]
+    public EnemyType enemyType;
+
     [Header("Stats")]
     int currentHealth;
     public int maxHealth;
@@ -28,6 +51,8 @@ public class Enemy : MonoBehaviour
     //public SphereCollider detectionRadius;
     private SpriteRenderer spriteRenderer;
 
+    private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
+
     [Header("Knock Back")]
     private bool knockedBack;
     private Transform playerPos;
@@ -39,20 +64,11 @@ public class Enemy : MonoBehaviour
     private IEnumerator coroutine;
     public float attackWindUpTime = 0.85f;
     public float maxAttackCoolDownTime = 2f;
-    private float attackCoolDownTime = 0;
+    public float attackCoolDownTime = 0;
     public float maxAttackDuration = 0.6f;
-    [SerializeField]private float attackDuration = 0;
+    public float attackDuration = 0;
     public float maxWaitTime = 0.7f;
     [SerializeField]private float waitTime = 0;
-
-
-
-    public enum EnemyState
-    {
-        ROAMING,
-        CHASING,
-        ATTACKING
-    }
 
     [Header("State Machine")]
     public EnemyState enemyState;
@@ -71,6 +87,8 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         enemyState = EnemyState.ROAMING;
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
     }
 
     void Update()
@@ -90,14 +108,8 @@ public class Enemy : MonoBehaviour
 
                     case EnemyState.CHASING:
 
-                        //When chasing, move towards player on X and Z axis
-                        transform.position += new Vector3(transform.forward.x * chaseSpeed * Time.deltaTime, 0, transform.forward.z * chaseSpeed * Time.deltaTime); 
-
-                        if (distanceFromPlayer <= aggroAttackDistance && attackCoolDownTime <= 0)
-                        {
-                            enemyState = EnemyState.ATTACKING;
-                        }
-
+                       enemyBehaviourAndAttackList.ChaseBehaviourList(enemyType, this, gameObject);
+                        
                     break;
 
                     case EnemyState.ATTACKING:
@@ -106,7 +118,6 @@ public class Enemy : MonoBehaviour
                         {
                             if (attackCoolDownTime <= 0)
                             {
-                                //Debug.Log("SKELLY ATK SETUP");
                                 attackSetup();
                             }
                         }
@@ -117,25 +128,11 @@ public class Enemy : MonoBehaviour
                         {
                             if (attackDuration > 0)
                             {
-                                //Debug.Log("SKELLY TIMER ON");
-                                switch (enemyAttackType)
-                                {
-                                    case EnemyAttackType.BASIC:
-                                        BasicAttack();
-                                    break;
-
-                                    case EnemyAttackType.RANGED:
-                                        
-                                    break;
-
-                                    default:
-                                        
-                                    break;
-                                }
+                                //ATTACK OCCURS HERE!
+                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject);
                             }
                             else if (attackDuration <= 0)
                             {
-                                //Debug.Log("SKELLY TIMER OFF");
                                 //Reset to before attack
                                 enemyAttacking = false;
                                 enemyAttackProcess = false;
@@ -228,13 +225,6 @@ public class Enemy : MonoBehaviour
             enemyAttacking = true;
             spriteRenderer.color = Color.white;
             attackDuration = maxAttackDuration;
-    }
-
-    private void BasicAttack()
-    {
-        //Debug.Log("YU<");
-        //the enemy moves quickly towards the player
-        transform.position += new Vector3(transform.forward.x * attackMoveTowardsSpeed * Time.deltaTime, 0, transform.forward.z * attackMoveTowardsSpeed * Time.deltaTime); 
     }
 
     public void TakeDamage(int amount)

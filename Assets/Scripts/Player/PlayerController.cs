@@ -60,16 +60,14 @@ public class PlayerController : MonoBehaviour
     public float attackDelayDefault;
     private float attackSpeed = 0.4f;
     public int attackDamage = 1;
-    public LayerMask attackLayer;
+    public bool attacking = false;
+    private bool readyToAttack = true;
+    private int attackCount;    
 
+    public LayerMask attackLayer;
     public GameObject hitEffect;
     public AudioClip swordSwing;
     public AudioClip hitSound;
-    
-    bool attacking = false;
-
-    private bool readyToAttack = true;
-    private int attackCount;    
 
     [Header("Blocking/Parrying")]
     public GameObject blockAndParryHitbox;
