@@ -38,8 +38,6 @@ public class PlayerCollisions : MonoBehaviour
                         }
                         else 
                         {
-                            attackParried = false;
-
                             //Larger momentum increase when parrying.
                             GetComponent<PlayerController>().ParryMomentumIncrease();
 
@@ -47,6 +45,8 @@ public class PlayerCollisions : MonoBehaviour
                             col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
                         }
                         
+                        //TODO: figure out bug with parrying- seems to parry if guarding after a successful parry
+                        attackParried = false;
 
                         canTakeDamage = false;
 

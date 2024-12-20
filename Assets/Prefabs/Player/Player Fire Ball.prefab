@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2654462850924077223}
   - component: {fileID: 2654462850924077220}
   - component: {fileID: 2654462850924077240}
-  - component: {fileID: 2654462850924077241}
+  - component: {fileID: -7721603605698550778}
   m_Layer: 0
   m_Name: Player Fire Ball
   m_TagString: Untagged
@@ -27,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2654462850924077221}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7779263, y: 0.7779263, z: 0.7779263}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2654462850924077223
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113,9 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 4
-  projectileDamage: 0
+  projectileDamage: 2
   rangeTime: 3
---- !u!114 &2654462850924077241
+--- !u!114 &-7721603605698550778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +124,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2654462850924077221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 505e1572bcf76164f97cb7d36654c8c2, type: 3}
+  m_Script: {fileID: 11500000, guid: b3e505a4d2aef704cb6f9aaf51c77798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 5
