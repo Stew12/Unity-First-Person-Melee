@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
-    [SerializeField] GameObject weaponBasis;
+    [SerializeField] GameObject equippedWeapon;
 
     CharacterController controller;
     Animator animator;
@@ -36,11 +36,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera")]
     public Camera cam;
-
     bool cameraLocked = false;
-
     public float sensitivity ;
-
     float xRotation = 0f;
 
     /* Animation variables */
@@ -56,15 +53,16 @@ public class PlayerController : MonoBehaviour
 
     /* Attacking variables */
     [Header("Attacking")]
-    public float attackDistance = 3f;
-    public float attackDelay = 1.7f;
-    public float attackDelayDefault;
-    private float attackSpeed = 0.4f;
-    public int attackDamage = 1;
+    //public float attackDistance = 3f;
+    //public float attackDelay = 1.7f;
+    //public float attackDelayDefault;
+   // public float attackSpeed = 0.4f;
+    //public int attackDamage = 1;
     public bool attacking = false;
     private bool readyToAttack = true;
     private int attackCount;    
 
+    [Header("Effects")]
     public LayerMask attackLayer;
     public GameObject hitEffect;
     public AudioClip swordSwing;
@@ -127,7 +125,6 @@ public class PlayerController : MonoBehaviour
         dragonPointBarUI.fillAmount = 1;
 
         moveSpeedDefault = moveSpeed;
-        attackDelayDefault = attackDelay;
        // animator.speed += 2;
 
        blockAndParryHitbox.SetActive(false);
@@ -192,8 +189,8 @@ public class PlayerController : MonoBehaviour
             {
                 currMomentumValue -= Time.deltaTime * momentumDecreaseSpeed;
                 
-                if (attackDelay < attackDelayDefault)
-                    attackDelay += Time.deltaTime * momentumDecreaseSpeed;
+                if (equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay < equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelayDefault)
+                    equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay += Time.deltaTime * momentumDecreaseSpeed;
                 
                 if (moveSpeed > moveSpeedDefault)
                     moveSpeed -= Time.deltaTime * (2 * momentumDecreaseSpeed);
@@ -256,6 +253,7 @@ public class PlayerController : MonoBehaviour
     void AssignInputs()
     {
         input.Jump.performed += ctx => Jump();
+        //TODO: decide if 'performed' is better (holding down attack instead of clicking)
         input.Attack.started += ctx => Attack();
         input.Block.started += ctx => Block();
         input.Cast.performed += ctx => Cast();
@@ -311,8 +309,8 @@ public class PlayerController : MonoBehaviour
 
         blocking = false;
 
-        Invoke(nameof(ResetAttack), attackDelay);
-        Invoke(nameof(AttackRaycast), attackSpeed);
+        Invoke(nameof(ResetAttack), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay);
+        Invoke(nameof(AttackRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
 
         audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
         audioSource.PlayOneShot(swordSwing);
@@ -337,9 +335,8 @@ public class PlayerController : MonoBehaviour
 
     void AttackRaycast()
     {
-        GameObject weapon = weaponBasis.transform.parent.gameObject;
-
-        if(Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+        //GameObject weapon = equippedWeapon.transform.parent.gameObject;
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
         { 
             HitTarget(hit.point);
 
@@ -348,12 +345,12 @@ public class PlayerController : MonoBehaviour
             { 
                 timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
 
-                T.TakeDamage(attackDamage); 
+                T.TakeDamage(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage); 
                 
                 momentumDecreasing = false;
 
                 /* Momentum increases upon hitting an enemy */
-                momentumIncrease();
+                MomentumIncrease();
             }
         } 
     }
@@ -401,7 +398,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-
+            //TODO: Notify player they cannot cast the spell e.g. a sound effect
         }
         
     }
@@ -418,13 +415,13 @@ public class PlayerController : MonoBehaviour
         dontTakeDamageTime = maxDontTakeDamageTime;
     }
 
-    void momentumIncrease()
+    void MomentumIncrease()
     {
         if (currMomentumValue < maxMomentum)
         {
             currMomentumValue += momumtumIncrease;
 
-            attackDelay -= momumtumIncrease;
+            equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= momumtumIncrease;
             moveSpeed += 2 * momumtumIncrease;
         }
     }

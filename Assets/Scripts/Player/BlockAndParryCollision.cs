@@ -20,6 +20,7 @@ public class BlockAndParryCollision : MonoBehaviour
             }
             else
             {
+                Debug.Log(GetComponentInParent<PlayerController>().parryWindowTime);
                 //Attack parried
                 GetComponentInParent<PlayerCollisions>().attackParried = true;
             }

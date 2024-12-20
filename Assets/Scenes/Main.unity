@@ -1155,7 +1155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866418612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.848, z: 0.714}
+  m_LocalPosition: {x: 0, y: 0.848, z: 0.487}
   m_LocalScale: {x: 0.43812883, y: 1.0073656, z: 0.059381}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2338,9 +2338,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921376898}
-  m_LocalRotation: {x: -0.21013941, y: 0.19418792, z: -0.28269514, w: 0.91554135}
-  m_LocalPosition: {x: 0.06424105, y: -0.16901928, z: -0.015722493}
-  m_LocalScale: {x: 0.7080959, y: 0.70809585, z: 0.70809597}
+  m_LocalRotation: {x: -0.2101394, y: 0.19418791, z: -0.2826951, w: 0.91554135}
+  m_LocalPosition: {x: 0.06434906, y: -0.2594007, z: -0.015776722}
+  m_LocalScale: {x: 0.70809597, y: 0.70809585, z: 0.70809597}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8745039931271322167}
@@ -2708,17 +2708,17 @@ PrefabInstance:
     - target: {fileID: 8065686313186757612, guid: 1a52b5e59c9e14f44bf64141f5437306,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.284
+      value: 0.226
       objectReference: {fileID: 0}
     - target: {fileID: 8065686313186757612, guid: 1a52b5e59c9e14f44bf64141f5437306,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.24400002
+      value: -0.156
       objectReference: {fileID: 0}
     - target: {fileID: 8065686313186757612, guid: 1a52b5e59c9e14f44bf64141f5437306,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.809
+      value: 0.881
       objectReference: {fileID: 0}
     - target: {fileID: 8065686313186757612, guid: 1a52b5e59c9e14f44bf64141f5437306,
         type: 3}
@@ -2856,7 +2856,7 @@ PrefabInstance:
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: maxHealth
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
@@ -3295,7 +3295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526ed24552cf0d04684295be1f2c8308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponBasis: {fileID: 8221127431247413389}
+  equippedWeapon: {fileID: 8221127431247413389}
   healthBarUI: {fileID: 1728090904}
   momentumBarUI: {fileID: 532406546}
   dragonPointBarUI: {fileID: 1808670009}
@@ -3305,10 +3305,6 @@ MonoBehaviour:
   jumpHeight: 0.9
   cam: {fileID: 330585545}
   sensitivity: 10
-  attackDistance: 2.5
-  attackDelay: 1.7
-  attackDelayDefault: 0
-  attackDamage: 1
   attacking: 0
   attackLayer:
     serializedVersion: 2
@@ -3876,7 +3872,7 @@ PrefabInstance:
     - target: {fileID: 6270278121750712902, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: aggroAttackDistance
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6270278121750712902, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
@@ -3891,7 +3887,7 @@ PrefabInstance:
     - target: {fileID: 6286608605994125364, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8573265339125465467, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
@@ -4142,7 +4138,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: f9188f08e11b0a54c8261e6e626529f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c67971e1c87dd7945af99f9201f529fb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4173,6 +4169,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8745039931271322173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221127431247413389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b54449f6464f146be261b7070133df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponClass: 15
+  weaponAttackDamage: 2
+  weaponWeight: 1.2
+  weaponAttackSpeed: 0.4
+  weaponAttackDistance: 2.5
+  weaponAttackDelay: 1.7
+  weaponAttackDelayDefault: 0
+  maxWeaponDurability: 10
+  currentWeaponDurability: 0
 --- !u!23 &8828499987181297561
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -29,6 +29,9 @@ public class PlayerCollisions : MonoBehaviour
                 if (canTakeDamage)
                 {
                     //TODO: make it that player can't parry enemy while they're winding up
+
+                    //BUG TBF: enemy hitting parry and player hitbox causes the hitbox collision to return a parry, but 
+                    //since it happens same time as enemy hitting player hitbox, seems to not be ready by playercontroller, causing a 'false parry'
                         
                     //if (col.GetComponent<Enemy>().enemyAttacking)
                     //{
@@ -43,6 +46,8 @@ public class PlayerCollisions : MonoBehaviour
 
                             //Knock ENEMY backward (relative to the player)
                             col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
+
+
                         }
                         
                         //TODO: figure out bug with parrying- seems to parry if guarding after a successful parry
