@@ -219,7 +219,16 @@ public class PlayerController : MonoBehaviour
             moveDirection.x = input.x;
             moveDirection.z = input.y;
 
-            controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+            if (!attacking)
+            {
+                controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                //When attacking, slow the player down based on the weight of their weapon. This will also be affected by momentum guage.
+                controller.Move(transform.TransformDirection(moveDirection) * (moveSpeed / equippedWeapon.GetComponent<PlayerWeaponValues>().weaponWeight) * Time.deltaTime);
+            }
+
             _PlayerVelocity.y += gravity * Time.deltaTime;
             if(isGrounded && _PlayerVelocity.y < 0)
                 _PlayerVelocity.y = -2f;
@@ -343,14 +352,10 @@ public class PlayerController : MonoBehaviour
             /* Enemy hit by melee */
             if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
             { 
-                timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
-
                 T.TakeDamage(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage); 
-                
-                momentumDecreasing = false;
 
                 /* Momentum increases upon hitting an enemy */
-                MomentumIncrease();
+                MomentumIncrease(momumtumIncrease);
             }
         } 
     }
@@ -377,17 +382,6 @@ public class PlayerController : MonoBehaviour
         blocking = false;
     }
 
-    public void ParryMomentumIncrease()
-    {
-        currMomentumValue += parryMomentumIncrease;
-
-        // Don't go higher than the max
-        if (currMomentumValue > maxMomentum)
-        {
-            currMomentumValue = maxMomentum;
-        }
-    }
-
     private void Cast()
     {
         //TODO spell casted depends on which spell is currently selected
@@ -405,6 +399,9 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack(Transform attackingEntityPos)
     {
+        //TODO: make it so that knocking back player doesn't send them into a wall
+        //controller.Move(transform.TransformDirection(moveDirection) * (moveSpeed / equippedWeapon.GetComponent<PlayerWeaponValues>().weaponWeight) * Time.deltaTime);
+
         this.attackingEntityPos = attackingEntityPos;
         knockedBack = true;
         knockBackTime = maxKnockBackTime;
@@ -415,14 +412,18 @@ public class PlayerController : MonoBehaviour
         dontTakeDamageTime = maxDontTakeDamageTime;
     }
 
-    void MomentumIncrease()
+    public void MomentumIncrease(float mIncrease)
     {
+        timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
+
+        momentumDecreasing = false;
+        
         if (currMomentumValue < maxMomentum)
         {
-            currMomentumValue += momumtumIncrease;
+            currMomentumValue += mIncrease;
 
-            equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= momumtumIncrease;
-            moveSpeed += 2 * momumtumIncrease;
+            equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= mIncrease;
+            moveSpeed += 2 * mIncrease;
         }
     }
 

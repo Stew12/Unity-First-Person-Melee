@@ -42,6 +42,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         {
             //SKELETON ATTACKS: RUSH AT PLAYER 
             case EnemyType.SKELETON:
+                //TODO: set trajectory towards player then move ONLY on that trqjectory for rest of attack
                BasicPhysicalAttack(enemyClass, enemyGameObject);
             break;
 

@@ -14,6 +14,8 @@ public class PlayerCollisions : MonoBehaviour
 
     public float blockDefenseFactor = 0.65f;
 
+    public float enemyColDelay = 0.00001f;
+
     public Image hurtFlash;
 
     public float hurtFlashTime = 0.1f;
@@ -25,42 +27,9 @@ public class PlayerCollisions : MonoBehaviour
         switch (col.tag)
         {
             case "Enemy":
-                //Take damage from enemy
-                if (canTakeDamage)
-                {
-                    //TODO: make it that player can't parry enemy while they're winding up
 
-                    //BUG TBF: enemy hitting parry and player hitbox causes the hitbox collision to return a parry, but 
-                    //since it happens same time as enemy hitting player hitbox, seems to not be ready by playercontroller, causing a 'false parry'
-                        
-                    //if (col.GetComponent<Enemy>().enemyAttacking)
-                    //{
-                        if (!attackParried)
-                        {
-                            TakeDamage(col, true);
-                        }
-                        else 
-                        {
-                            //Larger momentum increase when parrying.
-                            GetComponent<PlayerController>().ParryMomentumIncrease();
-
-                            //Knock ENEMY backward (relative to the player)
-                            col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
-
-
-                        }
-                        
-                        //TODO: figure out bug with parrying- seems to parry if guarding after a successful parry
-                        attackParried = false;
-
-                        canTakeDamage = false;
-
-                        GetComponent<PlayerController>().DontTakeDamage();
-                    //}
-
-                }
-
-                col.GetComponent<Enemy>().Wait();
+            coroutine = EnemyCollision(col, enemyColDelay);
+            StartCoroutine(coroutine);
 
             break;
 
@@ -88,6 +57,52 @@ public class PlayerCollisions : MonoBehaviour
 
             break;
         }
+    }
+
+    private IEnumerator EnemyCollision(Collider col, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        //Take damage from enemy
+                if (canTakeDamage)
+                {
+                    //TODO: make it that player can't parry enemy while they're winding up
+
+                    //BUG TBF: enemy hitting parry and player hitbox causes the hitbox collision to return a parry, but 
+                    //since it happens same time as enemy hitting player hitbox, seems to not be ready by playercontroller, causing a 'false parry'
+                        
+                    //if (col.GetComponent<Enemy>().enemyAttacking)
+                    //{
+                        if (!attackParried)
+                        {
+                            TakeDamage(col, true);
+                        }
+                        else 
+                        {
+                            if (col.GetComponent<Enemy>().enemyAttacking)
+                            {
+                                //Larger momentum increase when parrying.
+                                GetComponent<PlayerController>().MomentumIncrease(GetComponent<PlayerController>().parryMomentumIncrease);
+
+                                //Knock ENEMY backward (relative to the player)
+                                col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
+                            }
+                            else
+                            {
+                                TakeDamage(col, true);
+                            }
+                        }
+                        
+                        attackParried = false;
+
+                        canTakeDamage = false;
+
+                        GetComponent<PlayerController>().DontTakeDamage();
+                    //}
+
+                }
+
+                col.GetComponent<Enemy>().Wait();
     }
 
     private void TakeDamage(Collider enemy, bool canBlock)
