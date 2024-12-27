@@ -62,7 +62,8 @@ public class Enemy : MonoBehaviour
     private bool knockedBack;
     private Transform playerPos;
     public float knockBackSpeed = 3f;
-    public float maxKnockBackTime = 0.45f;
+    public float maxHurtKnockBackTime = 0.1f;
+    public float maxParryKnockBackTime = 0.45f;
     [SerializeField] float knockBackTime = 0;
 
     [Header("Timing")]
@@ -250,11 +251,24 @@ public class Enemy : MonoBehaviour
         { Death(); }
     }
 
-    public void EnemyKnockBack(Transform playerPos)
+    public void EnemyKnockBack(GameObject player, bool parried)
     {
-        this.playerPos = playerPos;
+        float wWeightDivFactor = 10;
+
+        playerPos = player.transform;
         knockedBack = true;
-        knockBackTime = maxKnockBackTime;
+
+        // Being parried has larger knockback than being damaged
+        if (parried)
+        {
+            knockBackTime = maxParryKnockBackTime;
+        }
+        else
+        {
+            // Knockback depends on weight of the weapon used to hit enemy
+            knockBackTime = player.GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>().weaponWeight / wWeightDivFactor;
+        }
+        
     }
 
     void Death()

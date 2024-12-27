@@ -9,3 +9,5 @@ improve weapon animations
 new weapons + weapon animations
 
 make fireball/s disappear when hitting a wall
+
+make skeleton attack on a trajectory like the enemy projectile does

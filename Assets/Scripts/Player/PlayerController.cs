@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
-    [SerializeField] GameObject equippedWeapon;
+    public GameObject equippedWeapon;
 
     [HideInInspector] public CharacterController controller;
     Animator animator;
@@ -356,6 +356,12 @@ public class PlayerController : MonoBehaviour
             if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
             { 
                 T.TakeDamage(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage); 
+
+                // Knock back enemy slightly if enemy is not currently attacking
+                if (!T.GetComponent<Enemy>().enemyAttackProcess)
+                {
+                    T.GetComponent<Enemy>().EnemyKnockBack(gameObject, false);
+                }
 
                 /* Momentum increases upon hitting an enemy */
                 MomentumIncrease(momumtumIncrease);

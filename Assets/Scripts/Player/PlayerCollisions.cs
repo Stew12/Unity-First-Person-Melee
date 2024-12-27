@@ -85,13 +85,14 @@ public class PlayerCollisions : MonoBehaviour
                         }
                         else 
                         {
+                            // Attack parry
                             if (col.GetComponent<Enemy>().enemyAttacking)
                             {
                                 //Larger momentum increase when parrying.
                                 GetComponent<PlayerController>().MomentumIncrease(GetComponent<PlayerController>().parryMomentumIncrease);
 
                                 //Knock ENEMY backward (relative to the player)
-                                col.GetComponent<Enemy>().EnemyKnockBack(gameObject.transform);
+                                col.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
                             }
                             else
                             {
