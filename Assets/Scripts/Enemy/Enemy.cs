@@ -62,7 +62,6 @@ public class Enemy : MonoBehaviour
     private bool knockedBack;
     private Transform playerPos;
     public float knockBackSpeed = 3f;
-    public float maxHurtKnockBackTime = 0.1f;
     public float maxParryKnockBackTime = 0.45f;
     [SerializeField] float knockBackTime = 0;
 
