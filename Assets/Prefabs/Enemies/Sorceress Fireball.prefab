@@ -128,4 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505e1572bcf76164f97cb7d36654c8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemyProjectile: 1
   turnSpeed: 4

@@ -56,7 +56,6 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public CharacterController enemyController;
     private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
-    private EnemyCollisions enemyCollisions;
     public GameObject enemyProjectile;
 
     [Header("Knock Back")]
@@ -96,8 +95,6 @@ public class Enemy : MonoBehaviour
         enemyController = GetComponent<CharacterController>();
 
         enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
-        enemyCollisions = GetComponent<EnemyCollisions>();
-        enemyCollisions.enemyController = enemyController;
     }
 
     void Update()

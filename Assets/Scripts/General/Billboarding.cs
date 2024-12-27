@@ -6,6 +6,8 @@ public class Billboarding : MonoBehaviour
 {
     private Transform cam;
 
+    [SerializeField] private bool isEnemyProjectile;
+
     // Angular speed in radians per sec.
     public float turnSpeed = 10.0f;
 
@@ -26,7 +28,10 @@ public class Billboarding : MonoBehaviour
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
 
         //Remove y from new Direction- we do not want billboarded sprites to rotate up or down
-        newDirection = new Vector3(newDirection.x, yRotation, newDirection.z);
+        if (!isEnemyProjectile)
+        {
+            newDirection = new Vector3(newDirection.x, yRotation, newDirection.z);
+        }
 
         transform.rotation = Quaternion.LookRotation(newDirection);
     }

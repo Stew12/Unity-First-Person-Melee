@@ -12,16 +12,35 @@ public class EnemyProjectile : MonoBehaviour
 
     private Vector3 trajectory;
 
+    private Camera cam;
+
+    private bool trajectorySet = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        //Point towards player pos upon spawning
-        trajectory = new Vector3(enemyCasterClass.gameObject.transform.forward.x * projectileSpeed * Time.deltaTime, enemyCasterClass.gameObject.transform.forward.y * projectileSpeed * Time.deltaTime, enemyCasterClass.gameObject.transform.forward.z *  projectileSpeed * Time.deltaTime);
+        cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!trajectorySet)
+        {
+             Vector3 targetDirection = cam.transform.position - transform.position;
+
+            float singleStep = 10000000 * Time.deltaTime;
+
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+
+            transform.rotation = Quaternion.LookRotation(newDirection);
+
+            //Point towards player pos upon spawning
+            trajectory = new Vector3(gameObject.transform.forward.x * projectileSpeed * Time.deltaTime, gameObject.transform.forward.y * projectileSpeed * Time.deltaTime, gameObject.transform.forward.z *  projectileSpeed * Time.deltaTime);
+
+            trajectorySet = true;
+        }
+
         rangeTime -= Time.deltaTime;
 
         if (rangeTime <= 0)
