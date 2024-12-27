@@ -60,13 +60,13 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     private void FollowPlayerBasic(Enemy enemyClass, GameObject enemyGameObject)
     {
          //When chasing, move towards player on X and Z axis
-        enemyGameObject.transform.position += new Vector3(enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime); 
+        enemyClass.GetComponent<Enemy>().enemyController.Move(new Vector3(enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime)); 
     }
 
     //the enemy moves quickly towards the player
     private void BasicPhysicalAttack(Enemy enemyClass, GameObject enemyGameObject)
     {
-        enemyGameObject.transform.position += new Vector3(enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime); 
+        enemyClass.GetComponent<Enemy>().enemyController.Move(new Vector3(enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime)); 
     }
 
     private void BasicRangedAttack(Enemy enemyClass, GameObject enemyGameObject, GameObject projectile)

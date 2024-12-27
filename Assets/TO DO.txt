@@ -1,0 +1,18 @@
+TO DO:
+
+Make it that player does not go through walls when knocked back - DONE
+
+Change billboarding so that y does not change - DONE
+
+Add 'enemy wall' - a wall collision that only affects enemies - DONE
+
+Make it that enemy can traverse using charactercontroller + does not go through walls when knocked back - DONE
+
+Bonus attacks per enemy
+
+New momentum gauge Boost mechanic
+
+improve weapon animations
+
+new weapons + weapon animations
+

@@ -24,7 +24,6 @@ public enum EnemyType
 
 public class Enemy : MonoBehaviour
 {
-
     [Header("Enemy Type")]
     public EnemyType enemyType;
 
@@ -38,6 +37,10 @@ public class Enemy : MonoBehaviour
     public float chaseSpeed;
     public float distanceFromPlayer;
     [SerializeField] private bool waiting;
+    private bool isGrounded;
+    Vector3 _EnemyVelocity;
+    public float gravity = -9.8f;
+
 
     [Header("Attacking")]
     public float attackMoveTowardsSpeed;
@@ -50,8 +53,10 @@ public class Enemy : MonoBehaviour
 
     [Header("Components")]
     //public SphereCollider detectionRadius;
+    [HideInInspector] public CharacterController enemyController;
     private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
+    private EnemyCollisions enemyCollisions;
     public GameObject enemyProjectile;
 
     [Header("Knock Back")]
@@ -88,8 +93,11 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         enemyState = EnemyState.ROAMING;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyController = GetComponent<CharacterController>();
 
         enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
+        enemyCollisions = GetComponent<EnemyCollisions>();
+        enemyCollisions.enemyController = enemyController;
     }
 
     void Update()
@@ -171,16 +179,25 @@ public class Enemy : MonoBehaviour
         else
         {
             if (knockBackTime > 0)
-        {
-            knockBackTime -= Time.deltaTime;
+            {
+                knockBackTime -= Time.deltaTime;
 
-            transform.position += new Vector3(playerPos.forward.x * knockBackSpeed * Time.deltaTime, 0, playerPos.forward.z * knockBackSpeed * Time.deltaTime);
+                enemyController.Move(new Vector3(playerPos.forward.x * knockBackSpeed * Time.deltaTime, 0, playerPos.forward.z * knockBackSpeed * Time.deltaTime));
+            }
+            else
+            {
+                knockedBack = false;
+            }
         }
-        else
+
+        // Gravity
+        _EnemyVelocity.y += gravity * Time.deltaTime;
+            
+        if (isGrounded && _EnemyVelocity.y < 0)
         {
-            knockedBack = false;
+           _EnemyVelocity.y = -2f;
         }
-        }
+        enemyController.Move(_EnemyVelocity * Time.deltaTime);
 
     }
 

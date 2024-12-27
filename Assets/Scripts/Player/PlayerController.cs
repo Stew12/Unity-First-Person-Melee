@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] GameObject equippedWeapon;
 
-    CharacterController controller;
+    [HideInInspector] public CharacterController controller;
     Animator animator;
     AudioSource audioSource;
 
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 _PlayerVelocity;
 
-    bool isGrounded;
+    private bool isGrounded;
 
     [Header("Camera")]
     public Camera cam;
@@ -53,11 +53,6 @@ public class PlayerController : MonoBehaviour
 
     /* Attacking variables */
     [Header("Attacking")]
-    //public float attackDistance = 3f;
-    //public float attackDelay = 1.7f;
-    //public float attackDelayDefault;
-   // public float attackSpeed = 0.4f;
-    //public int attackDamage = 1;
     public bool attacking = false;
     private bool readyToAttack = true;
     private int attackCount;    
@@ -101,8 +96,6 @@ public class PlayerController : MonoBehaviour
     public float maxParryWindowTime = 0.3f;
     [HideInInspector] public float parryWindowTime = 0;
 
-    
-
     [Header("Debug")]
 
     public bool stopWhenAttacking = false;
@@ -129,6 +122,8 @@ public class PlayerController : MonoBehaviour
 
        blockAndParryHitbox.SetActive(false);
        GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
+
+       NewLevelLoad();
     }
 
     void Update()
@@ -145,13 +140,16 @@ public class PlayerController : MonoBehaviour
             GetComponent<PlayerCollisions>().canTakeDamage = true;
         }
 
+        // Knock player backwards
         if (knockBackTime > 0)
         {
             knockBackTime -= Time.deltaTime;
 
             if (attackingEntityPos != null)
             {
-                transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
+                //transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
+
+                controller.Move(new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime));
             }
         }
         else
@@ -164,6 +162,8 @@ public class PlayerController : MonoBehaviour
             parryWindowTime -= Time.deltaTime;
         }
         
+        //Physics.IgnoreCollision(GetComponent<PlayerController>().controller, );
+
     }
 
     void FixedUpdate() 
@@ -230,8 +230,11 @@ public class PlayerController : MonoBehaviour
             }
 
             _PlayerVelocity.y += gravity * Time.deltaTime;
-            if(isGrounded && _PlayerVelocity.y < 0)
+
+            if (isGrounded && _PlayerVelocity.y < 0)
+            {
                 _PlayerVelocity.y = -2f;
+            }
             controller.Move(_PlayerVelocity * Time.deltaTime);
         }
     }
@@ -400,7 +403,6 @@ public class PlayerController : MonoBehaviour
     public void KnockBack(Transform attackingEntityPos)
     {
         //TODO: make it so that knocking back player doesn't send them into a wall
-        //controller.Move(transform.TransformDirection(moveDirection) * (moveSpeed / equippedWeapon.GetComponent<PlayerWeaponValues>().weaponWeight) * Time.deltaTime);
 
         this.attackingEntityPos = attackingEntityPos;
         knockedBack = true;
@@ -441,6 +443,15 @@ public class PlayerController : MonoBehaviour
 
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
+    }
+
+    // TODO: use this method upon entering each new scene (Temporarily called in Awake())
+    void NewLevelLoad()
+    {
+        foreach (GameObject eWall in GameObject.FindGameObjectsWithTag("Enemy Wall"))
+        {
+            Physics.IgnoreCollision(GetComponent<PlayerController>().controller, eWall.GetComponent<Collider>());
+        }
     }
 
     

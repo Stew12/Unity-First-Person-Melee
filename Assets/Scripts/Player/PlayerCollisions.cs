@@ -53,6 +53,12 @@ public class PlayerCollisions : MonoBehaviour
                 col.GetComponent<DetectionRadius>().PlayerEntered();
             break;
             
+            // case "Enemy Wall":
+            //     //Ignore the collision of any 'enemy wall' objects
+            //     Physics.IgnoreCollision(GetComponent<PlayerController>().controller, col.GetComponent<Collider>());
+            // break;
+
+
             default:
 
             break;
