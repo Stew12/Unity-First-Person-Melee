@@ -12,14 +12,23 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] GameObject weaponBasis;
 
+    [SerializeField] GameObject cameraBorder;
+
     CharacterController controller;
     Animator animator;
     AudioSource audioSource;
 
     public Image momentumBarUI;
 
+    public Image recordingBarUI;
+
+    public Image recordingDot;
+
     [Header("Controller")]
-    public float moveSpeed = 2.5f;
+    public float moveSpeed = 3.5f;
+
+    public float camMoveSpeed = 2;
+
     public float moveSpeedDefault;
     public float gravity = -9.8f;
     public float jumpHeight = 1.2f;
@@ -30,10 +39,22 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera")]
     public Camera cam;
+    public Camera VHSCam;
 
     bool cameraLocked = false;
 
-    public float sensitivity ;
+    public float sensitivity = 10f;
+    public float camSensitivity = 6;
+    public float sensitivityDefault;
+    public float camNormalPOV = 60;
+    public float camZoomedOutPOV = 35;
+
+    public float camRecordDistance = 10;
+    public float recordingAmount = 0;
+    private float maxRecordingAmount = 100;
+    public float recordingSpeed = 3.5f;
+    //public float recordingDecreaseSpeed = 3.5f;
+    bool recording = false;
 
     float xRotation = 0f;
 
@@ -63,6 +84,9 @@ public class PlayerController : MonoBehaviour
 
     bool attacking = false;
 
+    bool camcorderEnabled = false;
+    
+
     bool blocking = false;
     bool readyToAttack = true;
     int attackCount;    
@@ -87,14 +111,22 @@ public class PlayerController : MonoBehaviour
         input = playerInput.Main;
         AssignInputs();
 
+        cam.gameObject.SetActive(true);
+        VHSCam.gameObject.SetActive(false);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         momentumBarUI.fillAmount = 0;
+        recordingBarUI.fillAmount = 0;
 
         moveSpeedDefault = moveSpeed;
+        sensitivityDefault = sensitivity;
         attackDelayDefault = attackDelay;
        // animator.speed += 2;
+
+       cameraBorder.SetActive(false);
+       recordingDot.gameObject.SetActive(false);
     }
 
     void Update()
@@ -107,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
         SetAnimations();
 
-        
+        CamcorderRaycast();
     }
 
     void FixedUpdate() 
@@ -120,6 +152,8 @@ public class PlayerController : MonoBehaviour
         LookInput(input.Look.ReadValue<Vector2>()); 
 
         momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
+
+        recordingBarUI.fillAmount = recordingAmount / maxRecordingAmount;
 
         timeBeforeMomentumDecrease -= Time.deltaTime;
 
@@ -162,13 +196,11 @@ public class PlayerController : MonoBehaviour
 
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
+        
+        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        VHSCam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-        if (!cameraLocked)
-        {
-            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        }
-
-            transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
         
     }
 
@@ -189,7 +221,8 @@ public class PlayerController : MonoBehaviour
     {
         input.Jump.performed += ctx => Jump();
         input.Attack.started += ctx => Attack();
-        input.Block.started += ctx => Block();
+        input.Block.started += ctx => SwitchCamcorderView();
+        input.Record.started += ctx => CamcorderRecord();
     }
 
     // ---------- //
@@ -268,7 +301,7 @@ public class PlayerController : MonoBehaviour
             HitTarget(hit.point);
 
             /* Enemy hit by melee */
-            if(hit.transform.TryGetComponent<Actor>(out Actor T))
+            if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
             { 
                 timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
 
@@ -280,6 +313,51 @@ public class PlayerController : MonoBehaviour
                 momentumIncrease();
             }
         } 
+    }
+
+    void CamcorderRaycast()
+    {
+        GameObject weapon = weaponBasis.transform.parent.gameObject;
+
+        if(Physics.Raycast(weapon.transform.position, weapon.transform.forward, out RaycastHit hit, camRecordDistance, attackLayer) && recording && camcorderEnabled)
+        { 
+
+            /* Enemy targeted by camcorder */
+            if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
+            { 
+                recordingAmount += Time.deltaTime * recordingSpeed;
+            }
+            else
+            {
+                recordingAmount -= Time.deltaTime * recordingSpeed;
+                if (recordingAmount < 0) { recordingAmount = 0; }
+            }
+        } 
+        else
+        {
+            recordingAmount -= Time.deltaTime * recordingSpeed;
+            if (recordingAmount < 0) { recordingAmount = 0; }
+        }
+    }
+
+    void CamcorderRecord()
+    {
+        if (camcorderEnabled)
+        {
+            if (recording)
+            {
+                recording = false;
+
+                recordingDot.gameObject.SetActive(false);
+            }
+            else
+            {
+                recording = true;
+
+                recordingDot.gameObject.SetActive(true);
+            }
+            
+        }
     }
 
     IEnumerator MomentumDecreaseTime()
@@ -310,6 +388,44 @@ public class PlayerController : MonoBehaviour
         {
             blocking = false;
         }
+    }
+
+    void SwitchCamcorderView()
+    {
+        /* Camcorder view */
+        if (!camcorderEnabled)
+        {
+            camcorderEnabled = true;
+            cameraBorder.SetActive(true);
+
+            cam.gameObject.SetActive(false);
+            VHSCam.gameObject.SetActive(true);
+
+            cam.fieldOfView = camZoomedOutPOV;
+
+            if (recording)
+            {
+                recordingDot.gameObject.SetActive(true);
+            }
+
+            moveSpeed = camMoveSpeed;
+        }
+        /* Normal view */
+        else
+        {
+            camcorderEnabled = false;
+            cameraBorder.SetActive(false);
+
+            cam.gameObject.SetActive(true);
+            VHSCam.gameObject.SetActive(false);
+
+            cam.fieldOfView = camNormalPOV;
+
+            moveSpeed = moveSpeedDefault;
+
+            recordingDot.gameObject.SetActive(false);
+        }
+
     }
 
     void LockCamera()
