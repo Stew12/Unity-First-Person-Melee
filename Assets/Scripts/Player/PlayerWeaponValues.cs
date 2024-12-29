@@ -22,11 +22,11 @@ public class PlayerWeaponValues : MonoBehaviour
         MACE,
         RAPIER,
         SCHIMTAR,
-        SWORDSWORD,
+        SHORTSWORD,
         WAND
     }
     
-    public WeaponClass weaponClass = WeaponClass.SWORDSWORD;
+    public WeaponClass weaponClass = WeaponClass.SHORTSWORD;
 
     public int weaponAttackDamage = 2;
     //Weight- higher weight slows player down when they attack
@@ -35,6 +35,7 @@ public class PlayerWeaponValues : MonoBehaviour
     public float weaponAttackDistance = 2.5f;
     public float weaponAttackDelay = 1.7f;
     [HideInInspector] public float weaponAttackDelayDefault = 0;
+    private float damageReduceFactor = 10;
 
     public int maxWeaponDurability = 10;
     [HideInInspector] public int currentWeaponDurability = 0;
@@ -44,6 +45,14 @@ public class PlayerWeaponValues : MonoBehaviour
         currentWeaponDurability = maxWeaponDurability;
 
         weaponAttackDelayDefault = weaponAttackDelay;
+    }
+
+    //If durability = 0, grey out the weapon to show wear and reduce attack damage greatly
+    public void NoWeaponDurability()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(0.33f, 0.33f, 0.33f);
+
+        weaponAttackDamage = (int) (weaponAttackDamage / damageReduceFactor);
     }
 
 }

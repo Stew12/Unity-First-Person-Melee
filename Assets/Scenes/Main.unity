@@ -1374,7 +1374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -1}
+  m_AnchoredPosition: {x: 2, y: -1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888403808
@@ -3023,6 +3023,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 38.455
       objectReference: {fileID: 0}
+    - target: {fileID: 8054450495013261390, guid: 8464fe90bb8c25744a11300c35bab9fd,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.8584906
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054450495013261390, guid: 8464fe90bb8c25744a11300c35bab9fd,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.8584906
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054450495013261390, guid: 8464fe90bb8c25744a11300c35bab9fd,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.8584906
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 8464fe90bb8c25744a11300c35bab9fd, type: 3}
@@ -3382,6 +3397,8 @@ MonoBehaviour:
   parryMomentumIncrease: 0.3
   maxTimeBeforeMomentumDecrease: 1
   momentumDecreaseSpeed: 0.1
+  weaponDurabilityLossHit: 1
+  weaponDurabilityLossBlock: 3
   dragonSpellSelected: 0
   fireBall: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69,
     type: 3}

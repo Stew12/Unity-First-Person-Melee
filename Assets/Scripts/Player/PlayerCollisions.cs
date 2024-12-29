@@ -128,6 +128,9 @@ public class PlayerCollisions : MonoBehaviour
             GetComponent<PlayerValues>().currentHealth -= CalculateDamage(enemy, true);
             attackBlocked = false;
             GetComponent<PlayerController>().StopBlocking();
+
+            //Reduce durability on weapon
+            GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= GetComponent<PlayerController>().weaponDurabilityLossBlock;
         }
 
         hurtFlash.enabled = true;

@@ -95,6 +95,10 @@ public class PlayerController : MonoBehaviour
     private float timeBeforeMomentumDecrease;
     public float momentumDecreaseSpeed = 0.1f;
 
+    [Header("Durability")]
+    [SerializeField] private int weaponDurabilityLossHit = 1;
+    public int weaponDurabilityLossBlock = 3;
+
     [Header("Dragon Spell")]
     [SerializeField] private DragonSpells dragonSpellSelected;
     public GameObject fireBall;
@@ -199,10 +203,19 @@ public class PlayerController : MonoBehaviour
             
             powerBarUI.fillAmount = powerTime / maxPowerTime;
         }
+        
+        // If durability on weapon has run out, break the weapon to a weaker version
+        if (equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability <= 0)
+        {
+            equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability = 0;
+
+            equippedWeapon.GetComponent<PlayerWeaponValues>().NoWeaponDurability();
+        }
 
         // Show weapon durability in UI
         durabilityBarUI.fillAmount = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability / equippedWeapon.GetComponent<PlayerWeaponValues>().maxWeaponDurability;
         durabilityLabel.text = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability.ToString();
+
 
         if (boosting)
         {
@@ -411,6 +424,9 @@ public class PlayerController : MonoBehaviour
                 {
                     T.GetComponent<Enemy>().EnemyKnockBack(gameObject, false);
                 }
+
+                //Reduce durability on weapon
+                equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= weaponDurabilityLossHit;
 
                 /* Momentum increases upon hitting an enemy */
                 MomentumIncrease(momentumIncrease);
