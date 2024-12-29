@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Rendering;
 using Unity.VisualScripting;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public Image healthBarUI;
     public Image momentumBarUI;
     public Image dragonPointBarUI;
+    public Image powerBarUI;
+    public Image durabilityBarUI;
+    public TextMeshProUGUI durabilityLabel;
 
     [Header("Controller")]
     public float moveSpeed = 2.5f;
@@ -67,6 +71,12 @@ public class PlayerController : MonoBehaviour
     public GameObject blockAndParryHitbox;
     public bool blocking = false;
 
+    [Header("Power Bar")]
+    //public float power = 0;
+    [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
+    public float powerDamageFactor = 4;
+    private bool attackPowerBuilding = false;
+
     [Header("Knock Back")]
     private bool knockedBack;
     private Transform attackingEntityPos;
@@ -92,8 +102,9 @@ public class PlayerController : MonoBehaviour
     private float dontTakeDamageTime = 0;
     public float maxKnockBackTime = 0.45f;
     private float knockBackTime = 0;
-
     public float maxParryWindowTime = 0.3f;
+    [SerializeField] private float maxPowerTime = 0;
+    [SerializeField] private float powerTime = 0;
     [HideInInspector] public float parryWindowTime = 0;
 
     [Header("Debug")]
@@ -116,6 +127,7 @@ public class PlayerController : MonoBehaviour
         healthBarUI.fillAmount = 1;
         momentumBarUI.fillAmount = 0;
         dragonPointBarUI.fillAmount = 1;
+        powerBarUI.fillAmount = 0;
 
         moveSpeedDefault = moveSpeed;
        // animator.speed += 2;
@@ -161,8 +173,6 @@ public class PlayerController : MonoBehaviour
         {
             parryWindowTime -= Time.deltaTime;
         }
-        
-        //Physics.IgnoreCollision(GetComponent<PlayerController>().controller, );
 
     }
 
@@ -180,6 +190,17 @@ public class PlayerController : MonoBehaviour
         momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
 
         dragonPointBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentDragonPoints / (float)GetComponent<PlayerValues>().maxDragonPoints;
+
+        if (attackPowerBuilding && powerTime < maxPowerTime && !attacking)
+        {
+            powerTime += Time.deltaTime;
+            
+            powerBarUI.fillAmount = powerTime / maxPowerTime;
+        }
+
+        // Show weapon durability in UI
+        durabilityBarUI.fillAmount = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability / equippedWeapon.GetComponent<PlayerWeaponValues>().maxWeaponDurability;
+        durabilityLabel.text = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability.ToString();
 
         timeBeforeMomentumDecrease -= Time.deltaTime;
 
@@ -209,6 +230,7 @@ public class PlayerController : MonoBehaviour
         {
             blockAndParryHitbox.SetActive(false);
         }
+
     }
 
     void MoveInput(Vector2 input)
@@ -337,12 +359,19 @@ public class PlayerController : MonoBehaviour
             ChangeAnimationState(SWINGBACK);
             attackCount = 0;
         }
+
+        
     }
 
     void ResetAttack()
     {
         attacking = false;
         readyToAttack = true;
+
+        // Make power bar start to go up
+        attackPowerBuilding = true;
+        maxPowerTime = (equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor) / (moveSpeed / 1.2f);
+        powerTime = 0;
     }
 
     void AttackRaycast()
@@ -355,7 +384,13 @@ public class PlayerController : MonoBehaviour
             /* Enemy hit by melee */
             if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
             { 
-                T.TakeDamage(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage); 
+                //Power damage multiplier
+                float powerMultiplier;
+
+                //Damage depends on how full the power bar is
+                powerMultiplier = (1 + powerBarUI.fillAmount) * powerDamageFactor;
+
+                T.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerMultiplier)); 
 
                 // Knock back enemy slightly if enemy is not currently attacking
                 if (!T.GetComponent<Enemy>().enemyAttackProcess)

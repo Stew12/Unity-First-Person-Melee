@@ -17,3 +17,7 @@ Durability UI element
 Weapon switch
 
 Basic inventory menu
+
+Power time seems to go up way quicker likely due to increase rate being linked to move speed- find out why
+
+Add damage multiplier based on how full the power bar is

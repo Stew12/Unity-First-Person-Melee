@@ -244,6 +244,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        Debug.Log("DAMAGE: " + amount);
+
         currentHealth -= amount;
 
         if(currentHealth <= 0)
