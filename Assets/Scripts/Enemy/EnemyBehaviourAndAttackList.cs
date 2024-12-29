@@ -67,7 +67,6 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     {
         if (!enemyClass.attackTrajectorySet)
         {
-            Debug.Log("Aaaaa");
             //Point towards player pos upon spawning
             trajectory = new Vector3(enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime);
             enemyClass.attackTrajectorySet = true;

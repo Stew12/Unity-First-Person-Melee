@@ -429,7 +429,7 @@ public class PlayerController : MonoBehaviour
                 equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= weaponDurabilityLossHit;
 
                 /* Momentum increases upon hitting an enemy */
-                MomentumIncrease(momentumIncrease);
+                MomentumIncrease(false);
             }
         } 
     }
@@ -496,7 +496,7 @@ public class PlayerController : MonoBehaviour
         dontTakeDamageTime = maxDontTakeDamageTime;
     }
 
-    public void MomentumIncrease(float mIncrease)
+    public void MomentumIncrease(bool parryIncrease)
     {
         //timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
 
@@ -507,7 +507,15 @@ public class PlayerController : MonoBehaviour
             //NEW CHANGE: momentum only increases when not boosting, and the effects of momentum only kick in when boosting.
             if (!boosting)
             {
-                currMomentumValue += mIncrease;
+                if (!parryIncrease)
+                {
+                    // If the power bar is higher, gain slightly more momentum
+                    currMomentumValue += momentumIncrease + (powerBarUI.fillAmount / 10);
+                }
+                else
+                {
+                    currMomentumValue += parryMomentumIncrease;
+                }
             }
         }
     }
