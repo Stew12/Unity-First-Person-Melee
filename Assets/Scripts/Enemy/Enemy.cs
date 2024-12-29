@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour
     public bool enemyAttackProcess = false;
     public bool enemyAttacking = false;
     public bool canFireProjectile = true;
+    public bool attackTrajectorySet = false;
     
 
     [Header("Components")]
@@ -143,6 +144,8 @@ public class Enemy : MonoBehaviour
                                 enemyAttacking = false;
                                 enemyAttackProcess = false;
                                 enemyState = EnemyState.CHASING;
+
+                                attackTrajectorySet = false;
 
                                 attackCoolDownTime = maxAttackCoolDownTime;
 
