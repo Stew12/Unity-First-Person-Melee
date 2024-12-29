@@ -74,7 +74,8 @@ public class PlayerController : MonoBehaviour
     [Header("Power Bar")]
     //public float power = 0;
     [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
-    public float powerDamageFactor = 4;
+    [SerializeField] private float powerDamageFactor = 4;
+    [SerializeField] private float powerBarSpeedupFactor = 1.2f;
     private bool attackPowerBuilding = false;
 
     [Header("Knock Back")]
@@ -84,9 +85,10 @@ public class PlayerController : MonoBehaviour
 
     /* Momentum bar variables */
     [Header("Momentum Bar")]
+    [SerializeField] private bool boosting = false;
     public float currMomentumValue;
     public float maxMomentum = 1.2f;
-    public float momumtumIncrease = 0.1f;
+    public float momentumIncrease = 0.1f;
     public float parryMomentumIncrease = 0.4f;
     private bool momentumDecreasing = false;
     public float maxTimeBeforeMomentumDecrease = 2f;
@@ -202,23 +204,29 @@ public class PlayerController : MonoBehaviour
         durabilityBarUI.fillAmount = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability / equippedWeapon.GetComponent<PlayerWeaponValues>().maxWeaponDurability;
         durabilityLabel.text = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability.ToString();
 
-        timeBeforeMomentumDecrease -= Time.deltaTime;
-
-        if (timeBeforeMomentumDecrease <= 0)
+        if (boosting)
         {
-            if (currMomentumValue >= 0)
+            timeBeforeMomentumDecrease -= Time.deltaTime;
+
+            if (timeBeforeMomentumDecrease <= 0)
             {
-                currMomentumValue -= Time.deltaTime * momentumDecreaseSpeed;
-                
-                if (equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay < equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelayDefault)
-                    equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay += Time.deltaTime * momentumDecreaseSpeed;
-                
-                if (moveSpeed > moveSpeedDefault)
-                    moveSpeed -= Time.deltaTime * (2 * momentumDecreaseSpeed);
-            }
-            else
-            {
-                currMomentumValue = 0;
+                if (currMomentumValue >= 0)
+                {
+                    currMomentumValue -= Time.deltaTime * momentumDecreaseSpeed;
+                    
+                    if (equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay < equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelayDefault)
+                        equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay += Time.deltaTime * momentumDecreaseSpeed;
+                    
+                    if (moveSpeed > moveSpeedDefault)
+                        moveSpeed -= Time.deltaTime * (2 * momentumDecreaseSpeed);
+                }
+                else
+                {
+                    currMomentumValue = 0;
+
+                    //Boosting deactivates when momentum reaches 0
+                    boosting = false;
+                }
             }
         } 
 
@@ -291,6 +299,7 @@ public class PlayerController : MonoBehaviour
         input.Attack.started += ctx => Attack();
         input.Block.started += ctx => Block();
         input.Cast.performed += ctx => Cast();
+        input.Boost.performed += ctx => Boost();
     }
 
     private void Jump()
@@ -359,8 +368,6 @@ public class PlayerController : MonoBehaviour
             ChangeAnimationState(SWINGBACK);
             attackCount = 0;
         }
-
-        
     }
 
     void ResetAttack()
@@ -370,7 +377,14 @@ public class PlayerController : MonoBehaviour
 
         // Make power bar start to go up
         attackPowerBuilding = true;
-        maxPowerTime = (equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor) / (moveSpeed / 1.2f);
+        maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
+
+        //If boosting, the max power time will decrease (bar moves faster)
+        if (boosting)
+        {
+            maxPowerTime /= moveSpeed / powerBarSpeedupFactor;
+        }
+
         powerTime = 0;
     }
 
@@ -399,7 +413,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 /* Momentum increases upon hitting an enemy */
-                MomentumIncrease(momumtumIncrease);
+                MomentumIncrease(momentumIncrease);
             }
         } 
     }
@@ -441,6 +455,17 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void Boost()
+    {
+        if (currMomentumValue > 0)
+        {
+            boosting = true;
+
+            equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= currMomentumValue;
+            moveSpeed += 2 * currMomentumValue;
+        }
+    }
+
     public void KnockBack(Transform attackingEntityPos)
     {
         //TODO: make it so that knocking back player doesn't send them into a wall
@@ -457,16 +482,17 @@ public class PlayerController : MonoBehaviour
 
     public void MomentumIncrease(float mIncrease)
     {
-        timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
+        //timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
 
-        momentumDecreasing = false;
+        //momentumDecreasing = false;
         
         if (currMomentumValue < maxMomentum)
         {
-            currMomentumValue += mIncrease;
-
-            equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= mIncrease;
-            moveSpeed += 2 * mIncrease;
+            //NEW CHANGE: momentum only increases when not boosting, and the effects of momentum only kick in when boosting.
+            if (!boosting)
+            {
+                currMomentumValue += mIncrease;
+            }
         }
     }
 

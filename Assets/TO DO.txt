@@ -2,8 +2,6 @@ TO DO:
 
 Bonus attacks per enemy
 
-New momentum gauge Boost mechanic
-
 improve weapon animations
 
 new weapons + weapon animations

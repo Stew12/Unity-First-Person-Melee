@@ -89,6 +89,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Boost"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1fbe459-1d27-4f07-8ae7-d53aa7bcb832"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d0ef34d-b53b-4481-a461-7ffd51900697"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -233,6 +253,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Block = m_Main.FindAction("Block", throwIfNotFound: true);
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
+        m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -299,6 +320,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Block;
     private readonly InputAction m_Main_Interact;
     private readonly InputAction m_Main_Cast;
+    private readonly InputAction m_Main_Boost;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -310,6 +332,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_Main_Block;
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
+        public InputAction @Boost => m_Wrapper.m_Main_Boost;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -340,6 +363,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cast.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCast;
                 @Cast.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCast;
                 @Cast.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCast;
+                @Boost.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
+                @Boost.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
+                @Boost.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -365,6 +391,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cast.started += instance.OnCast;
                 @Cast.performed += instance.OnCast;
                 @Cast.canceled += instance.OnCast;
+                @Boost.started += instance.OnBoost;
+                @Boost.performed += instance.OnBoost;
+                @Boost.canceled += instance.OnBoost;
             }
         }
     }
@@ -387,5 +416,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
+        void OnBoost(InputAction.CallbackContext context);
     }
 }
