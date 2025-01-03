@@ -16,4 +16,8 @@ Basic inventory menu
 
 Healing items
 
-Power time seems to go up way quicker likely due to increase rate being linked to move speed- find out why
+weird texture glitch on incline
+
+weapon sheathing + makes run faster
+
+Weapon sprites going through wall
