@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class PlayerWeaponValues : MonoBehaviour
-{
-    public enum WeaponClass
+public enum WeaponClass
     {
         AXE,
         BAT,
@@ -25,7 +23,9 @@ public class PlayerWeaponValues : MonoBehaviour
         SHORTSWORD,
         WAND
     }
-    
+
+public class PlayerWeaponValues : MonoBehaviour
+{
     public WeaponClass weaponClass = WeaponClass.SHORTSWORD;
 
     public int weaponAttackDamage = 2;
@@ -38,7 +38,7 @@ public class PlayerWeaponValues : MonoBehaviour
     private float damageReduceFactor = 10;
 
     public int maxWeaponDurability = 10;
-    [HideInInspector] public int currentWeaponDurability = 0;
+    public int currentWeaponDurability = 0;
 
     void Awake()
     {

@@ -7,6 +7,7 @@ using System;
 using UnityEngine.Rendering;
 using Unity.VisualScripting;
 using TMPro;
+using JetBrains.Annotations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,8 +18,10 @@ public class PlayerController : MonoBehaviour
     public GameObject equippedWeapon;
 
     [HideInInspector] public CharacterController controller;
-    Animator animator;
     AudioSource audioSource;
+
+    [Header("Inventory")]
+    public PlayerInventory playerInventory;
 
     [Header("UI")]
     public Image healthBarUI;
@@ -46,12 +49,13 @@ public class PlayerController : MonoBehaviour
 
     /* Animation variables */
     [Header("Animation")]
-    public const string IDLE = "Null";
-    public const string WALK = "Null";
-    public const string SWINGACROSS = "Sword Swing Across";
-    public const string SWINGDOWN = "Sword Swing Down";
-    public const string SWINGBACK = "Sword Swing Across Back";
-    public const string BLOCK = "Sword Block";
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public string IDLE = "Null";
+    [HideInInspector] public string WALK = "Null";
+    [HideInInspector] public string SWINGACROSS = "Sword Swing Across";
+    //public const string SWINGDOWN = "Sword Swing Down";
+    [HideInInspector] public string SWINGBACK = "Sword Swing Across Back";
+    [HideInInspector] public string BLOCK = "Sword Block";
 
     string currentAnimationState;
 
@@ -140,6 +144,9 @@ public class PlayerController : MonoBehaviour
 
        blockAndParryHitbox.SetActive(false);
        GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
+
+       // Set animations for equipped weapon
+       GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
 
        NewLevelLoad();
     }
@@ -313,6 +320,16 @@ public class PlayerController : MonoBehaviour
         input.Block.started += ctx => Block();
         input.Cast.performed += ctx => Cast();
         input.Boost.performed += ctx => Boost();
+
+        input._1.performed += ctx => ItemSwitch(1);
+        input._2.performed += ctx => ItemSwitch(2);
+        input._3.performed += ctx => ItemSwitch(3);
+        input._4.performed += ctx => ItemSwitch(4);
+        input._5.performed += ctx => ItemSwitch(5);
+        input._6.performed += ctx => ItemSwitch(6);
+        input._7.performed += ctx => ItemSwitch(7);
+        input._8.performed += ctx => ItemSwitch(8);
+        input._9.performed += ctx => ItemSwitch(9);
     }
 
     private void Jump()
@@ -434,6 +451,15 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
+    void HitTarget(Vector3 pos)
+    {
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(hitSound);
+
+        GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
+        Destroy(GO, 20);
+    }
+
     void Block()
     {
         if (!blocking)
@@ -520,20 +546,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /* IEnumerator MomentumDecreaseTime()
+    void ItemSwitch(int hotKeyNumber)
     {
-        yield return new WaitForSeconds(timeBeforeMomentumDecrease);
-
-        momentumDecreasing = true;
-    } */
-
-    void HitTarget(Vector3 pos)
-    {
-        audioSource.pitch = 1;
-        audioSource.PlayOneShot(hitSound);
-
-        GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
-        Destroy(GO, 20);
+        playerInventory.HotKeyedItem(hotKeyNumber);
     }
 
     // TODO: use this method upon entering each new scene (Temporarily called in Awake())

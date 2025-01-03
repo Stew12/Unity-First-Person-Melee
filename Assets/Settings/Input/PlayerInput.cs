@@ -98,6 +98,87 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""1"",
+                    ""type"": ""Button"",
+                    ""id"": ""68001a43-ed66-493d-b10d-5846c1895701"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""2"",
+                    ""type"": ""Button"",
+                    ""id"": ""546779c5-a26c-4c1d-bdbb-5cee53d389ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""3"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e5a0bea-04f1-4427-a9cc-d497b8c4ff22"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""4"",
+                    ""type"": ""Button"",
+                    ""id"": ""14243c9e-4781-40da-a2a1-0eb5b99a6fe2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""5"",
+                    ""type"": ""Button"",
+                    ""id"": ""f418368e-0932-4d91-a5db-d5ef4625e304"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""6"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4007ace-d404-4657-9bf6-d8c25bd4d52d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""7"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c1e8d38-f004-409b-92f5-b23d286e4661"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""8"",
+                    ""type"": ""Button"",
+                    ""id"": ""bce6554d-c22a-49dc-823c-85df5bd0ae81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""9"",
+                    ""type"": ""Button"",
+                    ""id"": ""bf41153e-ab8b-469f-982e-4cadeb17fa31"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +313,105 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Boost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a95f450d-f4cc-408b-a212-c7a199da647a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6277f11d-fbf9-4398-b711-dfcedf065f03"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c5bbe94-6b0e-4605-b734-e0df13d25149"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa087c72-2928-4ea5-846d-946a71fc7aa7"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""883d77be-4bc5-4c5a-a631-1de8ab6d3cc6"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""641f4c4f-2fd9-4edd-988a-207258dd8af0"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cccf36fe-1029-4011-94d9-957c46891bb5"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c79f067-91dc-43c5-9749-a57d77445d98"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3cf06d85-1a65-4c70-8b59-5ad577c7ea6d"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""9"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -254,6 +434,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
+        m_Main__1 = m_Main.FindAction("1", throwIfNotFound: true);
+        m_Main__2 = m_Main.FindAction("2", throwIfNotFound: true);
+        m_Main__3 = m_Main.FindAction("3", throwIfNotFound: true);
+        m_Main__4 = m_Main.FindAction("4", throwIfNotFound: true);
+        m_Main__5 = m_Main.FindAction("5", throwIfNotFound: true);
+        m_Main__6 = m_Main.FindAction("6", throwIfNotFound: true);
+        m_Main__7 = m_Main.FindAction("7", throwIfNotFound: true);
+        m_Main__8 = m_Main.FindAction("8", throwIfNotFound: true);
+        m_Main__9 = m_Main.FindAction("9", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -321,6 +510,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Interact;
     private readonly InputAction m_Main_Cast;
     private readonly InputAction m_Main_Boost;
+    private readonly InputAction m_Main__1;
+    private readonly InputAction m_Main__2;
+    private readonly InputAction m_Main__3;
+    private readonly InputAction m_Main__4;
+    private readonly InputAction m_Main__5;
+    private readonly InputAction m_Main__6;
+    private readonly InputAction m_Main__7;
+    private readonly InputAction m_Main__8;
+    private readonly InputAction m_Main__9;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -333,6 +531,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
+        public InputAction @_1 => m_Wrapper.m_Main__1;
+        public InputAction @_2 => m_Wrapper.m_Main__2;
+        public InputAction @_3 => m_Wrapper.m_Main__3;
+        public InputAction @_4 => m_Wrapper.m_Main__4;
+        public InputAction @_5 => m_Wrapper.m_Main__5;
+        public InputAction @_6 => m_Wrapper.m_Main__6;
+        public InputAction @_7 => m_Wrapper.m_Main__7;
+        public InputAction @_8 => m_Wrapper.m_Main__8;
+        public InputAction @_9 => m_Wrapper.m_Main__9;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -366,6 +573,33 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Boost.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
                 @Boost.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
                 @Boost.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
+                @_1.started -= m_Wrapper.m_MainActionsCallbackInterface.On_1;
+                @_1.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_1;
+                @_1.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_1;
+                @_2.started -= m_Wrapper.m_MainActionsCallbackInterface.On_2;
+                @_2.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_2;
+                @_2.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_2;
+                @_3.started -= m_Wrapper.m_MainActionsCallbackInterface.On_3;
+                @_3.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_3;
+                @_3.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_3;
+                @_4.started -= m_Wrapper.m_MainActionsCallbackInterface.On_4;
+                @_4.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_4;
+                @_4.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_4;
+                @_5.started -= m_Wrapper.m_MainActionsCallbackInterface.On_5;
+                @_5.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_5;
+                @_5.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_5;
+                @_6.started -= m_Wrapper.m_MainActionsCallbackInterface.On_6;
+                @_6.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_6;
+                @_6.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_6;
+                @_7.started -= m_Wrapper.m_MainActionsCallbackInterface.On_7;
+                @_7.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_7;
+                @_7.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_7;
+                @_8.started -= m_Wrapper.m_MainActionsCallbackInterface.On_8;
+                @_8.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_8;
+                @_8.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_8;
+                @_9.started -= m_Wrapper.m_MainActionsCallbackInterface.On_9;
+                @_9.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_9;
+                @_9.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_9;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,6 +628,33 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Boost.started += instance.OnBoost;
                 @Boost.performed += instance.OnBoost;
                 @Boost.canceled += instance.OnBoost;
+                @_1.started += instance.On_1;
+                @_1.performed += instance.On_1;
+                @_1.canceled += instance.On_1;
+                @_2.started += instance.On_2;
+                @_2.performed += instance.On_2;
+                @_2.canceled += instance.On_2;
+                @_3.started += instance.On_3;
+                @_3.performed += instance.On_3;
+                @_3.canceled += instance.On_3;
+                @_4.started += instance.On_4;
+                @_4.performed += instance.On_4;
+                @_4.canceled += instance.On_4;
+                @_5.started += instance.On_5;
+                @_5.performed += instance.On_5;
+                @_5.canceled += instance.On_5;
+                @_6.started += instance.On_6;
+                @_6.performed += instance.On_6;
+                @_6.canceled += instance.On_6;
+                @_7.started += instance.On_7;
+                @_7.performed += instance.On_7;
+                @_7.canceled += instance.On_7;
+                @_8.started += instance.On_8;
+                @_8.performed += instance.On_8;
+                @_8.canceled += instance.On_8;
+                @_9.started += instance.On_9;
+                @_9.performed += instance.On_9;
+                @_9.canceled += instance.On_9;
             }
         }
     }
@@ -417,5 +678,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
+        void On_1(InputAction.CallbackContext context);
+        void On_2(InputAction.CallbackContext context);
+        void On_3(InputAction.CallbackContext context);
+        void On_4(InputAction.CallbackContext context);
+        void On_5(InputAction.CallbackContext context);
+        void On_6(InputAction.CallbackContext context);
+        void On_7(InputAction.CallbackContext context);
+        void On_8(InputAction.CallbackContext context);
+        void On_9(InputAction.CallbackContext context);
     }
 }

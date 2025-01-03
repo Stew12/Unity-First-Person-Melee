@@ -2,15 +2,9 @@ TO DO:
 
 Bonus attacks per enemy
 
-improve weapon animations
-
-new weapons + weapon animations
-
 make fireball/s disappear when hitting a wall
 
 Durability repair items
-
-Weapon switch
 
 Basic inventory menu
 
@@ -21,3 +15,12 @@ weird texture glitch on incline
 weapon sheathing + makes run faster
 
 Weapon sprites going through wall
+
+Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k
+
+
+LONG TERM
+
+new weapons + weapon animations
+
+new enemy types

@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 8054450495013261390}
   - component: {fileID: 8054450495013261391}
   - component: {fileID: 8054450495013261385}
+  - component: {fileID: -7868245328247226945}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -111,7 +112,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7245439273364376313}
-  m_LocalRotation: {x: 0.2827871, y: 0.08370059, z: 0.27357414, w: 0.9155233}
+  m_LocalRotation: {x: 0.28278685, y: 0.08370481, z: 0.27357346, w: 0.91552323}
   m_LocalPosition: {x: 0.226, y: -0.156, z: 0.881}
   m_LocalScale: {x: 1.4122378, y: 1.4122381, z: 1.4122378}
   m_ConstrainProportionsScale: 0
@@ -221,11 +222,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponClass: 15
-  weaponAttackDamage: 2
+  weaponAttackDamage: 0
   weaponWeight: 2
   weaponAttackSpeed: 0.4
-  weaponAttackDistance: 2.5
+  weaponAttackDistance: 2.1
   weaponAttackDelay: 1.7
   weaponAttackDelayDefault: 0
   maxWeaponDurability: 15
-  currentWeaponDurability: 0
+  currentWeaponDurability: 14
+--- !u!114 &-7868245328247226945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7245439273364376313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf21ac256d331b44d9fa6d6f84e2b3c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hotKey: 1
+  originalItemIndex: 1
