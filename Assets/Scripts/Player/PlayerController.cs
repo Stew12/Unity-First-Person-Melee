@@ -335,6 +335,7 @@ public class PlayerController : MonoBehaviour
         input.Block.started += ctx => Block();
         input.Cast.performed += ctx => Cast();
         input.Boost.performed += ctx => Boost();
+        input.Interact.performed += ctx => Interact();
 
         input._1.performed += ctx => ItemSwitch(1);
         input._2.performed += ctx => ItemSwitch(2);
@@ -522,6 +523,29 @@ public class PlayerController : MonoBehaviour
             moveSpeed += 2 * currMomentumValue;
         }
     }
+
+    private void Interact()
+    {
+        Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
+
+
+    }
+
+    void InteractRaycast()
+    {
+        //GameObject weapon = equippedWeapon.transform.parent.gameObject;
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
+        { 
+            /* If NPC interacted */
+            if(hit.transform.TryGetComponent<NPC>(out NPC N))
+            { 
+                N.GetComponent<NPC>().PlayDialogue();
+                
+            }
+        } 
+    }
+
+
 
     public void KnockBack(Transform attackingEntityPos)
     {
