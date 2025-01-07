@@ -24,3 +24,5 @@ LONG TERM
 new weapons + weapon animations
 
 new enemy types
+
+make footsteps tempo play faster if moving faster, rather than pitch

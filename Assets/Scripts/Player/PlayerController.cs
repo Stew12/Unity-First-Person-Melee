@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     public GameObject equippedWeapon;
 
     [HideInInspector] public CharacterController controller;
-    AudioSource audioSource;
+    private AudioSource audioSource;
+    public AudioSource footstepsAudioSource;
 
     [Header("Inventory")]
     public PlayerInventory playerInventory;
@@ -173,7 +174,6 @@ public class PlayerController : MonoBehaviour
             if (attackingEntityPos != null)
             {
                 //transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
-
                 controller.Move(new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime));
             }
         }
@@ -238,7 +238,9 @@ public class PlayerController : MonoBehaviour
                         equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay += Time.deltaTime * momentumDecreaseSpeed;
                     
                     if (moveSpeed > moveSpeedDefault)
+                    {
                         moveSpeed -= Time.deltaTime * (2 * momentumDecreaseSpeed);
+                    }
                 }
                 else
                 {
@@ -286,6 +288,19 @@ public class PlayerController : MonoBehaviour
                 _PlayerVelocity.y = -2f;
             }
             controller.Move(_PlayerVelocity * Time.deltaTime);
+
+            // Footsteps noise- only play when moving!
+            if (moveDirection != Vector3.zero)
+            {
+                if (!footstepsAudioSource.isPlaying)
+                {
+                    // Change pitch based on movespeed
+                    footstepsAudioSource.pitch = moveSpeed / 2.5f;
+                    
+                    footstepsAudioSource.Play();
+                }
+            }
+           
         }
     }
 
