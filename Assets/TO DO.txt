@@ -18,6 +18,10 @@ Weapon sprites going through wall
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k
 
+make footsteps tempo play faster if moving faster, rather than pitch- 
+Likely do this by having custom sped up audio clips that are roughly attributed to each section of the movement guage when boosting
+
+Handle extra dialog boxes and lock camera to NPC when speaking to them.
 
 LONG TERM
 
@@ -25,4 +29,3 @@ new weapons + weapon animations
 
 new enemy types
 
-make footsteps tempo play faster if moving faster, rather than pitch

@@ -339,8 +339,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922693966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 5.2, z: -32.26}
-  m_LocalScale: {x: 2.8740447, y: 2.8740447, z: 2.8740447}
+  m_LocalPosition: {x: -0, y: 4.952, z: -32.26}
+  m_LocalScale: {x: 2.5946012, y: 2.5946012, z: 2.5946012}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -682,6 +682,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1178371333 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 558321031, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
+    type: 3}
+  m_PrefabInstance: {fileID: 6743968145386345131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa26226e7559a444b8e6334063f181c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1225720313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,9 +1255,19 @@ PrefabInstance:
       objectReference: {fileID: 1728090904}
     - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
+      propertyPath: dialogTextBox
+      value: 
+      objectReference: {fileID: 1178371333}
+    - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
       propertyPath: momentumBarUI
       value: 
       objectReference: {fileID: 532406546}
+    - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: dialogueTextBox
+      value: 
+      objectReference: {fileID: 1178371333}
     - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
       propertyPath: durabilityBarUI
@@ -1266,11 +1288,6 @@ PrefabInstance:
       propertyPath: dragonPointBarUI
       value: 
       objectReference: {fileID: 1808670009}
-    - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
-        type: 3}
-      propertyPath: footstepsAudioSource
-      value: 
-      objectReference: {fileID: 4226839757342427865}
     - target: {fileID: 1282487068343986871, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
       propertyPath: hurtFlash
@@ -1351,12 +1368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526ed24552cf0d04684295be1f2c8308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &4226839757342427865 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4226839757342427865, guid: edee1349e414e7c48abf2d456ad0860b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3126781738731708519}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6267722937007312150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1456,10 +1467,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 558321027, guid: 889ceeaa1d5861a44b7ec2c352c7f990, type: 3}
-      propertyPath: m_TagString
-      value: Dialog Text
-      objectReference: {fileID: 0}
     - target: {fileID: 6743968145531317488, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1595,6 +1602,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: hilltop2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037940813981176294, guid: 0575e6efd0fc2fe4f978b7ca19fffe07,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6377312037795400540, guid: 0575e6efd0fc2fe4f978b7ca19fffe07,
         type: 3}

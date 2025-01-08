@@ -179,6 +179,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectOptionNextDialog"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5847640-7584-4685-b756-3cd97c44ba17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -412,6 +421,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""9"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a0cc19c-3f8f-4dd0-a81b-3029ad1a9d50"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectOptionNextDialog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""174af871-a383-428d-93e5-f1dec97669d7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectOptionNextDialog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -443,6 +474,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main__7 = m_Main.FindAction("7", throwIfNotFound: true);
         m_Main__8 = m_Main.FindAction("8", throwIfNotFound: true);
         m_Main__9 = m_Main.FindAction("9", throwIfNotFound: true);
+        m_Main_SelectOptionNextDialog = m_Main.FindAction("SelectOptionNextDialog", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -519,6 +551,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main__7;
     private readonly InputAction m_Main__8;
     private readonly InputAction m_Main__9;
+    private readonly InputAction m_Main_SelectOptionNextDialog;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -540,6 +573,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @_7 => m_Wrapper.m_Main__7;
         public InputAction @_8 => m_Wrapper.m_Main__8;
         public InputAction @_9 => m_Wrapper.m_Main__9;
+        public InputAction @SelectOptionNextDialog => m_Wrapper.m_Main_SelectOptionNextDialog;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -600,6 +634,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @_9.started -= m_Wrapper.m_MainActionsCallbackInterface.On_9;
                 @_9.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_9;
                 @_9.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_9;
+                @SelectOptionNextDialog.started -= m_Wrapper.m_MainActionsCallbackInterface.OnSelectOptionNextDialog;
+                @SelectOptionNextDialog.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnSelectOptionNextDialog;
+                @SelectOptionNextDialog.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnSelectOptionNextDialog;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -655,6 +692,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @_9.started += instance.On_9;
                 @_9.performed += instance.On_9;
                 @_9.canceled += instance.On_9;
+                @SelectOptionNextDialog.started += instance.OnSelectOptionNextDialog;
+                @SelectOptionNextDialog.performed += instance.OnSelectOptionNextDialog;
+                @SelectOptionNextDialog.canceled += instance.OnSelectOptionNextDialog;
             }
         }
     }
@@ -687,5 +727,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void On_7(InputAction.CallbackContext context);
         void On_8(InputAction.CallbackContext context);
         void On_9(InputAction.CallbackContext context);
+        void OnSelectOptionNextDialog(InputAction.CallbackContext context);
     }
 }

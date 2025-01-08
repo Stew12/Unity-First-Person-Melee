@@ -8,6 +8,8 @@ using UnityEngine.Rendering;
 using Unity.VisualScripting;
 using TMPro;
 using JetBrains.Annotations;
+using UnityEditor.Rendering;
+using Unity.VisualScripting.Dependencies.Sqlite;
 
 public class PlayerController : MonoBehaviour
 {
@@ -108,6 +110,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private DragonSpells dragonSpellSelected;
     public GameObject fireBall;
 
+    [Header("Dialog")]
+    public TextCrawl dialogueTextBox;
+    private bool isListeningToDialogue = false;
+
     [Header("Timing")]
     public float maxDontTakeDamageTime = 0.8f;
     private float dontTakeDamageTime = 0;
@@ -143,8 +149,10 @@ public class PlayerController : MonoBehaviour
         moveSpeedDefault = moveSpeed;
        // animator.speed += 2;
 
+       //Set required elements to inactive
        blockAndParryHitbox.SetActive(false);
        GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
+       dialogueTextBox.transform.parent.gameObject.SetActive(false);
 
        // Set animations for equipped weapon
        GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
@@ -265,7 +273,8 @@ public class PlayerController : MonoBehaviour
 
     void MoveInput(Vector2 input)
     {
-        if ((!attacking || !stopWhenAttacking) && !knockedBack)
+        // Only move if these conditions are met
+        if ((!attacking || !stopWhenAttacking) && !knockedBack && !isListeningToDialogue)
         {
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
@@ -336,6 +345,7 @@ public class PlayerController : MonoBehaviour
         input.Cast.performed += ctx => Cast();
         input.Boost.performed += ctx => Boost();
         input.Interact.performed += ctx => Interact();
+        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
 
         input._1.performed += ctx => ItemSwitch(1);
         input._2.performed += ctx => ItemSwitch(2);
@@ -351,7 +361,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
-        if (isGrounded)
+        if (isGrounded && !isListeningToDialogue)
             _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
     }
 
@@ -391,7 +401,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if(!readyToAttack || attacking) return;
+        if(!readyToAttack || attacking || isListeningToDialogue) return;
         
         readyToAttack = false;
         attacking = true;
@@ -478,17 +488,20 @@ public class PlayerController : MonoBehaviour
 
     void Block()
     {
-        if (!blocking)
+        if (!isListeningToDialogue)
         {
-            blocking = true;
+            if (!blocking)
+            {
+                blocking = true;
 
-            parryWindowTime = maxParryWindowTime;
+                parryWindowTime = maxParryWindowTime;
 
-            ChangeAnimationState(BLOCK);
-        }
-        else
-        {
-            blocking = false;
+                ChangeAnimationState(BLOCK);
+            }
+            else
+            {
+                blocking = false;
+            }
         }
     }
 
@@ -501,14 +514,16 @@ public class PlayerController : MonoBehaviour
     private void Cast()
     {
         //TODO spell casted depends on which spell is currently selected
-
-        if (GetComponent<PlayerValues>().currentDragonPoints > 0)
+        if (!isListeningToDialogue)
         {
-            GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
-        }
-        else
-        {
-            //TODO: Notify player they cannot cast the spell e.g. a sound effect
+            if (GetComponent<PlayerValues>().currentDragonPoints > 0)
+            {
+                GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
+            }
+            else
+            {
+                //TODO: Notify player they cannot cast the spell e.g. a sound effect
+            }
         }
         
     }
@@ -526,25 +541,48 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
-        Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
+        if (!isListeningToDialogue)
+            Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
 
 
     }
 
     void InteractRaycast()
     {
-        //GameObject weapon = equippedWeapon.transform.parent.gameObject;
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
         { 
             /* If NPC interacted */
             if(hit.transform.TryGetComponent<NPC>(out NPC N))
             { 
-                N.GetComponent<NPC>().PlayDialogue();
-                
+                isListeningToDialogue = true;
+                dialogueTextBox.transform.parent.gameObject.SetActive(true);
+                N.GetComponent<NPC>().PlayDialogue(dialogueTextBox);
             }
         } 
     }
 
+    void SelectOptionOrNextDialog()
+    {
+        if (dialogueTextBox.enabled)
+        {
+            //If text is still crawling, display the entire message at once
+            if (!dialogueTextBox.boxFinished)
+            {
+                dialogueTextBox.showAllText = true;
+                dialogueTextBox.boxFinished = true;
+            }
+            else
+            {
+                //TODO go to next dialog box if available
+
+                //Close text box
+                dialogueTextBox.transform.parent.gameObject.SetActive(false);
+                isListeningToDialogue = false;
+            }
+        }
+
+
+    }
 
 
     public void KnockBack(Transform attackingEntityPos)

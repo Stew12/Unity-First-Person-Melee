@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa26226e7559a444b8e6334063f181c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxFinished: 0
+  showAllText: 0
   textWriteInterval: 0.1
 --- !u!82 &558321032
 AudioSource:

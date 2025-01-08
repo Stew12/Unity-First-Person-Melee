@@ -6,12 +6,10 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public List<string> dialogue = new List<string>();
-    public void PlayDialogue()
+    
+    public void PlayDialogue(TextCrawl dialogueText)
     {
-        GameObject DialogueText = GameObject.FindGameObjectWithTag("Dialog Text");
-
-        DialogueText.GetComponent<TextCrawl>().WriteNewTextBox(dialogue[0]);
-
+        dialogueText.GetComponent<TextCrawl>().WriteNewTextBox(dialogue[0]);
     }
 
 }

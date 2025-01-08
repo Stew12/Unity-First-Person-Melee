@@ -74,7 +74,7 @@ Transform:
   - {fileID: 3126781738961630637}
   - {fileID: 3126781739497447391}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1282487068343986869
 MonoBehaviour:
@@ -152,6 +152,7 @@ MonoBehaviour:
   dragonSpellSelected: 0
   fireBall: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69,
     type: 3}
+  dialogTextBox: {fileID: 0}
   maxDontTakeDamageTime: 0.8
   maxKnockBackTime: 0.45
   maxParryWindowTime: 0.15
