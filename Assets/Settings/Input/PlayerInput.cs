@@ -224,6 +224,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Repair"",
+                    ""type"": ""Button"",
+                    ""id"": ""b34ce2fe-1713-4629-bbd5-29f2ff90abcb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -523,6 +532,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Sheathe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2420eef5-2c9b-416c-9d0f-01c3f69ef257"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Repair"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -559,6 +579,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main__8 = m_Main.FindAction("8", throwIfNotFound: true);
         m_Main__9 = m_Main.FindAction("9", throwIfNotFound: true);
         m_Main_SelectOptionNextDialog = m_Main.FindAction("SelectOptionNextDialog", throwIfNotFound: true);
+        m_Main_Repair = m_Main.FindAction("Repair", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -640,6 +661,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main__8;
     private readonly InputAction m_Main__9;
     private readonly InputAction m_Main_SelectOptionNextDialog;
+    private readonly InputAction m_Main_Repair;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -666,6 +688,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @_8 => m_Wrapper.m_Main__8;
         public InputAction @_9 => m_Wrapper.m_Main__9;
         public InputAction @SelectOptionNextDialog => m_Wrapper.m_Main_SelectOptionNextDialog;
+        public InputAction @Repair => m_Wrapper.m_Main_Repair;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -741,6 +764,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SelectOptionNextDialog.started -= m_Wrapper.m_MainActionsCallbackInterface.OnSelectOptionNextDialog;
                 @SelectOptionNextDialog.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnSelectOptionNextDialog;
                 @SelectOptionNextDialog.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnSelectOptionNextDialog;
+                @Repair.started -= m_Wrapper.m_MainActionsCallbackInterface.OnRepair;
+                @Repair.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnRepair;
+                @Repair.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnRepair;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -811,6 +837,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SelectOptionNextDialog.started += instance.OnSelectOptionNextDialog;
                 @SelectOptionNextDialog.performed += instance.OnSelectOptionNextDialog;
                 @SelectOptionNextDialog.canceled += instance.OnSelectOptionNextDialog;
+                @Repair.started += instance.OnRepair;
+                @Repair.performed += instance.OnRepair;
+                @Repair.canceled += instance.OnRepair;
             }
         }
     }
@@ -848,5 +877,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void On_8(InputAction.CallbackContext context);
         void On_9(InputAction.CallbackContext context);
         void OnSelectOptionNextDialog(InputAction.CallbackContext context);
+        void OnRepair(InputAction.CallbackContext context);
     }
 }

@@ -286,8 +286,6 @@ public class PlayerController : MonoBehaviour
         //     attackPowerBuilding = true;
         // }
 
-
-
     }
 
     void AssignInputs()
@@ -299,6 +297,7 @@ public class PlayerController : MonoBehaviour
         input.Boost.performed += ctx => Boost();
         input.Interact.performed += ctx => Interact();
         input.Sheathe.performed += ctx => SheatheWeaponToggle();
+        input.Repair.performed += ctx => RepairWeapon();
         input.Inventory.performed += ctx => InventoryToggle();
         input.EquipItem.performed += ctx => EquipItem();
         input.OpenItemInfo.performed += ctx => ShowItemInfo();
@@ -614,6 +613,25 @@ public class PlayerController : MonoBehaviour
                 attackPowerBuilding = true;
             }
         }
+    }
+
+    private void RepairWeapon()
+    {
+        if (!blocking)
+        {
+            //Repair currently equipped weapon if repair kit available
+
+        }
+        else
+        {
+            //TODO: if button held down long enough while blocking, perform a weapon destruction attack
+            //WeaponDestructionAttack();
+        }
+    }
+
+    private void WeaponDestructionAttack()
+    {
+
     }
 
     private void Interact()
