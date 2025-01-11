@@ -78,6 +78,33 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "53bfa57f-666c-4d8d-bb52-513106024b55",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EquipItem",
+                    "type": "Button",
+                    "id": "7578e0f1-ba30-466e-be08-644de1bb8668",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenItemInfo",
+                    "type": "Button",
+                    "id": "ed1d1c00-a786-453f-9ae9-7ef4db002a78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "1",
                     "type": "Button",
                     "id": "68001a43-ed66-493d-b10d-5846c1895701",
@@ -402,6 +429,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a42f20e2-0c95-44a9-b78e-8ca3a8c050e8",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7a0cc19c-3f8f-4dd0-a81b-3029ad1a9d50",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -419,6 +457,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "SelectOptionNextDialog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b4b9b30-b6a2-4aad-966a-20336174448d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d13bf652-bc00-4f5f-974b-47557cedf5ea",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenItemInfo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

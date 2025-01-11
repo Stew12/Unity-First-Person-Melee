@@ -112,9 +112,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dialog")]
     public TextCrawl dialogueTextBox;
-    private bool isListeningToDialogue = false;
 
     [Header("Timing")]
+    [HideInInspector] public bool waiting = false;
     public float maxDontTakeDamageTime = 0.8f;
     private float dontTakeDamageTime = 0;
     public float maxKnockBackTime = 0.45f;
@@ -274,7 +274,7 @@ public class PlayerController : MonoBehaviour
     void MoveInput(Vector2 input)
     {
         // Only move if these conditions are met
-        if ((!attacking || !stopWhenAttacking) && !knockedBack && !isListeningToDialogue)
+        if ((!attacking || !stopWhenAttacking) && !knockedBack && !waiting)
         {
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
@@ -315,18 +315,22 @@ public class PlayerController : MonoBehaviour
 
     void LookInput(Vector3 input)
     {
-        float mouseX = input.x;
-        float mouseY = input.y;
-
-        xRotation -= (mouseY * Time.deltaTime * sensitivity);
-        xRotation = Mathf.Clamp(xRotation, -80, 80);
-
-        if (!cameraLocked)
+        if (!waiting)
         {
-            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        }
+            float mouseX = input.x;
+            float mouseY = input.y;
 
+            xRotation -= (mouseY * Time.deltaTime * sensitivity);
+            xRotation = Mathf.Clamp(xRotation, -80, 80);
+
+            if (!cameraLocked)
+            {
+                cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            }
+            
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+
+        }
         
     }
 
@@ -345,6 +349,9 @@ public class PlayerController : MonoBehaviour
         input.Cast.performed += ctx => Cast();
         input.Boost.performed += ctx => Boost();
         input.Interact.performed += ctx => Interact();
+        input.Inventory.performed += ctx => InventoryToggle();
+        input.EquipItem.performed += ctx => EquipItem();
+        input.OpenItemInfo.performed += ctx => ShowItemInfo();
         input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
 
         input._1.performed += ctx => ItemSwitch(1);
@@ -361,7 +368,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
-        if (isGrounded && !isListeningToDialogue)
+        if (isGrounded && !waiting)
             _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
     }
 
@@ -401,7 +408,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if(!readyToAttack || attacking || isListeningToDialogue) return;
+        if(!readyToAttack || attacking || waiting) return;
         
         readyToAttack = false;
         attacking = true;
@@ -488,7 +495,7 @@ public class PlayerController : MonoBehaviour
 
     void Block()
     {
-        if (!isListeningToDialogue)
+        if (!waiting)
         {
             if (!blocking)
             {
@@ -514,7 +521,7 @@ public class PlayerController : MonoBehaviour
     private void Cast()
     {
         //TODO spell casted depends on which spell is currently selected
-        if (!isListeningToDialogue)
+        if (!waiting)
         {
             if (GetComponent<PlayerValues>().currentDragonPoints > 0)
             {
@@ -530,18 +537,21 @@ public class PlayerController : MonoBehaviour
 
     private void Boost()
     {
-        if (currMomentumValue > 0)
+        if (!waiting)
         {
-            boosting = true;
+            if (currMomentumValue > 0)
+            {
+                boosting = true;
 
-            equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= currMomentumValue;
-            moveSpeed += 2 * currMomentumValue;
+                equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= currMomentumValue;
+                moveSpeed += 2 * currMomentumValue;
+            }
         }
     }
 
     private void Interact()
     {
-        if (!isListeningToDialogue)
+        if (!waiting)
             Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
 
 
@@ -554,7 +564,8 @@ public class PlayerController : MonoBehaviour
             /* If NPC interacted */
             if(hit.transform.TryGetComponent<NPC>(out NPC N))
             { 
-                isListeningToDialogue = true;
+                waiting = true;
+                Cursor.lockState = CursorLockMode.None;
                 dialogueTextBox.transform.parent.gameObject.SetActive(true);
                 N.GetComponent<NPC>().PlayDialogue(dialogueTextBox);
             }
@@ -563,7 +574,7 @@ public class PlayerController : MonoBehaviour
 
     void SelectOptionOrNextDialog()
     {
-        if (dialogueTextBox.enabled)
+        if (dialogueTextBox.isActiveAndEnabled)
         {
             //If text is still crawling, display the entire message at once
             if (!dialogueTextBox.boxFinished)
@@ -577,13 +588,26 @@ public class PlayerController : MonoBehaviour
 
                 //Close text box
                 dialogueTextBox.transform.parent.gameObject.SetActive(false);
-                isListeningToDialogue = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                waiting = false;
             }
         }
+    }
 
+    void InventoryToggle()
+    {
+        playerInventory.InventoryToggle();
+    }
+
+    void EquipItem()
+    {
 
     }
 
+    void ShowItemInfo()
+    {
+
+    }
 
     public void KnockBack(Transform attackingEntityPos)
     {

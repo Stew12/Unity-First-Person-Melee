@@ -100,6 +100,33 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""53bfa57f-666c-4d8d-bb52-513106024b55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""7578e0f1-ba30-466e-be08-644de1bb8668"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenItemInfo"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed1d1c00-a786-453f-9ae9-7ef4db002a78"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""1"",
                     ""type"": ""Button"",
                     ""id"": ""68001a43-ed66-493d-b10d-5846c1895701"",
@@ -424,6 +451,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a42f20e2-0c95-44a9-b78e-8ca3a8c050e8"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7a0cc19c-3f8f-4dd0-a81b-3029ad1a9d50"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -441,6 +479,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SelectOptionNextDialog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b4b9b30-b6a2-4aad-966a-20336174448d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d13bf652-bc00-4f5f-974b-47557cedf5ea"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenItemInfo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -465,6 +525,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
+        m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
+        m_Main_EquipItem = m_Main.FindAction("EquipItem", throwIfNotFound: true);
+        m_Main_OpenItemInfo = m_Main.FindAction("OpenItemInfo", throwIfNotFound: true);
         m_Main__1 = m_Main.FindAction("1", throwIfNotFound: true);
         m_Main__2 = m_Main.FindAction("2", throwIfNotFound: true);
         m_Main__3 = m_Main.FindAction("3", throwIfNotFound: true);
@@ -542,6 +605,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Interact;
     private readonly InputAction m_Main_Cast;
     private readonly InputAction m_Main_Boost;
+    private readonly InputAction m_Main_Inventory;
+    private readonly InputAction m_Main_EquipItem;
+    private readonly InputAction m_Main_OpenItemInfo;
     private readonly InputAction m_Main__1;
     private readonly InputAction m_Main__2;
     private readonly InputAction m_Main__3;
@@ -564,6 +630,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
+        public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
+        public InputAction @EquipItem => m_Wrapper.m_Main_EquipItem;
+        public InputAction @OpenItemInfo => m_Wrapper.m_Main_OpenItemInfo;
         public InputAction @_1 => m_Wrapper.m_Main__1;
         public InputAction @_2 => m_Wrapper.m_Main__2;
         public InputAction @_3 => m_Wrapper.m_Main__3;
@@ -607,6 +676,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Boost.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
                 @Boost.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
                 @Boost.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
+                @Inventory.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
+                @EquipItem.started -= m_Wrapper.m_MainActionsCallbackInterface.OnEquipItem;
+                @EquipItem.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnEquipItem;
+                @EquipItem.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnEquipItem;
+                @OpenItemInfo.started -= m_Wrapper.m_MainActionsCallbackInterface.OnOpenItemInfo;
+                @OpenItemInfo.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnOpenItemInfo;
+                @OpenItemInfo.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnOpenItemInfo;
                 @_1.started -= m_Wrapper.m_MainActionsCallbackInterface.On_1;
                 @_1.performed -= m_Wrapper.m_MainActionsCallbackInterface.On_1;
                 @_1.canceled -= m_Wrapper.m_MainActionsCallbackInterface.On_1;
@@ -665,6 +743,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Boost.started += instance.OnBoost;
                 @Boost.performed += instance.OnBoost;
                 @Boost.canceled += instance.OnBoost;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+                @EquipItem.started += instance.OnEquipItem;
+                @EquipItem.performed += instance.OnEquipItem;
+                @EquipItem.canceled += instance.OnEquipItem;
+                @OpenItemInfo.started += instance.OnOpenItemInfo;
+                @OpenItemInfo.performed += instance.OnOpenItemInfo;
+                @OpenItemInfo.canceled += instance.OnOpenItemInfo;
                 @_1.started += instance.On_1;
                 @_1.performed += instance.On_1;
                 @_1.canceled += instance.On_1;
@@ -718,6 +805,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
+        void OnEquipItem(InputAction.CallbackContext context);
+        void OnOpenItemInfo(InputAction.CallbackContext context);
         void On_1(InputAction.CallbackContext context);
         void On_2(InputAction.CallbackContext context);
         void On_3(InputAction.CallbackContext context);

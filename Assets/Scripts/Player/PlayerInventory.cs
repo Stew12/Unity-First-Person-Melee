@@ -10,6 +10,8 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private PlayerController player;
 
+    [HideInInspector] public GameObject inventoryInterface;
+
     public List<GameObject> weaponsList = new List<GameObject>();
 
     public List<GameObject> itemsList = new List<GameObject>();
@@ -20,6 +22,7 @@ public class PlayerInventory : MonoBehaviour
 
     public GameObject[] hotKeyList = new GameObject[9];
 
+
     //Starts from 1 rather than 0
     public int weaponInvIndex = 1;
     public int itemInvIndex = 1;
@@ -27,7 +30,31 @@ public class PlayerInventory : MonoBehaviour
 
     void Awake()
     {
+        inventoryInterface = transform.GetChild(0).gameObject;
+        inventoryInterface.SetActive(false);
+
         LoadHotkeys();
+    }
+
+    public void InventoryToggle()
+    {
+        if (!inventoryInterface.activeInHierarchy)
+        {
+            //Show inventory
+            inventoryInterface.SetActive(true);
+            player.waiting = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            //Hide inventory
+            inventoryInterface.SetActive(false);
+            player.waiting = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
     }
 
     void LoadHotkeys()

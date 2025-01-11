@@ -23,6 +23,11 @@ Likely do this by having custom sped up audio clips that are roughly attributed 
 
 Handle extra dialog boxes and lock camera to NPC when speaking to them.
 
+inventory work - selecting, equipping, etc. 
+
+Adding if waiting to update methods in player control
+
+
 LONG TERM
 
 new weapons + weapon animations
