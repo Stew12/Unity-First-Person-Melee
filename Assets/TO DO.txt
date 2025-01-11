@@ -16,7 +16,7 @@ weapon sheathing + makes run faster
 
 Weapon sprites going through wall
 
-Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k
+Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
 make footsteps tempo play faster if moving faster, rather than pitch- 
 Likely do this by having custom sped up audio clips that are roughly attributed to each section of the movement guage when boosting
@@ -24,6 +24,8 @@ Likely do this by having custom sped up audio clips that are roughly attributed 
 Handle extra dialog boxes and lock camera to NPC when speaking to them.
 
 inventory work - selecting, equipping, etc. 
+
+Tabs for different inventory categories
 
 Adding if waiting to update methods in player control
 

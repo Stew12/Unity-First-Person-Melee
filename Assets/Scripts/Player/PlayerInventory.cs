@@ -40,11 +40,16 @@ public class PlayerInventory : MonoBehaviour
     {
         if (!inventoryInterface.activeInHierarchy)
         {
-            //Show inventory
-            inventoryInterface.SetActive(true);
-            player.waiting = true;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (!player.waiting)
+            {
+                //Show inventory
+                inventoryInterface.SetActive(true);
+                player.waiting = true;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
+                player.attackPowerBuilding = false;
+            }
         }
         else
         {
@@ -53,6 +58,8 @@ public class PlayerInventory : MonoBehaviour
             player.waiting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            player.attackPowerBuilding = true;
         }
 
     }
@@ -81,47 +88,40 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
-    public void HotKeyedItem(int index)
+    public void HotKeyedItem(int index, bool weaponSheathed)
     {
         //TODO: make this for all items not just weapons, based on the GameObject type/tag
         if (hotKeyList[index - 1] != null)
         {
-            //Get values of initial weapon
-            GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
-            Vector3 weaponPos = player.equippedWeapon.transform.position;
-
-            //Save durability to the intial weapon
-            //weaponsList[hotKeyList[index - 1].GetComponent<HotKey>().originalItemIndex].GetComponent<PlayerWeaponValues>().currentWeaponDurability = player.equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability;
-            //itemValuesList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability;
-            //Debug.Log("DU: " + weaponsList[hotKeyList[index - 1].GetComponent<HotKey>().originalItemIndex].GetComponent<PlayerWeaponValues>().currentWeaponDurability);
-
-            //Destroy(player.equippedWeapon.gameObject);
             
-            //Send initial weapon back to the Weapon Stock and disable it
-            player.equippedWeapon.transform.parent = weaponStock.transform;
-            player.equippedWeapon.SetActive(false);
+            //WEAPON
+            if (!weaponSheathed)
+            {
+                //Get values of initial weapon
+                GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
+                Vector3 weaponPos = player.equippedWeapon.transform.position;
+                
+                //Send initial weapon back to the Weapon Stock and disable it
+                player.equippedWeapon.transform.parent = weaponStock.transform;
+                player.equippedWeapon.SetActive(false);
 
-            //Look through the weapon stock for a weapon matching the hotKey
-            
-            
-            GameObject newWeapon = hotKeyList[index - 1];
-            newWeapon.SetActive(true);
-            newWeapon.transform.SetParent(weaponParent.transform);
-            //newWeapon.transform.position = weaponPos;
-            newWeapon.transform.position = new Vector3(0,0,0);
-    
-            Debug.Log(weaponPos);       
+                //Look through the weapon stock for a weapon matching the hotKey
+                GameObject newWeapon = hotKeyList[index - 1];
+                newWeapon.SetActive(true);
+                newWeapon.transform.SetParent(weaponParent.transform);
+                //newWeapon.transform.position = weaponPos;
+                newWeapon.transform.position = new Vector3(0,0,0);      
 
-            //if (itemValuesList[index - 1])
-            //newWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability = itemValuesList[index - 1];
-            
-            //weaponsList[newWeapon.GetComponent<HotKey>().originalItemIndex].GetComponent<PlayerWeaponValues>().currentWeaponDurability;
+                player.equippedWeapon = newWeapon;
 
-            player.equippedWeapon = newWeapon;
+                //Set animations for new weapon
+                player.animator = player.equippedWeapon.GetComponent<Animator>();
+                player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
+            }
 
-            //Set animations for new weapon
-            player.animator = player.equippedWeapon.GetComponent<Animator>();
-            player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
+            //SPELL
+
+            //ITEM
 
         }
     }

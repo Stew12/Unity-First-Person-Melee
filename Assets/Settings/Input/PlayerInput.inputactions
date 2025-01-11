@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Sheathe",
+                    "type": "Button",
+                    "id": "c67c5b77-43e4-46e4-8d05-84d3e7aa816c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Inventory",
                     "type": "Button",
                     "id": "53bfa57f-666c-4d8d-bb52-513106024b55",
@@ -479,6 +488,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenItemInfo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2a3fca4-2aa8-4282-9013-dc71c54fb8f2",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sheathe",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

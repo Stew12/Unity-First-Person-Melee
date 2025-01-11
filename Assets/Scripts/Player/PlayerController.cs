@@ -37,8 +37,10 @@ public class PlayerController : MonoBehaviour
     [Header("Controller")]
     public float moveSpeed = 2.5f;
     public float moveSpeedDefault;
+    [SerializeField] private float moveSpeedSheathedFactor = 2;
     public float gravity = -9.8f;
-    public float jumpHeight = 1.2f;
+    [SerializeField] private float jumpHeight = 1.2f;
+    [SerializeField] private float jumpHeightSheathedFactor = 2f;
 
     Vector3 _PlayerVelocity;
 
@@ -59,14 +61,16 @@ public class PlayerController : MonoBehaviour
     //public const string SWINGDOWN = "Sword Swing Down";
     [HideInInspector] public string SWINGBACK = "Sword Swing Across Back";
     [HideInInspector] public string BLOCK = "Sword Block";
+    [SerializeField] private GameObject noWeaponHand;
 
     string currentAnimationState;
 
     /* Attacking variables */
     [Header("Attacking")]
-    public bool attacking = false;
+    [HideInInspector] public bool attacking = false;
     private bool readyToAttack = true;
-    private int attackCount;    
+    private int attackCount;   
+    private bool weaponSheathed = false; 
 
     [Header("Effects")]
     public LayerMask attackLayer;
@@ -83,7 +87,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
     [SerializeField] private float powerDamageFactor = 4;
     [SerializeField] private float powerBarSpeedupFactor = 1.2f;
-    private bool attackPowerBuilding = false;
+    [HideInInspector] public bool attackPowerBuilding = false;
 
     [Header("Knock Back")]
     private bool knockedBack;
@@ -153,9 +157,12 @@ public class PlayerController : MonoBehaviour
        blockAndParryHitbox.SetActive(false);
        GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
        dialogueTextBox.transform.parent.gameObject.SetActive(false);
+       noWeaponHand.SetActive(false);
 
        // Set animations for equipped weapon
        GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
+
+       maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
 
        NewLevelLoad();
     }
@@ -269,6 +276,43 @@ public class PlayerController : MonoBehaviour
             blockAndParryHitbox.SetActive(false);
         }
 
+        //Make values not go up while 'waiting' (in a dialog box, inventory, etc)
+        // if (waiting)
+        // {
+        //     attackPowerBuilding = false;
+        // }
+        // else
+        // {
+        //     attackPowerBuilding = true;
+        // }
+
+
+
+    }
+
+    void AssignInputs()
+    {
+        input.Jump.performed += ctx => Jump();
+        input.Attack.started += ctx => Attack();
+        input.Block.started += ctx => Block();
+        input.Cast.performed += ctx => Cast();
+        input.Boost.performed += ctx => Boost();
+        input.Interact.performed += ctx => Interact();
+        input.Sheathe.performed += ctx => SheatheWeaponToggle();
+        input.Inventory.performed += ctx => InventoryToggle();
+        input.EquipItem.performed += ctx => EquipItem();
+        input.OpenItemInfo.performed += ctx => ShowItemInfo();
+        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
+
+        input._1.performed += ctx => ItemSwitch(1);
+        input._2.performed += ctx => ItemSwitch(2);
+        input._3.performed += ctx => ItemSwitch(3);
+        input._4.performed += ctx => ItemSwitch(4);
+        input._5.performed += ctx => ItemSwitch(5);
+        input._6.performed += ctx => ItemSwitch(6);
+        input._7.performed += ctx => ItemSwitch(7);
+        input._8.performed += ctx => ItemSwitch(8);
+        input._9.performed += ctx => ItemSwitch(9);
     }
 
     void MoveInput(Vector2 input)
@@ -327,7 +371,7 @@ public class PlayerController : MonoBehaviour
             {
                 cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             }
-            
+
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
 
         }
@@ -340,36 +384,14 @@ public class PlayerController : MonoBehaviour
     void OnDisable()
     { input.Disable(); }
 
-    void AssignInputs()
-    {
-        input.Jump.performed += ctx => Jump();
-        //TODO: decide if 'performed' is better (holding down attack instead of clicking)
-        input.Attack.started += ctx => Attack();
-        input.Block.started += ctx => Block();
-        input.Cast.performed += ctx => Cast();
-        input.Boost.performed += ctx => Boost();
-        input.Interact.performed += ctx => Interact();
-        input.Inventory.performed += ctx => InventoryToggle();
-        input.EquipItem.performed += ctx => EquipItem();
-        input.OpenItemInfo.performed += ctx => ShowItemInfo();
-        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
-
-        input._1.performed += ctx => ItemSwitch(1);
-        input._2.performed += ctx => ItemSwitch(2);
-        input._3.performed += ctx => ItemSwitch(3);
-        input._4.performed += ctx => ItemSwitch(4);
-        input._5.performed += ctx => ItemSwitch(5);
-        input._6.performed += ctx => ItemSwitch(6);
-        input._7.performed += ctx => ItemSwitch(7);
-        input._8.performed += ctx => ItemSwitch(8);
-        input._9.performed += ctx => ItemSwitch(9);
-    }
-
     private void Jump()
     {
         // Adds force to the player rigidbody to jump
         if (isGrounded && !waiting)
+        {
             _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+        }
+
     }
 
     // ---------- //
@@ -408,7 +430,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if(!readyToAttack || attacking || waiting) return;
+        if(!readyToAttack || attacking || waiting || weaponSheathed) return;
         
         readyToAttack = false;
         attacking = true;
@@ -495,7 +517,7 @@ public class PlayerController : MonoBehaviour
 
     void Block()
     {
-        if (!waiting)
+        if (!waiting && !weaponSheathed)
         {
             if (!blocking)
             {
@@ -537,7 +559,8 @@ public class PlayerController : MonoBehaviour
 
     private void Boost()
     {
-        if (!waiting)
+        // Can only boost when weapon is out
+        if (!waiting && !weaponSheathed)
         {
             if (currMomentumValue > 0)
             {
@@ -549,12 +572,54 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void SheatheWeaponToggle()
+    {
+        // Can't sheathe or unsheathe whilst boosting
+        if (!boosting && !waiting)
+        {
+            if (!weaponSheathed)
+            {
+                //Sheathe weapon
+                noWeaponHand.SetActive(true);
+                equippedWeapon.SetActive(false);
+
+                weaponSheathed = true;
+
+                // Increase movement speed when sheathed
+                moveSpeed *= moveSpeedSheathedFactor;
+
+                // Increase jump height when sheathed
+                jumpHeight *= jumpHeightSheathedFactor;
+
+                //Reset power time and prevent it from increasing
+                attackPowerBuilding = false;
+                powerTime = 0;
+                powerBarUI.fillAmount = 0;
+            }
+            else
+            {
+                //Unsheathe weapon
+                noWeaponHand.SetActive(false);
+                equippedWeapon.SetActive(true);
+
+                weaponSheathed = false;
+
+                // Return movement speed to default
+                moveSpeed /= moveSpeedSheathedFactor;
+                
+                // Return jump height to default
+                jumpHeight /= jumpHeightSheathedFactor;
+
+                //Return power time increasing
+                attackPowerBuilding = true;
+            }
+        }
+    }
+
     private void Interact()
     {
         if (!waiting)
             Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
-
-
     }
 
     void InteractRaycast()
@@ -649,7 +714,7 @@ public class PlayerController : MonoBehaviour
 
     void ItemSwitch(int hotKeyNumber)
     {
-        playerInventory.HotKeyedItem(hotKeyNumber);
+        playerInventory.HotKeyedItem(hotKeyNumber, weaponSheathed);
     }
 
     // TODO: use this method upon entering each new scene (Temporarily called in Awake())

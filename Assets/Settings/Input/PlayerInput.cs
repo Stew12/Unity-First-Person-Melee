@@ -100,6 +100,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Sheathe"",
+                    ""type"": ""Button"",
+                    ""id"": ""c67c5b77-43e4-46e4-8d05-84d3e7aa816c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""53bfa57f-666c-4d8d-bb52-513106024b55"",
@@ -503,6 +512,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""OpenItemInfo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2a3fca4-2aa8-4282-9013-dc71c54fb8f2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sheathe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -525,6 +545,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
+        m_Main_Sheathe = m_Main.FindAction("Sheathe", throwIfNotFound: true);
         m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
         m_Main_EquipItem = m_Main.FindAction("EquipItem", throwIfNotFound: true);
         m_Main_OpenItemInfo = m_Main.FindAction("OpenItemInfo", throwIfNotFound: true);
@@ -605,6 +626,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Interact;
     private readonly InputAction m_Main_Cast;
     private readonly InputAction m_Main_Boost;
+    private readonly InputAction m_Main_Sheathe;
     private readonly InputAction m_Main_Inventory;
     private readonly InputAction m_Main_EquipItem;
     private readonly InputAction m_Main_OpenItemInfo;
@@ -630,6 +652,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
+        public InputAction @Sheathe => m_Wrapper.m_Main_Sheathe;
         public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
         public InputAction @EquipItem => m_Wrapper.m_Main_EquipItem;
         public InputAction @OpenItemInfo => m_Wrapper.m_Main_OpenItemInfo;
@@ -676,6 +699,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Boost.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
                 @Boost.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
                 @Boost.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBoost;
+                @Sheathe.started -= m_Wrapper.m_MainActionsCallbackInterface.OnSheathe;
+                @Sheathe.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnSheathe;
+                @Sheathe.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnSheathe;
                 @Inventory.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
@@ -743,6 +769,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Boost.started += instance.OnBoost;
                 @Boost.performed += instance.OnBoost;
                 @Boost.canceled += instance.OnBoost;
+                @Sheathe.started += instance.OnSheathe;
+                @Sheathe.performed += instance.OnSheathe;
+                @Sheathe.canceled += instance.OnSheathe;
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
@@ -805,6 +834,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
+        void OnSheathe(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnEquipItem(InputAction.CallbackContext context);
         void OnOpenItemInfo(InputAction.CallbackContext context);
