@@ -731,30 +731,6 @@ Transform:
   m_Father: {fileID: 458032532}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &229890332 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6286608605994125364, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
-    type: 3}
-  m_PrefabInstance: {fileID: 7946899770674004706}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &229890338
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229890332}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: -0.01320526, y: -0.04241955, z: 0}
 --- !u!1001 &257192458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2627,30 +2603,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1023733645}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1024988988 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
-    type: 3}
-  m_PrefabInstance: {fileID: 2193332089511432882}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &1024988994
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024988988}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: -0.01320526, y: -0.04241955, z: 0}
 --- !u!1 &1058889567 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4459f236e7964a94cac804d372adfd5c,
@@ -5129,11 +5081,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7075933641429308993, guid: 55187a9703d68a945afb9d75e9c4f890,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: maxHealth
@@ -5163,11 +5110,6 @@ PrefabInstance:
         type: 3}
       propertyPath: aggroAttackDistance
       value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
-        type: 3}
-      propertyPath: maxHurtKnockBackTime
-      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
@@ -5238,11 +5180,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeleton
-      objectReference: {fileID: 0}
-    - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -5677,11 +5614,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1549862445368315834, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4917653815812299702, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -5716,11 +5648,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sorceress
-      objectReference: {fileID: 0}
-    - target: {fileID: 6286608605994125364, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8573265339125465467, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}

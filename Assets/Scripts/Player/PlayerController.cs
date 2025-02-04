@@ -652,6 +652,19 @@ public class PlayerController : MonoBehaviour
                 dialogueTextBox.transform.parent.gameObject.SetActive(true);
                 N.GetComponent<NPC>().PlayDialogue(dialogueTextBox);
             }
+            
+            /* If door interacted */
+            if (hit.transform.tag == "Door")
+            {
+                if (hit.transform.parent.GetComponent<Door>() != null)
+                {
+                    hit.transform.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
+                }
+                else
+                {
+                    hit.transform.parent.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
+                }
+            }
         } 
     }
 

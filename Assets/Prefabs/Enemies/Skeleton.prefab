@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 7075933641429308993}
   - component: {fileID: 7075933641429309002}
   - component: {fileID: 7075933641429309003}
+  - component: {fileID: 1024988994}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Enemy
@@ -151,7 +152,7 @@ Transform:
   - {fileID: 2193332089957568721}
   - {fileID: 2193332090426056280}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7075933641429308994
 MonoBehaviour:
@@ -166,30 +167,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  maxHealth: 5
+  maxHealth: 300
   attackDamage: 10
   roamSpeed: 0
-  chaseSpeed: 1.4
+  chaseSpeed: 1
   distanceFromPlayer: 0
   waiting: 0
-  attackMoveTowardsSpeed: 5
+  gravity: -9.8
+  attackMoveTowardsSpeed: 9
   attackDistance: 0
-  aggroAttackDistance: 3
+  aggroAttackDistance: 2.4
   enemyAttackProcess: 0
   enemyAttacking: 0
   canFireProjectile: 1
+  attackTrajectorySet: 0
+  enemyController: {fileID: 0}
   enemyProjectile: {fileID: 0}
   knockBackSpeed: 3
-  maxKnockBackTime: 0.45
+  maxParryKnockBackTime: 0.45
   knockBackTime: 0
-  attackWindUpTime: 0.85
-  maxAttackCoolDownTime: 2
+  attackWindUpTime: 1.2
+  maxAttackCoolDownTime: 4
   attackCoolDownTime: 0
-  maxAttackDuration: 0.7
+  maxAttackDuration: 0.6
   attackDuration: 0
   maxWaitTime: 0.7
   waitTime: 0
-  enemyState: 1
+  enemyState: 0
   enemyAttackType: 0
 --- !u!136 &7075933641429308993
 CapsuleCollider:
@@ -269,4 +273,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 505e1572bcf76164f97cb7d36654c8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemyProjectile: 0
   turnSpeed: 10
+--- !u!143 &1024988994
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075933641429309022}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.1
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: -0.01320526, y: -0.04241955, z: 0}
