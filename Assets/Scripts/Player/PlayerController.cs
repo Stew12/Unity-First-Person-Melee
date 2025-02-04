@@ -567,6 +567,9 @@ public class PlayerController : MonoBehaviour
 
                 equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= currMomentumValue;
                 moveSpeed += 2 * currMomentumValue;
+                
+                maxPowerTime /= moveSpeed / powerBarSpeedupFactor;
+
             }
         }
     }

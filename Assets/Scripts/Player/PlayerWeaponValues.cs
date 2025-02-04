@@ -28,7 +28,7 @@ public class PlayerWeaponValues : MonoBehaviour
 {
     public WeaponClass weaponClass = WeaponClass.SHORTSWORD;
 
-    public int weaponAttackDamage = 2;
+    public float weaponAttackDamage = 2;
     //Weight- higher weight slows player down when they attack
     public float weaponWeight = 1.2f;
     public float weaponAttackSpeed = 0.4f;
