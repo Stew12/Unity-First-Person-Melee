@@ -137,6 +137,16 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         }
     }
 
+    private void DuplicateSelf()
+    {
+        //if (enemyClass.canFireProjectile)
+        //{
+          //  enemyClass.canFireProjectile = false;
+
+            //GameObject spawnedEnemy = Instantiate(AOE, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
+        //}
+    }
+
     private void EnemyAttackRandomChoice(EnemyAttack[] enemyAttacks)
     {
         if (attackChoice == -1)
