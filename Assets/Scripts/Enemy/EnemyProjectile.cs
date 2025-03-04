@@ -10,6 +10,8 @@ public class EnemyProjectile : MonoBehaviour
     public float projectileDamage;
     [SerializeField] private float rangeTime;
 
+    [SerializeField] private Rigidbody rigidbody;
+
     private Vector3 trajectory;
 
     private Camera cam;
@@ -20,6 +22,7 @@ public class EnemyProjectile : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -51,7 +54,8 @@ public class EnemyProjectile : MonoBehaviour
         else
         {
             //Continue in that same direction even if player moves away
-            transform.position += trajectory;
+            //transform.position += trajectory;
+            rigidbody.AddForce(trajectory);
         }
     }
 

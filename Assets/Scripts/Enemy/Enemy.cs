@@ -55,9 +55,10 @@ public class Enemy : MonoBehaviour
     [Header("Components")]
     //public SphereCollider detectionRadius;
     [HideInInspector] public CharacterController enemyController;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
     public GameObject enemyProjectile;
+    public GameObject enemyAOE;
 
     [Header("Knock Back")]
     private bool knockedBack;
@@ -92,7 +93,10 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         enemyState = EnemyState.ROAMING;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        
         enemyController = GetComponent<CharacterController>();
 
         enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
@@ -136,7 +140,7 @@ public class Enemy : MonoBehaviour
                             if (attackDuration > 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile, enemyAOE);
                             }
                             else if (attackDuration <= 0)
                             {
@@ -148,6 +152,8 @@ public class Enemy : MonoBehaviour
                                 attackTrajectorySet = false;
 
                                 attackCoolDownTime = maxAttackCoolDownTime;
+
+                                enemyBehaviourAndAttackList.attackChoice = -1;
 
                             }
                         }

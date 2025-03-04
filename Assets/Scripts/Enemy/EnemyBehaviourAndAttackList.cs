@@ -1,8 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum EnemyAttack
+    {
+        BASICPHYSICAL,
+        BASICRANGED,
+        BASICAOE,
+        RANGEDPILLAR,
+        DUPLICATE
+
+    }
 
 public class EnemyBehaviourAndAttackList : MonoBehaviour
 {
     Vector3 trajectory = Vector3.zero;
+
+    EnemyType enemyType;
+    Enemy enemyClass;
+    GameObject enemyGameObject;
+    GameObject projectile;
+    GameObject AOE;
+
+    [HideInInspector] public int attackChoice = -1;
 
     public void RoamBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
     {
@@ -11,15 +30,24 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     public void ChaseBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
     {
+        this.enemyType = enemyType;
+        this.enemyClass = enemyClass;
+        this.enemyGameObject = enemyGameObject;
+
         switch (enemyType)
         {
             //SKELETON CHASE BEHAVIOR: PURSUE PLAYER 
             case EnemyType.SKELETON:
-               FollowPlayerBasic(enemyClass, enemyGameObject);
+               FollowPlayerBasic();
             break;
 
             case EnemyType.SORCERESS:
                 //Do Nothing (doesn't chase player)
+            break;
+
+            //IMP CHASE BEHAVIOR: PURSUE PLAYER 
+            case EnemyType.IMP:
+               FollowPlayerBasic();
             break;
 
             default:
@@ -35,18 +63,31 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile)
+    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE)
     {
+        this.enemyType = enemyType;
+        this.enemyClass = enemyClass;
+        this.enemyGameObject = enemyGameObject;
+        this.projectile = projectile;
+        this.AOE = AOE;
+
         switch (enemyType)
         {
             //SKELETON ATTACKS: RUSH AT PLAYER 
             case EnemyType.SKELETON:
                 //TODO: set trajectory towards player then move ONLY on that trqjectory for rest of attack
-               BasicPhysicalAttack(enemyClass, enemyGameObject);
+               EnemyAttackListSelect(EnemyAttack.BASICPHYSICAL);
             break;
 
+            //SKELETON ATTACKS: SHOOT FIREBALL AT PLAYER 
             case EnemyType.SORCERESS:
-                BasicRangedAttack(enemyClass, enemyGameObject, projectile);
+                EnemyAttackListSelect(EnemyAttack.BASICRANGED);
+            break;
+
+
+            case EnemyType.IMP:
+                EnemyAttackRandomChoice(new EnemyAttack[] {EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE, EnemyAttack.BASICAOE});
+                
             break;
 
             default:
@@ -56,14 +97,14 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     }
 
     //Pursues the player at a designated speed
-    private void FollowPlayerBasic(Enemy enemyClass, GameObject enemyGameObject)
+    private void FollowPlayerBasic()
     {
          //When chasing, move towards player on X and Z axis
         enemyClass.GetComponent<Enemy>().enemyController.Move(new Vector3(enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime)); 
     }
 
     //the enemy moves quickly towards the player
-    private void BasicPhysicalAttack(Enemy enemyClass, GameObject enemyGameObject)
+    private void BasicPhysicalAttack()
     {
         if (!enemyClass.attackTrajectorySet)
         {
@@ -75,13 +116,55 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         enemyClass.enemyController.Move(trajectory); 
     }
 
-    private void BasicRangedAttack(Enemy enemyClass, GameObject enemyGameObject, GameObject projectile)
+    private void BasicRangedAttack()
     {
         if (enemyClass.canFireProjectile)
         {
             enemyClass.canFireProjectile = false;
             GameObject spawnedProjectile = Instantiate(projectile, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
             spawnedProjectile.GetComponent<EnemyProjectile>().enemyCasterClass = enemyClass;
+        }
+    }
+
+    private void BasicAOEAttack()
+    {
+        if (enemyClass.canFireProjectile)
+        {
+            enemyClass.canFireProjectile = false;
+
+            GameObject spawnedAOE = Instantiate(AOE, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
+            spawnedAOE.GetComponent<EnemyAOEAttack>().enemyCasterClass = enemyClass;
+        }
+    }
+
+    private void EnemyAttackRandomChoice(EnemyAttack[] enemyAttacks)
+    {
+        if (attackChoice == -1)
+        {
+            int maxRandom = enemyAttacks.Length;
+
+            attackChoice = Random.Range(0, maxRandom);
+        }
+        
+        EnemyAttackListSelect(enemyAttacks[attackChoice]);
+    }
+
+    private void EnemyAttackListSelect(EnemyAttack enemyAttack)
+    {
+        switch (enemyAttack)
+        {
+            case EnemyAttack.BASICPHYSICAL:
+                BasicPhysicalAttack();
+            break;
+
+            case EnemyAttack.BASICRANGED:
+                BasicRangedAttack();
+            break;
+
+            case EnemyAttack.BASICAOE:
+                BasicAOEAttack();
+            break;
+
         }
     }
 }

@@ -710,8 +710,7 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack(Transform attackingEntityPos)
     {
-        //TODO: make it so that knocking back player doesn't send them into a wall
-
+        Debug.Log (attackingEntityPos.name);
         this.attackingEntityPos = attackingEntityPos;
         knockedBack = true;
         knockBackTime = maxKnockBackTime;

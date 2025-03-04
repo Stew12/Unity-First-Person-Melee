@@ -36,7 +36,14 @@ public class PlayerCollisions : MonoBehaviour
             case "Enemy Projectile":
                 if (canTakeDamage)
                 {
-                    col.GetComponent<EnemyProjectile>().EnemyCasterCanFire();
+                    if (col.GetComponent<EnemyProjectile>() != null)
+                        col.GetComponent<EnemyProjectile>().EnemyCasterCanFire();
+
+                    else if (col.GetComponent<EnemyAOEAttack>() != null)
+                    {
+                        col.GetComponent<EnemyAOEAttack>().EnemyCasterCanFire();
+                        GetComponent<PlayerController>().KnockBack(col.GetComponent<EnemyAOEAttack>().enemyCasterClass.gameObject.transform);
+                    }
 
                     //Projectiles can be blocked, but not parried
                     TakeDamage(col, true);
@@ -44,7 +51,8 @@ public class PlayerCollisions : MonoBehaviour
 
                     GetComponent<PlayerController>().DontTakeDamage();
 
-                    Destroy(col.gameObject);
+                    if (col.GetComponent<EnemyProjectile>() != null)
+                        Destroy(col.gameObject);
                 }
             break;
 
@@ -152,7 +160,10 @@ public class PlayerCollisions : MonoBehaviour
             break;
 
             case "Enemy Projectile":
-                totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
+                if (harmfulEntity.GetComponent<EnemyProjectile>() != null)
+                    totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
+                else if (harmfulEntity.GetComponent<EnemyAOEAttack>() != null)
+                    totalDamage = (int)harmfulEntity.GetComponent<EnemyAOEAttack>().projectileDamage;
             break;
 
             default:
