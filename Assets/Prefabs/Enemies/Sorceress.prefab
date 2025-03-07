@@ -175,6 +175,8 @@ MonoBehaviour:
     type: 3}
   enemyAOE: {fileID: 0}
   enemyHPBarBG: {fileID: 2338915614995728592}
+  mainHitbox: {fileID: 1499837858204121754}
+  weakPointHitboxes: []
   audioSource: {fileID: 0}
   maxHealth: 3
   attackDamage: 15

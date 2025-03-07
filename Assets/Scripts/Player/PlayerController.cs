@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     private bool readyToAttack = true;
     private int attackCount;   
     private bool weaponSheathed = false; 
+    public float weakPointDamageFactor = 1.35f;
 
     [Header("Effects")]
     public LayerMask attackLayer;
@@ -484,31 +485,15 @@ public class PlayerController : MonoBehaviour
         { 
             HitTarget(hit.point);
 
+            /* Weakness hit*/
+            if (hit.transform.TryGetComponent<EnemyWeakPointGameObject>(out EnemyWeakPointGameObject enemyWeakPointGameObject))
+            {
+                PlayerHitEnemy(hit, enemyWeakPointGameObject.parentEnemy, true);
+            }
             /* Enemy hit by melee */
-            if(hit.transform.TryGetComponent<Enemy>(out Enemy T))
+            else if(hit.transform.TryGetComponent<Enemy>(out Enemy enemy))
             { 
-                //Power damage multiplier
-                float powerMultiplier;
-
-                //Damage depends on how full the power bar is
-                powerMultiplier = (1 + powerBarUI.fillAmount) * powerDamageFactor;
-
-                T.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerMultiplier)); 
-
-                // Knock back enemy slightly if enemy is not currently attacking
-                if (!T.GetComponent<Enemy>().enemyAttackProcess)
-                {
-                    T.GetComponent<Enemy>().EnemyKnockBack(gameObject, false);
-                }
-
-                //Reduce durability on weapon
-                equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= weaponDurabilityLossHit;
-
-                /* Momentum increases upon hitting an enemy */
-                MomentumIncrease(false);
-
-                audioSource.pitch = 1;
-                audioSource.PlayOneShot(enemyHitSound);
+                PlayerHitEnemy(hit, enemy, false);
             }
             else
             {
@@ -523,6 +508,36 @@ public class PlayerController : MonoBehaviour
         // Create hit particle effect
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
+    }
+
+    private void PlayerHitEnemy(RaycastHit hit, Enemy enemy, bool weakPoint)
+    {
+        if (hit.collider == enemy.mainHitbox || weakPoint)
+            {
+                Debug.Log(weakPoint);
+                //Power damage multiplier
+                float powerMultiplier;
+
+                //Damage depends on how full the power bar is
+                powerMultiplier = (1 + powerBarUI.fillAmount) * powerDamageFactor;
+
+                enemy.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerMultiplier), weakPoint, weakPointDamageFactor); 
+
+                // Knock back enemy slightly if enemy is not currently attacking
+                if (!enemy.GetComponent<Enemy>().enemyAttackProcess)
+                {
+                    enemy.GetComponent<Enemy>().EnemyKnockBack(gameObject, false);
+                }
+
+                //Reduce durability on weapon
+                equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= weaponDurabilityLossHit;
+
+                /* Momentum increases upon hitting an enemy */
+                MomentumIncrease(false);
+
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(enemyHitSound);
+            }
     }
 
     void Block()
@@ -721,7 +736,6 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack(Transform attackingEntityPos)
     {
-        Debug.Log (attackingEntityPos.name);
         this.attackingEntityPos = attackingEntityPos;
         knockedBack = true;
         knockBackTime = maxKnockBackTime;

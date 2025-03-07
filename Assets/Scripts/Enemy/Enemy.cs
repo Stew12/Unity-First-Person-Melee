@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour
     public GameObject enemyProjectile;
     public GameObject enemyAOE;
     [SerializeField] private GameObject enemyHPBarBG;
+    public CapsuleCollider mainHitbox;
+    public CapsuleCollider[] weakPointHitboxes;
     private SpriteRenderer enemyHPBar;
     private TextMeshPro damageNumber;
     [HideInInspector] public AudioSource audioSource;
@@ -269,15 +271,17 @@ public class Enemy : MonoBehaviour
         attackDuration = maxAttackDuration;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, bool weakPointHit, float weakPointDamageFactor)
     {
+        if (weakPointHit) { amount = (int)(amount * weakPointDamageFactor); }
+
         Debug.Log("DAMAGE: " + amount);
 
         currentHealth -= amount;
 
         // Enemy HP Bar
         enemyHPBarBG.SetActive(true);
-        EnemyHPBarChange(amount);
+        EnemyHPBarChange(amount, weakPointHit);
         coroutine = HideEnemyHPBar();
         StartCoroutine(coroutine);
 
@@ -311,11 +315,23 @@ public class Enemy : MonoBehaviour
         
     }
 
-    private void EnemyHPBarChange(float damageAmt)
+    private void EnemyHPBarChange(float damageAmt, bool weakPointHit)
     {
         //Health bar elements
         enemyHPBar.transform.localScale = new Vector3((float)currentHealth / (float)maxHealth, enemyHPBar.transform.localScale.y, enemyHPBar.transform.localScale.z);
         damageNumber.text = damageAmt.ToString();
+
+        if (weakPointHit)
+        {
+            Debug.Log("SHHH");
+            /* YELLOW- weak point damage */
+            damageNumber.color = Color.yellow;
+        }
+        else
+        {
+            /* WHITE- normal damage */
+            damageNumber.color = Color.white;
+        }
     }
 
     private IEnumerator HideEnemyHPBar()

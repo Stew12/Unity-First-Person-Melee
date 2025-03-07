@@ -835,6 +835,21 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 492865513}
     m_Modifications:
+    - target: {fileID: 167572241736401609, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090029255633448365, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.157
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308993, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: maxHealth
@@ -924,6 +939,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeleton (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7494433022655274447, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
