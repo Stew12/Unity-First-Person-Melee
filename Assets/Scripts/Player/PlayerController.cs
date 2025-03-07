@@ -782,6 +782,11 @@ public class PlayerController : MonoBehaviour
         {
             Physics.IgnoreCollision(GetComponent<PlayerController>().controller, eWall.GetComponent<Collider>());
         }
+
+        foreach (GameObject weakPointCol in GameObject.FindGameObjectsWithTag("Weak Point"))
+        {
+            Physics.IgnoreCollision(GetComponent<PlayerController>().controller, weakPointCol.GetComponent<Collider>());
+        }
     }
 
     

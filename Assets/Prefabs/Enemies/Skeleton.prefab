@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1090029255633448365
 Transform:
   m_ObjectHideFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167572241736401609}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.132, y: 0.1814, z: 0.07}
+  m_LocalPosition: {x: -0.132, y: 0.1814, z: 0.247}
   m_LocalScale: {x: 0.6860593, y: 0.6860593, z: 0.6860593}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,7 +239,7 @@ MonoBehaviour:
   weakPointHitboxes:
   - {fileID: 7494433022655274447}
   audioSource: {fileID: 0}
-  maxHealth: 150
+  maxHealth: 200
   attackDamage: 10
   roamSpeed: 0
   chaseSpeed: 0.5
@@ -280,7 +280,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.2353412
+  m_Radius: 0.2553412
   m_Height: 1
   m_Direction: 1
   m_Center: {x: -0.01320526, y: -0.042419545, z: 0}
@@ -362,7 +362,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1
-  m_Radius: 0.19
+  m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
