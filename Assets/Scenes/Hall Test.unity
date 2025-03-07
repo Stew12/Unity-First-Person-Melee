@@ -3329,6 +3329,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 55187a9703d68a945afb9d75e9c4f890, type: 3}
@@ -3927,6 +3932,21 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 492865513}
     m_Modifications:
+    - target: {fileID: 901180920018452097, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 996111886334533605, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308993, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.2553412
+      objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: ef83fe617fab5d049b80b731393060c9,
         type: 3}
       propertyPath: chaseSpeed
