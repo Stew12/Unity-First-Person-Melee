@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -27,6 +28,18 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Type")]
     public EnemyType enemyType;
 
+     [Header("Components")]
+    //public SphereCollider detectionRadius;
+    [HideInInspector] public CharacterController enemyController;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
+    public GameObject enemyProjectile;
+    public GameObject enemyAOE;
+    [SerializeField] private GameObject enemyHPBarBG;
+    private SpriteRenderer enemyHPBar;
+    private TextMeshPro damageNumber;
+    [HideInInspector] public AudioSource audioSource;
+
     [Header("Stats")]
     int currentHealth;
     public int maxHealth;
@@ -50,22 +63,19 @@ public class Enemy : MonoBehaviour
     public bool enemyAttacking = false;
     public bool canFireProjectile = true;
     public bool attackTrajectorySet = false;
-    
 
-    [Header("Components")]
-    //public SphereCollider detectionRadius;
-    [HideInInspector] public CharacterController enemyController;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
-    public GameObject enemyProjectile;
-    public GameObject enemyAOE;
+    [Header("Audio Clips")]
+    public AudioClip enemyAlert;
+    public AudioClip enemyAttack;
+    [SerializeField] private AudioClip enemyHurt;
+    [SerializeField] private AudioClip enemyDie;
 
     [Header("Knock Back")]
     private bool knockedBack;
     private Transform playerPos;
     public float knockBackSpeed = 3f;
     public float maxParryKnockBackTime = 0.45f;
-    [SerializeField] float knockBackTime = 0;
+    [SerializeField] private float knockBackTime = 0;
 
     [Header("Timing")]
     private IEnumerator coroutine;
@@ -75,6 +85,7 @@ public class Enemy : MonoBehaviour
     public float maxAttackDuration = 0.6f;
     public float attackDuration = 0;
     public float maxWaitTime = 0.7f;
+    [SerializeField] private float hpBarShowTime = 0.8f;
     [SerializeField]private float waitTime = 0;
 
     [Header("State Machine")]
@@ -96,7 +107,14 @@ public class Enemy : MonoBehaviour
         
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Set enemy HP bar, then hide it
+        enemyHPBar = enemyHPBarBG.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        damageNumber = enemyHPBarBG.transform.GetChild(1).GetComponent<TextMeshPro>();
+        enemyHPBarBG.SetActive(false);
         
+        audioSource = GetComponent<AudioSource>();
+
         enemyController = GetComponent<CharacterController>();
 
         enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
@@ -244,11 +262,11 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator ExecuteEnemyAttack(float waitTime) 
     {
-            yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(waitTime);
 
-            enemyAttacking = true;
-            spriteRenderer.color = Color.white;
-            attackDuration = maxAttackDuration;
+        enemyAttacking = true;
+        spriteRenderer.color = Color.white;
+        attackDuration = maxAttackDuration;
     }
 
     public void TakeDamage(int amount)
@@ -257,8 +275,20 @@ public class Enemy : MonoBehaviour
 
         currentHealth -= amount;
 
+        // Enemy HP Bar
+        enemyHPBarBG.SetActive(true);
+        EnemyHPBarChange(amount);
+        coroutine = HideEnemyHPBar();
+        StartCoroutine(coroutine);
+
+        //Audio
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(enemyHurt);
+
         if(currentHealth <= 0)
-        { Death(); }
+        { 
+            EnemyDeath();     
+        }
     }
 
     public void EnemyKnockBack(GameObject player, bool parried)
@@ -281,9 +311,25 @@ public class Enemy : MonoBehaviour
         
     }
 
-    void Death()
+    private void EnemyHPBarChange(float damageAmt)
     {
-        // Death function
+        //Health bar elements
+        enemyHPBar.transform.localScale = new Vector3((float)currentHealth / (float)maxHealth, enemyHPBar.transform.localScale.y, enemyHPBar.transform.localScale.z);
+        damageNumber.text = damageAmt.ToString();
+    }
+
+    private IEnumerator HideEnemyHPBar()
+    {
+        yield return new WaitForSeconds(hpBarShowTime);
+
+        enemyHPBarBG.SetActive(false);
+    }
+
+    void EnemyDeath()
+    {
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(enemyDie);
+
         // TEMPORARY: Destroy Object
         Destroy(gameObject);
     }

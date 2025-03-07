@@ -1,27 +1,50 @@
 TO DO:
 
-Bonus attacks per enemy
+BUGS
 
 make fireball/s disappear when hitting a wall
 
-Durability repair items
-
-Basic inventory menu
-
-Healing items
-
 weird texture glitch on incline
-
-weapon sheathing + makes run faster
 
 Weapon sprites going through wall
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
+
+BALANCING
+
+Power bar balance- does too much damage at lower power level
+
+
+AUDIO
+
 make footsteps tempo play faster if moving faster, rather than pitch- 
 Likely do this by having custom sped up audio clips that are roughly attributed to each section of the movement guage when boosting
 
+
+GAMEPLAY
+
+Durability repair items
+
+Healing items
+
+Player death
+
+LEVEL
+
+Switch opens door
+
+Switch moves/rotates platform
+
+Platform rotates/moves and stops at intervals
+
+
+NPC
+
 Handle extra dialog boxes and lock camera to NPC when speaking to them.
+
+
+INVENTORY
 
 inventory work - selecting, equipping, etc. 
 
@@ -35,4 +58,8 @@ LONG TERM
 new weapons + weapon animations
 
 new enemy types
+
+dungeon level
+
+town with NPCs
 

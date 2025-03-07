@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject equippedWeapon;
 
     [HideInInspector] public CharacterController controller;
-    private AudioSource audioSource;
+    [HideInInspector] public AudioSource audioSource;
     public AudioSource footstepsAudioSource;
 
     [Header("Inventory")]
@@ -75,8 +75,13 @@ public class PlayerController : MonoBehaviour
     [Header("Effects")]
     public LayerMask attackLayer;
     public GameObject hitEffect;
-    public AudioClip swordSwing;
-    public AudioClip hitSound;
+
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip swordSwing;
+    [SerializeField] private AudioClip wallHitSound;
+    [SerializeField] private AudioClip enemyHitSound;
+    public AudioClip parrySound;
+    public AudioClip hurtSound;
 
     [Header("Blocking/Parrying")]
     public GameObject blockAndParryHitbox;
@@ -235,7 +240,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Show weapon durability in UI
-        durabilityBarUI.fillAmount = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability / equippedWeapon.GetComponent<PlayerWeaponValues>().maxWeaponDurability;
+        durabilityBarUI.fillAmount = (float)equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability / (float)equippedWeapon.GetComponent<PlayerWeaponValues>().maxWeaponDurability;
         durabilityLabel.text = equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability.ToString();
 
 
@@ -501,15 +506,21 @@ public class PlayerController : MonoBehaviour
 
                 /* Momentum increases upon hitting an enemy */
                 MomentumIncrease(false);
+
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(enemyHitSound);
+            }
+            else
+            {
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(wallHitSound);
             }
         } 
     }
 
     void HitTarget(Vector3 pos)
     {
-        audioSource.pitch = 1;
-        audioSource.PlayOneShot(hitSound);
-
+        // Create hit particle effect
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
     }

@@ -101,6 +101,9 @@ public class PlayerCollisions : MonoBehaviour
 
                                 //Knock ENEMY backward (relative to the player)
                                 col.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
+
+                                GetComponent<PlayerController>().audioSource.pitch = 1;
+                                GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
                             }
                             else
                             {
@@ -147,33 +150,38 @@ public class PlayerCollisions : MonoBehaviour
 
         //Knock player backward (relative to the enemy, not the player)
         GetComponent<PlayerController>().KnockBack(enemy.gameObject.transform);
+
+        GetComponent<PlayerController>().audioSource.pitch = 1;
+        GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
     }
 
     private int CalculateDamage(Collider harmfulEntity, bool blocked)
     {
         int totalDamage = 0;
-
-        switch (harmfulEntity.tag)
+        if (harmfulEntity != null)
         {
-            case "Enemy":
-                totalDamage = (int)harmfulEntity.GetComponent<Enemy>().attackDamage;
-            break;
+            switch (harmfulEntity.tag)
+            {
+                case "Enemy":
+                    totalDamage = (int)harmfulEntity.GetComponent<Enemy>().attackDamage;
+                break;
 
-            case "Enemy Projectile":
-                if (harmfulEntity.GetComponent<EnemyProjectile>() != null)
-                    totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
-                else if (harmfulEntity.GetComponent<EnemyAOEAttack>() != null)
-                    totalDamage = (int)harmfulEntity.GetComponent<EnemyAOEAttack>().projectileDamage;
-            break;
+                case "Enemy Projectile":
+                    if (harmfulEntity.GetComponent<EnemyProjectile>() != null)
+                        totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
+                    else if (harmfulEntity.GetComponent<EnemyAOEAttack>() != null)
+                        totalDamage = (int)harmfulEntity.GetComponent<EnemyAOEAttack>().projectileDamage;
+                break;
 
-            default:
-                Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");
-            break;
-        }
+                default:
+                    Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");
+                break;
+            }
 
-        if (blocked)
-        {
-            totalDamage = (int)(totalDamage * blockDefenseFactor);
+            if (blocked)
+            {
+                totalDamage = (int)(totalDamage * blockDefenseFactor);
+            }
         }
 
         return totalDamage;

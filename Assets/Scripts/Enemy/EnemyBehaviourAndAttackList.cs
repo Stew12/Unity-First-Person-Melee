@@ -34,6 +34,9 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         this.enemyClass = enemyClass;
         this.enemyGameObject = enemyGameObject;
 
+        //enemyClass.audioSource.pitch = 1;
+        //enemyClass.audioSource.PlayOneShot(enemyClass.enemyAlert);
+
         switch (enemyType)
         {
             //SKELETON CHASE BEHAVIOR: PURSUE PLAYER 
@@ -86,7 +89,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
 
             case EnemyType.IMP:
-                EnemyAttackRandomChoice(new EnemyAttack[] {EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE, EnemyAttack.BASICAOE});
+                EnemyAttackRandomChoice(new EnemyAttack[] {EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE});
                 
             break;
 
@@ -112,6 +115,9 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
             trajectory = new Vector3(enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime);
             enemyClass.attackTrajectorySet = true;
         }
+
+        enemyClass.audioSource.pitch = 1;
+        enemyClass.audioSource.PlayOneShot(enemyClass.enemyAttack);
 
         enemyClass.enemyController.Move(trajectory); 
     }
