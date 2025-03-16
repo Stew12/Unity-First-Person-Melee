@@ -460,7 +460,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void ResetAttack()
+    public void ResetAttack()
     {
         attacking = false;
         readyToAttack = true;
@@ -667,6 +667,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!waiting)
             Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
+        else if (playerInventory.enabled)
+        {
+            Debug.Log("EQUIP");
+        }
     }
 
     void InteractRaycast()

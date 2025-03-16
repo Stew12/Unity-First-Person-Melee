@@ -5,23 +5,23 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 public enum EnemyType
-    {
-        SKELETON,
-        SORCERESS,
-        WRAITH,
-        IMP,
-        MIMIC,
-        SHADOW,
-        TENTACLES,
-        ZOMBIE
-    }
+{
+    SKELETON,
+    SORCERESS,
+    WRAITH,
+    IMP,
+    MIMIC,
+    SHADOW,
+    TENTACLES,
+    ZOMBIE
+}
 
-    public enum EnemyState
-    {
-        ROAMING,
-        CHASING,
-        ATTACKING
-    }
+public enum EnemyState
+{
+    ROAMING,
+    CHASING,
+    ATTACKING
+}
 
 public class Enemy : MonoBehaviour
 {

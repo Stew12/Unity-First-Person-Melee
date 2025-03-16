@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Microsoft.Unity.VisualStudio.Editor;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -8,9 +9,19 @@ public class PlayerInventory : MonoBehaviour
 {
     public GameObject weaponStock;
 
+    private GameObject selectedItem;
+    private GameObject selectedItemGObj;
+    [SerializeField] private GameObject selectedInvWindow;
+    [SerializeField] private GameObject invTabs;
+
     [SerializeField] private PlayerController player;
 
     [HideInInspector] public GameObject inventoryInterface;
+
+    [SerializeField] private GameObject weaponInvWindow;
+    [SerializeField] private GameObject armourInvWindow;
+    [SerializeField] private GameObject spellInvWindow;
+    [SerializeField] private GameObject consumableInvWindow;
 
     public List<GameObject> weaponsList = new List<GameObject>();
 
@@ -30,10 +41,62 @@ public class PlayerInventory : MonoBehaviour
 
     void Awake()
     {
-        inventoryInterface = transform.GetChild(0).gameObject;
+        inventoryInterface = selectedInvWindow.gameObject;
         inventoryInterface.SetActive(false);
 
+        invTabs.SetActive(false);
+
         LoadHotkeys();
+
+        LoadInventory();
+    }
+
+    private void LoadInventory()
+    {
+
+    }
+
+    public void OpenInventoryTab(ItemTypeUI itemTypeUI)
+    {
+        Debug.Log("SSSS");
+        weaponInvWindow.SetActive(false);
+        armourInvWindow.SetActive(false);
+        spellInvWindow.SetActive(false);
+        consumableInvWindow.SetActive(false);
+
+        switch (itemTypeUI)
+        {
+            case ItemTypeUI.WEAPON:
+                selectedInvWindow = weaponInvWindow;
+            break;
+
+            case ItemTypeUI.ARMOUR:
+                selectedInvWindow = armourInvWindow;
+            break;
+
+            case ItemTypeUI.SPELL:
+                selectedInvWindow = spellInvWindow;
+            break;
+
+            case ItemTypeUI.CONSUMABLE:
+                selectedInvWindow = consumableInvWindow;
+            break;
+
+            case ItemTypeUI.KEYITEM:
+                selectedInvWindow = consumableInvWindow;
+            break;
+
+            case ItemTypeUI.ATTACKITEM:
+                selectedInvWindow = consumableInvWindow;
+            break;
+
+            default:
+                
+            break;
+        }
+
+        selectedInvWindow.SetActive(true);
+        inventoryInterface = selectedInvWindow;
     }
 
     public void InventoryToggle()
@@ -44,17 +107,19 @@ public class PlayerInventory : MonoBehaviour
             {
                 //Show inventory
                 inventoryInterface.SetActive(true);
+                invTabs.SetActive(true);
+
                 player.waiting = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-
-                player.attackPowerBuilding = false;
             }
         }
         else
         {
             //Hide inventory
             inventoryInterface.SetActive(false);
+            invTabs.SetActive(false);
+
             player.waiting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -64,26 +129,44 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    void LoadHotkeys()
+    public void ItemIsSelected(GameObject item, GameObject itemGObj)
     {
-        //int i = 0;
+        selectedItem = item;
+        selectedItemGObj = itemGObj;
 
-        if (player.equippedWeapon.GetComponent<HotKey>().hotKey > 0 && player.equippedWeapon.GetComponent<HotKey>().hotKey < 10)
+        foreach (Transform icon in selectedInvWindow.transform)
         {
-            hotKeyList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon;
-        }
-
-        foreach (Transform weapon in weaponStock.transform)
-        {
-            if (weapon.gameObject.GetComponent<HotKey>().hotKey > 0 && weapon.GetComponent<HotKey>().hotKey < 10)
+            if (icon.gameObject != selectedItemGObj)
             {
-                hotKeyList[weapon.gameObject.GetComponent<HotKey>().hotKey - 1] = weapon.gameObject;
-                //weapon.GetComponent<HotKey>().originalItemIndex = i;
-                //Debug.Log("DU: " + i);
+                icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
+            }
+            else
+            {
+                icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+            }
+        }
+    }
+
+    private void LoadHotkeys()
+    {
+        //Can't Switch weapons while attacking!
+        
+            if (player.equippedWeapon.GetComponent<HotKey>().hotKey > 0 && player.equippedWeapon.GetComponent<HotKey>().hotKey < 10)
+            {
+                hotKeyList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon;
             }
 
-            //i++;
-        }
+            foreach (Transform weapon in weaponStock.transform)
+            {
+                if (weapon.gameObject.GetComponent<HotKey>().hotKey > 0 && weapon.GetComponent<HotKey>().hotKey < 10)
+                {
+                    hotKeyList[weapon.gameObject.GetComponent<HotKey>().hotKey - 1] = weapon.gameObject;
+                    //weapon.GetComponent<HotKey>().originalItemIndex = i;
+                    //Debug.Log("DU: " + i);
+                }
+
+                //i++;
+            }
 
         
     }
@@ -95,7 +178,7 @@ public class PlayerInventory : MonoBehaviour
         {
             
             //WEAPON
-            if (!weaponSheathed)
+            if (!weaponSheathed && !player.attacking)
             {
                 //Get values of initial weapon
                 GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
@@ -117,6 +200,7 @@ public class PlayerInventory : MonoBehaviour
                 //Set animations for new weapon
                 player.animator = player.equippedWeapon.GetComponent<Animator>();
                 player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
+                player.ResetAttack();
             }
 
             //SPELL
