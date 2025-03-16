@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool attacking = false;
     private bool readyToAttack = true;
     private int attackCount;   
-    private bool weaponSheathed = false; 
+    [HideInInspector] public bool weaponSheathed = false; 
     public float weakPointDamageFactor = 1.35f;
 
     [Header("Effects")]
@@ -516,12 +516,12 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log(weakPoint);
                 //Power damage multiplier
-                float powerMultiplier;
+                //float powerMultiplier;
 
                 //Damage depends on how full the power bar is
-                powerMultiplier = (1 + powerBarUI.fillAmount) * powerDamageFactor;
+                //powerMultiplier = (1 + powerBarUI.fillAmount) * powerDamageFactor;
 
-                enemy.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerMultiplier), weakPoint, weakPointDamageFactor); 
+                enemy.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerBarUI.fillAmount * powerDamageFactor), weakPoint, weakPointDamageFactor); 
 
                 // Knock back enemy slightly if enemy is not currently attacking
                 if (!enemy.GetComponent<Enemy>().enemyAttackProcess)
@@ -725,7 +725,8 @@ public class PlayerController : MonoBehaviour
 
     void InventoryToggle()
     {
-        playerInventory.InventoryToggle();
+        if (!attacking)
+            playerInventory.InventoryToggle();
     }
 
     void EquipItem()

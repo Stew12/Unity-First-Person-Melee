@@ -16,6 +16,6 @@ public class OnInventoryTabClicked : MonoBehaviour
 
     public void InvTabClicked()
     {
-        pInventory.OpenInventoryTab(itemTypeUI);
+        pInventory.InventoryTab(itemTypeUI);
     }
 }

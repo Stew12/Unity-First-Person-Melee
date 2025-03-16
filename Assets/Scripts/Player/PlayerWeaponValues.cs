@@ -40,6 +40,8 @@ public class PlayerWeaponValues : MonoBehaviour
     public int maxWeaponDurability = 10;
     public int currentWeaponDurability = 0;
 
+    public AudioClip unsheatheSound;
+
     void Awake()
     {
         currentWeaponDurability = maxWeaponDurability;

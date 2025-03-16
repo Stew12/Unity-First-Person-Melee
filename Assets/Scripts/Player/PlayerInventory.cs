@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public GameObject weaponStock;
+    private AudioSource invAudioSource;
 
     private GameObject selectedItem;
     private GameObject selectedItemGObj;
@@ -44,6 +45,8 @@ public class PlayerInventory : MonoBehaviour
         inventoryInterface = selectedInvWindow.gameObject;
         inventoryInterface.SetActive(false);
 
+        invAudioSource = GetComponent<AudioSource>();
+
         invTabs.SetActive(false);
 
         LoadHotkeys();
@@ -56,9 +59,8 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public void OpenInventoryTab(ItemTypeUI itemTypeUI)
+    public void InventoryTab(ItemTypeUI itemTypeUI)
     {
-        Debug.Log("SSSS");
         weaponInvWindow.SetActive(false);
         armourInvWindow.SetActive(false);
         spellInvWindow.SetActive(false);
@@ -145,6 +147,38 @@ public class PlayerInventory : MonoBehaviour
                 icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
             }
         }
+
+        switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
+        {
+            case ItemTypeUI.WEAPON:
+                EquipWeapon(item);
+            break;
+
+            case ItemTypeUI.ARMOUR:
+                
+            break;
+
+            case ItemTypeUI.SPELL:
+                
+            break;
+
+            case ItemTypeUI.CONSUMABLE:
+               
+            break;
+
+            case ItemTypeUI.KEYITEM:
+
+           break;
+
+            case ItemTypeUI.ATTACKITEM:
+    
+            break;
+
+            default:
+                
+            break;
+        }
+        
     }
 
     private void LoadHotkeys()
@@ -173,12 +207,28 @@ public class PlayerInventory : MonoBehaviour
 
     public void HotKeyedItem(int index, bool weaponSheathed)
     {
-        //TODO: make this for all items not just weapons, based on the GameObject type/tag
-        if (hotKeyList[index - 1] != null)
+        if (!player.attacking)
         {
-            
-            //WEAPON
-            if (!weaponSheathed && !player.attacking)
+            //TODO: make this for all items not just weapons, based on the GameObject type/tag
+            //Hot keys might be a stretch feature as using the inventory is surprsingly smooth
+            if (hotKeyList[index - 1] != null)
+            {
+                
+                //WEAPON
+                //TODO: If is a weapon
+                EquipWeapon(hotKeyList[index - 1]);
+
+                //SPELL
+
+                //ITEM
+
+            }
+        }
+    }
+
+    private void EquipWeapon(GameObject newWeapon)
+    {
+        if (!player.weaponSheathed)
             {
                 //Get values of initial weapon
                 GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
@@ -189,7 +239,6 @@ public class PlayerInventory : MonoBehaviour
                 player.equippedWeapon.SetActive(false);
 
                 //Look through the weapon stock for a weapon matching the hotKey
-                GameObject newWeapon = hotKeyList[index - 1];
                 newWeapon.SetActive(true);
                 newWeapon.transform.SetParent(weaponParent.transform);
                 //newWeapon.transform.position = weaponPos;
@@ -201,14 +250,11 @@ public class PlayerInventory : MonoBehaviour
                 player.animator = player.equippedWeapon.GetComponent<Animator>();
                 player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
                 player.ResetAttack();
+
+                //Play sound of unsheathing
+                invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
             }
-
-            //SPELL
-
-            //ITEM
-
-        }
     }
-
 
 }
