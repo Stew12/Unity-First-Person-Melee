@@ -6,4 +6,5 @@ public class InteractableItem : MonoBehaviour
 {
     public string itemName = "New Item";
     public ItemTypeUI interactedItemType;
+    public GameObject UIIcon;
 }

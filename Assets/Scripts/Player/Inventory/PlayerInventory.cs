@@ -201,11 +201,14 @@ public class PlayerInventory : MonoBehaviour
     public void AddToInventory(GameObject itemFound)
     {
         GameObject savedItem = new GameObject();
-        savedItem.AddComponent<InteractableItem>();
-        savedItem.GetComponent<InteractableItem>().interactedItemType = itemFound.GetComponent<InteractableItem>().interactedItemType;
-        savedItem.name = itemFound.GetComponent<InteractableItem>().itemName;
+        
+        //savedItem = itemFound;
 
-        Destroy(itemFound);
+        savedItem.AddComponent<InteractableItem>();
+        
+        savedItem.GetComponent<InteractableItem>().itemName = itemFound.GetComponent<InteractableItem>().itemName;
+        savedItem.GetComponent<InteractableItem>().interactedItemType = itemFound.GetComponent<InteractableItem>().interactedItemType;
+        savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon;   
 
         switch (savedItem.GetComponent<InteractableItem>().interactedItemType)
         {
@@ -226,7 +229,7 @@ public class PlayerInventory : MonoBehaviour
                 bool itemExists = false;
                 for (int i = 0; i < consumablesList.Count; i++)
                 {
-                    if (consumablesList[i].itemName == savedItem.name)
+                    if (consumablesList[i].itemName == savedItem.GetComponent<InteractableItem>().itemName)
                     {
                         //Dupicate item, stack
                         itemExists = true;
@@ -240,15 +243,19 @@ public class PlayerInventory : MonoBehaviour
                 
                 if (!itemExists)
                 {
+                    
                     //New Item, add
-                    consumablesList.Add(new ConsumableInInventory(savedItem.name, 1));
+                    consumablesList.Add(new ConsumableInInventory(savedItem, 1));
                     
                     DEBUGConsumablesList.Add(savedItem);
                     DEBUGConsumablesQuantities.Add(1);
+                    //Debug.Log (consumablesList[0].itemName + ", " + savedItem.name);
                 }
 
             break;
         }
+
+        Destroy(itemFound);
 
         
     }

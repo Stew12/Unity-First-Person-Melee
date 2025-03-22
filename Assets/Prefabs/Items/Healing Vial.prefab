@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 7786502534206770416}
   - component: {fileID: 7786502534206770191}
   - component: {fileID: 8943801645194059576}
-  m_Layer: 0
+  - component: {fileID: 2106621533}
+  - component: {fileID: 2106621529}
+  m_Layer: 6
   m_Name: Healing Vial
   m_TagString: Player Item
   m_Icon: {fileID: 0}
@@ -28,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7786502534206770190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 64.631004, y: 203.66632, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3447, y: 1.3447, z: 1.3447}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,3 +116,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyProjectile: 0
   turnSpeed: 10
+--- !u!65 &2106621533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7786502534206770190}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15999998, y: 0.22999999, z: 0.19999999}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2106621529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7786502534206770190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06e17a8ff349de4d9597fc51652ae9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Healing Vial
+  interactedItemType: 3
+  UIIcon: {fileID: 526734179472673324, guid: 3597548cfc45991498cb7c3823b61739, type: 3}
