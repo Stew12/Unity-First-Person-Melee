@@ -21,6 +21,8 @@ public class OnInventoryIconClicked : MonoBehaviour
 
     public DragonSpells dragonSpells = DragonSpells.NONE;
 
+    public GameObject consumable;
+
     public bool selected = false;
 
     private Image iconImg;

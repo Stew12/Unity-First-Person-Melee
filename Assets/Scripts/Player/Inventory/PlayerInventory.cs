@@ -155,7 +155,7 @@ public class PlayerInventory : MonoBehaviour
                 break;
 
                 case ItemTypeUI.CONSUMABLE:
-                
+                    itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>());
                 break;
 
                 case ItemTypeUI.KEYITEM:
