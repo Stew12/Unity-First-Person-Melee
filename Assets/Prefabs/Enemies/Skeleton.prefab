@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 7075933641429308993}
   - component: {fileID: 7075933641429309002}
   - component: {fileID: 7075933641429309003}
+  - component: {fileID: 5994788409186898453}
   - component: {fileID: 1024988994}
   - component: {fileID: 1086073727559955277}
   m_Layer: 6
@@ -350,6 +351,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyProjectile: 0
   turnSpeed: 10
+--- !u!114 &5994788409186898453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075933641429309022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ee0b6723b74474e93cbef0f263482d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!143 &1024988994
 CharacterController:
   m_ObjectHideFlags: 0

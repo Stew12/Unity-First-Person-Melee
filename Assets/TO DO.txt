@@ -6,14 +6,12 @@ make fireball/s disappear when hitting a wall
 
 weird texture glitch on incline
 
-Weapon sprites going through wall
+Weapon sprites going through wall. Other layering issues such as sprites disappearing behind enemy AOE
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
 
 BALANCING
-
-Power bar balance- does too much damage at lower power level
 
 
 AUDIO
@@ -30,6 +28,7 @@ Healing items
 
 Player death
 
+
 LEVEL
 
 Switch opens door
@@ -42,6 +41,12 @@ Platform rotates/moves and stops at intervals
 NPC
 
 Handle extra dialog boxes and lock camera to NPC when speaking to them.
+
+Player choices (?)
+
+NPC sprites
+
+NPC portrait art (this seems good: https://canonkiller.itch.io/dragonborn-portrait-generator)
 
 
 INVENTORY

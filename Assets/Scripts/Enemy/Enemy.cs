@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
     public GameObject enemyProjectile;
+    public GameObject projectileSpawn;
     public GameObject enemyAOE;
     [SerializeField] private GameObject enemyHPBarBG;
     public CapsuleCollider mainHitbox;
@@ -254,6 +255,8 @@ public class Enemy : MonoBehaviour
     private void attackSetup()
     {
         spriteRenderer.color = Color.red;
+
+        canFireProjectile = true;
 
         enemyAttackProcess = true;
 

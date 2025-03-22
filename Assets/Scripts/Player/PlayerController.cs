@@ -116,9 +116,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int weaponDurabilityLossHit = 1;
     public int weaponDurabilityLossBlock = 3;
 
-    [Header("Dragon Spell")]
+    [Header("Dragon Spells")]
     [SerializeField] private DragonSpells dragonSpellSelected;
     public GameObject fireBall;
+    public GameObject thunderTarget;
+    public GameObject thunder;
 
     [Header("Dialog")]
     public TextCrawl dialogueTextBox;
@@ -603,7 +605,7 @@ public class PlayerController : MonoBehaviour
     private void SheatheWeaponToggle()
     {
         // Can't sheathe or unsheathe whilst boosting
-        if (!boosting && !waiting)
+        if (!boosting && !waiting && !attacking)
         {
             if (!weaponSheathed)
             {

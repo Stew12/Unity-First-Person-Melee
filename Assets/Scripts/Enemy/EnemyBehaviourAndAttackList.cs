@@ -127,7 +127,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         if (enemyClass.canFireProjectile)
         {
             enemyClass.canFireProjectile = false;
-            GameObject spawnedProjectile = Instantiate(projectile, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
+            GameObject spawnedProjectile = Instantiate(projectile, enemyClass.projectileSpawn.transform.position, enemyGameObject.transform.rotation);
             spawnedProjectile.GetComponent<EnemyProjectile>().enemyCasterClass = enemyClass;
         }
     }
