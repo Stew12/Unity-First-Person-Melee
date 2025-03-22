@@ -51,9 +51,6 @@ public class ConsumableItem : MonoBehaviour
                     playerValues.currentDragonPoints = newDP;
                 } 
             break;
-
         }
-
-
     }
 }

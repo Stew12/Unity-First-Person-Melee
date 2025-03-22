@@ -28,11 +28,13 @@ public class PlayerInventory : MonoBehaviour
 
     public List<GameObject> weaponsList = new List<GameObject>();
 
-    public List<GameObject> itemsList = new List<GameObject>();
+    public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
+    public List<GameObject> DEBUGConsumablesList = new List<GameObject>();
+    public List<int> DEBUGConsumablesQuantities = new List<int>();
 
     public List<GameObject> spellsList = new List<GameObject>();
 
-    private List<int> itemValuesList = new List<int>();
+    //private List<int> itemValuesList = new List<int>();
 
     public GameObject[] hotKeyList = new GameObject[9];
 
@@ -135,58 +137,99 @@ public class PlayerInventory : MonoBehaviour
 
     public void ItemIsSelected(GameObject item, GameObject itemGObj)
     {
+        // Make item not null if item selected
         selectedItem = item;
         selectedItemGObj = itemGObj;
 
-        if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
-        {
-            switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
+        // If item STILL null
+        //if (item == null && itemGObj == null)
+        //{
+            if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
             {
-                case ItemTypeUI.WEAPON:
-                    EquipWeapon(item);
-                break;
-
-                case ItemTypeUI.ARMOUR:
-                    
-                break;
-
-                case ItemTypeUI.SPELL:
-                    EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
-                break;
-
-                case ItemTypeUI.CONSUMABLE:
-                    itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>());
-                break;
-
-                case ItemTypeUI.KEYITEM:
-
-            break;
-
-                case ItemTypeUI.ATTACKITEM:
-        
-                break;
-
-                default:
-                    
-                break;
-            }
-        }
-        else
-        {
-            foreach (Transform icon in selectedInvWindow.transform)
-            {
-                if (icon.gameObject != selectedItemGObj)
+                switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
                 {
-                    icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
-                }
-                else
-                {
-                    icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+                    case ItemTypeUI.WEAPON:
+                        EquipWeapon(item);
+                    break;
+
+                    case ItemTypeUI.ARMOUR:
+                        
+                    break;
+
+                    case ItemTypeUI.SPELL:
+                        EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                    break;
+
+                    case ItemTypeUI.CONSUMABLE:
+                        itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>());
+                    break;
+
+                    case ItemTypeUI.KEYITEM:
+
+                break;
+
+                    case ItemTypeUI.ATTACKITEM:
+            
+                    break;
+
+                    default:
+                        
+                    break;
                 }
             }
-        }
+            else
+            {
+                foreach (Transform icon in selectedInvWindow.transform)
+                {
+                    if (icon.gameObject != selectedItemGObj)
+                    {
+                        icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
+                    }
+                    else
+                    {
+                        icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+                    }
+                }
+            }
+        //}
         
     }
+
+    public void AddToInventory(GameObject itemFound)
+    {
+        GameObject savedItem = new GameObject();
+        savedItem.AddComponent<InteractableItem>();
+        savedItem.GetComponent<InteractableItem>().interactedItemType = itemFound.GetComponent<InteractableItem>().interactedItemType;
+        savedItem.name = itemFound.GetComponent<InteractableItem>().itemName;
+
+        Destroy(itemFound);
+
+        switch (savedItem.GetComponent<InteractableItem>().interactedItemType)
+        {
+            case ItemTypeUI.WEAPON:
+                
+            break;
+
+            case ItemTypeUI.ARMOUR:
+                
+            break;
+
+            case ItemTypeUI.SPELL:
+                
+            break;
+
+            case ItemTypeUI.CONSUMABLE:
+               consumablesList.Add(savedItem, 1);
+               DEBUGConsumablesList.Add(savedItem);
+               DEBUGConsumablesQuantities.Add(1);
+
+
+            break;
+        }
+
+        
+    }
+
 
     private void LoadHotkeys()
     {

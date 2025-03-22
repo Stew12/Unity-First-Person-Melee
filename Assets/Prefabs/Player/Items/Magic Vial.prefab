@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7786502534206770417}
   - component: {fileID: 7786502534206770416}
   - component: {fileID: 7786502534206770191}
+  - component: {fileID: 3170145702204800239}
   m_Layer: 0
   m_Name: Magic Vial
-  m_TagString: Untagged
+  m_TagString: Player Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,3 +100,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3170145702204800239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7786502534206770190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505e1572bcf76164f97cb7d36654c8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemyProjectile: 0
+  turnSpeed: 10

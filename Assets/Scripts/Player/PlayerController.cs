@@ -671,7 +671,7 @@ public class PlayerController : MonoBehaviour
             Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
         else if (playerInventory.enabled)
         {
-            Debug.Log("EQUIP");
+            playerInventory.ItemIsSelected(null, null);
         }
     }
 
@@ -699,6 +699,11 @@ public class PlayerController : MonoBehaviour
                 {
                     hit.transform.parent.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
                 }
+            }
+            else if (hit.transform.tag == "Player Item")
+            {
+                Debug.Log("HIT");
+                playerInventory.AddToInventory(hit.transform.gameObject);
             }
         } 
     }

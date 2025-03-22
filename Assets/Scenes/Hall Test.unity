@@ -2030,6 +2030,7 @@ Transform:
   - {fileID: 1537155868}
   - {fileID: 330410557}
   - {fileID: 791917030}
+  - {fileID: 2106621527}
   - {fileID: 999093245}
   - {fileID: 181567981}
   - {fileID: 1128039287}
@@ -5837,7 +5838,8 @@ MonoBehaviour:
   - {fileID: 2117967004886463130, guid: 0db7fed624dbfa1429c8572f4f4a4de1, type: 3}
   - {fileID: 7245439273364376313, guid: 8464fe90bb8c25744a11300c35bab9fd, type: 3}
   - {fileID: 3054693565241576188, guid: d414764ee83ba504984c79a96d56f3e4, type: 3}
-  itemsList: []
+  DEBUGConsumablesList: []
+  DEBUGConsumablesQuantities: 
   spellsList: []
   hotKeyList:
   - {fileID: 7245439273364376313, guid: 8464fe90bb8c25744a11300c35bab9fd, type: 3}
@@ -8448,6 +8450,136 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a66899da3f104ef40a42243beea65452, type: 3}
+--- !u!1001 &2106621526
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 492865513}
+    m_Modifications:
+    - target: {fileID: 7786502534206770190, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_Name
+      value: Healing Vial
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770190, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3447
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3447
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3447
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.159
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4281bebbd9ee7514db4c31db0e756d65, type: 3}
+--- !u!4 &2106621527 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106621526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2106621528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7786502534206770190, guid: 4281bebbd9ee7514db4c31db0e756d65,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106621526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2106621529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106621528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06e17a8ff349de4d9597fc51652ae9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Healing Vial
+  interactedItemType: 3
+--- !u!65 &2106621533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106621528}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15999998, y: 0.22999999, z: 0.19999999}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2118027755
 PrefabInstance:
   m_ObjectHideFlags: 0

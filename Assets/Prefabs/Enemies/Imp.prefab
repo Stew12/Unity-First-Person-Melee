@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901180920018452097}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.058, y: 0.336, z: 0.195}
-  m_LocalScale: {x: 0.8133919, y: 0.8133919, z: 0.8133919}
+  m_LocalPosition: {x: -0.0501, y: 0.336, z: 0.195}
+  m_LocalScale: {x: 0.8780565, y: 0.8780565, z: 0.8780565}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7075933641429308997}
@@ -86,8 +86,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996111886334533605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.262, y: 0.336, z: 0.195}
-  m_LocalScale: {x: 0.8133919, y: 0.8133919, z: 0.8133919}
+  m_LocalPosition: {x: -0.287, y: 0.336, z: 0.195}
+  m_LocalScale: {x: 0.8780565, y: 0.8780565, z: 0.8780565}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7075933641429308997}
@@ -379,6 +379,7 @@ MonoBehaviour:
   enemyController: {fileID: 0}
   spriteRenderer: {fileID: 1646031126582157704}
   enemyProjectile: {fileID: 0}
+  projectileSpawn: {fileID: 0}
   enemyAOE: {fileID: 1872096942104245859, guid: dad915fe99bc30e40b6cfd4f9de5496d,
     type: 3}
   enemyHPBarBG: {fileID: 2432492757766264808}
