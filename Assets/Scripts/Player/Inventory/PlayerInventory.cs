@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +29,9 @@ public class PlayerInventory : MonoBehaviour
 
     public List<GameObject> weaponsList = new List<GameObject>();
 
-    public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
+    //public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
+    public List<ConsumableInInventory> consumablesList = new List<ConsumableInInventory>();
+    // So I can look at consumable list values in inspector (can't see Dictionary in inspector)
     public List<GameObject> DEBUGConsumablesList = new List<GameObject>();
     public List<int> DEBUGConsumablesQuantities = new List<int>();
 
@@ -219,10 +222,30 @@ public class PlayerInventory : MonoBehaviour
             break;
 
             case ItemTypeUI.CONSUMABLE:
-               consumablesList.Add(savedItem, 1);
-               DEBUGConsumablesList.Add(savedItem);
-               DEBUGConsumablesQuantities.Add(1);
+                
+                bool itemExists = false;
+                for (int i = 0; i < consumablesList.Count; i++)
+                {
+                    if (consumablesList[i].itemName == savedItem.name)
+                    {
+                        //Dupicate item, stack
+                        itemExists = true;
+                        consumablesList[i].itemQuantity++;
+                        Debug.Log(consumablesList[i].itemName + ", " + consumablesList[i].itemQuantity);
 
+                        DEBUGConsumablesQuantities[i]++;
+                        break;
+                    }
+                }
+                
+                if (!itemExists)
+                {
+                    //New Item, add
+                    consumablesList.Add(new ConsumableInInventory(savedItem.name, 1));
+                    
+                    DEBUGConsumablesList.Add(savedItem);
+                    DEBUGConsumablesQuantities.Add(1);
+                }
 
             break;
         }
