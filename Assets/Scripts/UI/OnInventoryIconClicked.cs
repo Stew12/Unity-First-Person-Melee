@@ -19,6 +19,10 @@ public class OnInventoryIconClicked : MonoBehaviour
     [SerializeField] private GameObject ITEM;
     public ItemTypeUI itemTypeUI;
 
+    public DragonSpells dragonSpells = DragonSpells.NONE;
+
+    public bool selected = false;
+
     private Image iconImg;
 
     [SerializeField] private bool DEBUG = false;
@@ -43,14 +47,16 @@ public class OnInventoryIconClicked : MonoBehaviour
         
     }
 
-    public void Selected(bool selected)
+    public void Selected(bool s)
     {
-        if (selected)
+        if (s)
         {
+            selected = true;
             iconImg.color = Color.white;
         }
         else
         {
+            selected = false;
             iconImg.color = SetIconColour();
         }
     }

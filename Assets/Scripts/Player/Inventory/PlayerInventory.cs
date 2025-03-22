@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
     public GameObject weaponStock;
     private AudioSource invAudioSource;
+
+    [SerializeField] private Image HUDSpell;
 
     private GameObject selectedItem;
     private GameObject selectedItemGObj;
@@ -136,47 +138,52 @@ public class PlayerInventory : MonoBehaviour
         selectedItem = item;
         selectedItemGObj = itemGObj;
 
-        foreach (Transform icon in selectedInvWindow.transform)
+        if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
         {
-            if (icon.gameObject != selectedItemGObj)
+            switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
             {
-                icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
-            }
-            else
-            {
-                icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+                case ItemTypeUI.WEAPON:
+                    EquipWeapon(item);
+                break;
+
+                case ItemTypeUI.ARMOUR:
+                    
+                break;
+
+                case ItemTypeUI.SPELL:
+                    EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                break;
+
+                case ItemTypeUI.CONSUMABLE:
+                
+                break;
+
+                case ItemTypeUI.KEYITEM:
+
+            break;
+
+                case ItemTypeUI.ATTACKITEM:
+        
+                break;
+
+                default:
+                    
+                break;
             }
         }
-
-        switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
+        else
         {
-            case ItemTypeUI.WEAPON:
-                EquipWeapon(item);
-            break;
-
-            case ItemTypeUI.ARMOUR:
-                
-            break;
-
-            case ItemTypeUI.SPELL:
-                
-            break;
-
-            case ItemTypeUI.CONSUMABLE:
-               
-            break;
-
-            case ItemTypeUI.KEYITEM:
-
-           break;
-
-            case ItemTypeUI.ATTACKITEM:
-    
-            break;
-
-            default:
-                
-            break;
+            foreach (Transform icon in selectedInvWindow.transform)
+            {
+                if (icon.gameObject != selectedItemGObj)
+                {
+                    icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
+                }
+                else
+                {
+                    icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+                }
+            }
         }
         
     }
@@ -255,6 +262,13 @@ public class PlayerInventory : MonoBehaviour
                 invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
                 invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
             }
+    }
+
+    private void EquipSpell(DragonSpells newSpell)
+    {
+        HUDSpell.sprite = selectedItemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
+
+        player.dragonSpellSelected = newSpell;
     }
 
 }

@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     public int weaponDurabilityLossBlock = 3;
 
     [Header("Dragon Spells")]
-    [SerializeField] private DragonSpells dragonSpellSelected;
+    public DragonSpells dragonSpellSelected;
     public GameObject fireBall;
     public GameObject thunderTarget;
     public GameObject thunder;

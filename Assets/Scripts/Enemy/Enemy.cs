@@ -326,7 +326,6 @@ public class Enemy : MonoBehaviour
 
         if (weakPointHit)
         {
-            Debug.Log("SHHH");
             /* YELLOW- weak point damage */
             damageNumber.color = Color.yellow;
         }

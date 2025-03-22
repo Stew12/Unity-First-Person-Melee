@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal.Internal;
 
 public enum DragonSpells
 {
+        NONE,
         FIREBALLBREATH,
         THUNDERBREATH
 }
