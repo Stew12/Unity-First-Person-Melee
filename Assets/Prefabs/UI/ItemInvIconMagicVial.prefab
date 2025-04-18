@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c105abfdc49574cbc4e48f5a456c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ITEM: {fileID: 0}
+  ITEM: {fileID: 7786502534206770190, guid: 4665c4b497f02104fb90f916511da519, type: 3}
   itemTypeUI: 3
   dragonSpells: 0
   consumable: {fileID: 7786502534206770190, guid: 4665c4b497f02104fb90f916511da519,

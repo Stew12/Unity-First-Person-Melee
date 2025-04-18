@@ -29,6 +29,8 @@ public class PlayerInventory : MonoBehaviour
 
     public List<GameObject> weaponsList = new List<GameObject>();
 
+    public List<GameObject> armourList = new List<GameObject>();
+
     //public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
     public List<ConsumableInInventory> consumablesList = new List<ConsumableInInventory>();
     // So I can look at consumable list values in inspector (can't see Dictionary in inspector)
@@ -190,6 +192,7 @@ public class PlayerInventory : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log(icon.gameObject);
                         icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
                     }
                 }
@@ -227,8 +230,11 @@ public class PlayerInventory : MonoBehaviour
             case ItemTypeUI.CONSUMABLE:
                 
                 bool itemExists = false;
+                Debug.Log("CCC: " + consumablesList.Count);
                 for (int i = 0; i < consumablesList.Count; i++)
                 {
+                    Debug.Log("NAMEINLIST: " + consumablesList[i].itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
+
                     if (consumablesList[i].itemName == savedItem.GetComponent<InteractableItem>().itemName)
                     {
                         //Dupicate item, stack
@@ -249,15 +255,47 @@ public class PlayerInventory : MonoBehaviour
                     
                     DEBUGConsumablesList.Add(savedItem);
                     DEBUGConsumablesQuantities.Add(1);
-                    //Debug.Log (consumablesList[0].itemName + ", " + savedItem.name);
+
+                    //Debug.Log(savedItem.GetComponent<InteractableItem>().UIIcon);
+                    //Add icon to UI
+
+                    //TODO: will likely need to have the UI icons recreate every time the tab is opened rather than this
+                    
+                    GameObject invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
+                    invIcon.transform.parent = consumableInvWindow.transform;
+
+                    invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
+                    SetInvIconUILocation(invIcon);
                 }
 
             break;
         }
 
         Destroy(itemFound);
+    }
 
-        
+    private void SetInvIconUILocation(GameObject IIU)
+    {
+        int listPos = 0;
+
+        switch (IIU.GetComponent<OnInventoryIconClicked>().itemTypeUI)
+        {
+            case ItemTypeUI.WEAPON:
+                listPos = weaponsList.Count;
+            break;
+
+            case ItemTypeUI.ARMOUR:
+                listPos = armourList.Count;
+            break;
+
+            case ItemTypeUI.CONSUMABLE:
+                listPos = consumablesList.Count;
+
+            break;
+        }
+
+        IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(2, 100.9065f);
+        IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f,1,1);
     }
 
 

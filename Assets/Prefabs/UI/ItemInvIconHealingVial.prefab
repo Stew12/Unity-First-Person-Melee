@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c105abfdc49574cbc4e48f5a456c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ITEM: {fileID: 0}
+  ITEM: {fileID: 7786502534206770190, guid: 4281bebbd9ee7514db4c31db0e756d65, type: 3}
   itemTypeUI: 3
   dragonSpells: 0
   consumable: {fileID: 7786502534206770190, guid: 4281bebbd9ee7514db4c31db0e756d65,

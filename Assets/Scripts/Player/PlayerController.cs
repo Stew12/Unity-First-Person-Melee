@@ -702,7 +702,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (hit.transform.tag == "Player Item")
             {
-                Debug.Log("HIT");
+                Debug.Log("ITEM HIT");
                 playerInventory.AddToInventory(hit.transform.gameObject);
             }
         } 

@@ -25,13 +25,19 @@ public class OnInventoryIconClicked : MonoBehaviour
 
     public bool selected = false;
 
-    private Image iconImg;
+    [SerializeField] private Image iconImg;
 
     [SerializeField] private bool DEBUG = false;
 
     void Awake()
     {
-        pInventory = transform.parent.transform.parent.gameObject.GetComponent<PlayerInventory>();
+        ItemSetup();
+    }
+    
+    public void ItemSetup()
+    {
+        if (transform.parent != null)
+            pInventory = transform.parent.transform.parent.gameObject.GetComponent<PlayerInventory>();
 
         iconImg = GetComponent<Image>();
 
