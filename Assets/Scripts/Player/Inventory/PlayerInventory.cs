@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -8,46 +9,44 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public GameObject weaponStock;
-    private AudioSource invAudioSource;
-
-    [SerializeField] private Image HUDSpell;
-
+    [Header("Items and Tabs")]
     private GameObject selectedItem;
     private GameObject selectedItemGObj;
     [SerializeField] private GameObject selectedInvWindow;
     [SerializeField] private GameObject invTabs;
-
-    [SerializeField] private PlayerController player;
-
     [HideInInspector] public GameObject inventoryInterface;
 
+    [Header("Inventory Windows")]
     [SerializeField] private GameObject weaponInvWindow;
     [SerializeField] private GameObject armourInvWindow;
     [SerializeField] private GameObject spellInvWindow;
     [SerializeField] private GameObject consumableInvWindow;
 
+    [Header("Inventory Lists")]
     public List<GameObject> weaponsList = new List<GameObject>();
-
     public List<GameObject> armourList = new List<GameObject>();
-
     //public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
     public List<ConsumableInInventory> consumablesList = new List<ConsumableInInventory>();
     // So I can look at consumable list values in inspector (can't see Dictionary in inspector)
     public List<GameObject> DEBUGConsumablesList = new List<GameObject>();
     public List<int> DEBUGConsumablesQuantities = new List<int>();
-
     public List<GameObject> spellsList = new List<GameObject>();
-
     //private List<int> itemValuesList = new List<int>();
-
     public GameObject[] hotKeyList = new GameObject[9];
 
-
+    [Header("Indices")]
     //Starts from 1 rather than 0
     public int weaponInvIndex = 1;
     public int itemInvIndex = 1;
     public int spellInvIndex = 1;
+
+    [Header("Other Variables")]
+    public GameObject weaponStock;
+    private AudioSource invAudioSource;
+    [SerializeField] private Image HUDSpell;
+    private int inventoryCols = 5;
+    [SerializeField] private PlayerController player;
+
 
     void Awake()
     {
@@ -59,7 +58,6 @@ public class PlayerInventory : MonoBehaviour
         invTabs.SetActive(false);
 
         LoadHotkeys();
-
         LoadInventory();
     }
 
@@ -230,7 +228,6 @@ public class PlayerInventory : MonoBehaviour
             case ItemTypeUI.CONSUMABLE:
                 
                 bool itemExists = false;
-                Debug.Log("CCC: " + consumablesList.Count);
                 for (int i = 0; i < consumablesList.Count; i++)
                 {
                     Debug.Log("NAMEINLIST: " + consumablesList[i].itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
@@ -240,29 +237,41 @@ public class PlayerInventory : MonoBehaviour
                         //Dupicate item, stack
                         itemExists = true;
                         consumablesList[i].itemQuantity++;
+
+                        Debug.Log(consumablesList[i].UIIcon.name);
+                        if (consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
+                        {
+                            consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.SetText(consumablesList[i].itemQuantity.ToString());
+                            Debug.Log(consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text);
+                        }
+
                         Debug.Log(consumablesList[i].itemName + ", " + consumablesList[i].itemQuantity);
 
-                        DEBUGConsumablesQuantities[i]++;
+                        //DEBUGConsumablesQuantities[i]++;
                         break;
                     }
                 }
-                
+
                 if (!itemExists)
                 {
                     
                     //New Item, add
                     consumablesList.Add(new ConsumableInInventory(savedItem, 1));
                     
-                    DEBUGConsumablesList.Add(savedItem);
-                    DEBUGConsumablesQuantities.Add(1);
+                    //DEBUGConsumablesList.Add(savedItem);
+                    //DEBUGConsumablesQuantities.Add(1);
 
                     //Debug.Log(savedItem.GetComponent<InteractableItem>().UIIcon);
                     //Add icon to UI
-
-                    //TODO: will likely need to have the UI icons recreate every time the tab is opened rather than this
                     
                     GameObject invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
                     invIcon.transform.parent = consumableInvWindow.transform;
+
+                    if (consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
+                    {
+                        consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.SetText(1.ToString());
+                        Debug.Log(consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text);
+                    }
 
                     invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
                     SetInvIconUILocation(invIcon);
@@ -294,7 +303,46 @@ public class PlayerInventory : MonoBehaviour
             break;
         }
 
-        IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(2, 100.9065f);
+        // Get UI position
+        float invx = 0;
+        float invy = 0;
+
+        float xSpacing = 106.2f;
+        float ySpacing = 100; 
+
+        float startingx = -209.8f;
+
+        //DEBUG
+        //listPos += 9;
+
+        // Inv item 1-5
+        if (listPos > 0 && listPos < inventoryCols + 1)
+        {
+            invx = (listPos - 1) * xSpacing;
+            invy = ySpacing;
+        }
+        // Inv item 6-10
+        else if (listPos > inventoryCols && listPos < inventoryCols * 2 + 1)
+        {
+            invx = (listPos - 1 - inventoryCols) * xSpacing;
+            invy = 0;
+        }
+        // Inv item 11-15
+        else if (listPos > inventoryCols * 2 && listPos < inventoryCols * 3 + 1)
+        {
+            invx = (listPos - 1 - inventoryCols * 2) * xSpacing;
+            invy = -ySpacing;
+        }
+        // Cannot fit in inventory
+        else
+        {
+            Debug.LogError("ERROR: list pos is higher than inventory limit");
+        }
+
+        // Place the UI icon on a position on the UI
+        IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(startingx + invx, invy);
+
+        // Give it the scale to display properly
         IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f,1,1);
     }
 

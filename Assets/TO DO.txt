@@ -2,7 +2,7 @@ TO DO:
 
 BUGS
 
-make fireball/s disappear when hitting a wall
+make player fireball disappear when hitting a wall
 
 weird texture glitch on incline
 
@@ -10,6 +10,7 @@ Weapon sprites going through wall. Other layering issues such as sprites disappe
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
+TextMeshProUGUI having trouble updating quantity even when the debug.log says it has updated variable wise. Maybe a glitch with textmeshproUGUI 
 
 BALANCING
 
