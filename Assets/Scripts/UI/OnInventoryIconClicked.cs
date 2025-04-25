@@ -30,7 +30,7 @@ public class OnInventoryIconClicked : MonoBehaviour
 
     [SerializeField] private bool DEBUG = false;
 
-    public TextMeshProUGUI quantityText;
+    public Text quantityText;
 
     void Awake()
     {
