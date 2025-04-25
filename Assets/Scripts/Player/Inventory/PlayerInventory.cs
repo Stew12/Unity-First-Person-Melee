@@ -296,16 +296,17 @@ public class PlayerInventory : MonoBehaviour
                 if (consumablesList[i].GetComponent<ConsumableItem>().itemQuantity > 0)
                 {
                     //Item has only had its quantity decreased. Update inventory label
-                    consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                    UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
                 }
                 else
                 {
                     //Remove item from inventory
-                    consumablesList.Remove(consumablesList[i]);
-                    Destroy(consumablesList[i].GetComponent<InteractableItem>().UIIcon.gameObject);
-                }
+                    Destroy(UIIconsInInventory[i].gameObject);
 
-                Debug.Log("NAME: " + dorItem.name);
+                    UIIconsInInventory.Remove(UIIconsInInventory[i]);
+                    consumablesList.Remove(consumablesList[i]);
+                    
+                }
             }
         }
     }
