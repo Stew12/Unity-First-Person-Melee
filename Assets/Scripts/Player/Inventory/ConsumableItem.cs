@@ -18,7 +18,7 @@ public class ConsumableItem : MonoBehaviour
     //Restores health, mana etc depending on what's selected
     [SerializeField] private int restoreAmount;
 
-    //public int itemQuantity;
+    public int itemQuantity = 0;
     
     public void UseConsumable(PlayerValues playerValues, PlayerInventory playerInventory, GameObject item)
     {

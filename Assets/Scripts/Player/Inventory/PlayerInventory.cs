@@ -26,8 +26,8 @@ public class PlayerInventory : MonoBehaviour
     public List<GameObject> weaponsList = new List<GameObject>();
     public List<GameObject> armourList = new List<GameObject>();
     //public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
-    public List<ConsumableInInventory> consumablesList = new List<ConsumableInInventory>();
-    public List <GameObject> consumablesGameObjects = new List<GameObject>();
+    public List<GameObject> consumablesList = new List<GameObject>();
+    [SerializeField] private List<GameObject> UIIconsInInventory = new List<GameObject>();
     
     // So I can look at consumable list values in inspector (can't see Dictionary in inspector)
     //public List<GameObject> DEBUGConsumablesList = new List<GameObject>();
@@ -200,33 +200,6 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
-    public void DecreaseOrRemoveConsumable(GameObject dorItem)
-    {
-        for (int i = 0; i < consumablesList.Count; i++)
-        {
-            //Find Item
-            if (consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.name)
-            {
-                consumablesList[i].itemQuantity--;
-
-                if (consumablesList[i].itemQuantity > 0)
-                {
-                    //Item has only had its quantity decreased. Update inventory label
-                    consumablesGameObjects[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].itemQuantity.ToString();
-                }
-                else
-                {
-                    //Remove item from inventory
-                    consumablesList.Remove(consumablesList[i]);
-                    Destroy(consumablesGameObjects[i].gameObject);
-                    consumablesGameObjects.Remove(consumablesGameObjects[i]);
-                }
-
-                Debug.Log("NAME: " + dorItem.name);
-            }
-        }
-    }
-
     public void AddToInventory(GameObject itemFound)
     {
         GameObject savedItem = new GameObject();
@@ -237,7 +210,7 @@ public class PlayerInventory : MonoBehaviour
         
         savedItem.GetComponent<InteractableItem>().itemName = itemFound.GetComponent<InteractableItem>().itemName;
         savedItem.GetComponent<InteractableItem>().interactedItemType = itemFound.GetComponent<InteractableItem>().interactedItemType;
-        savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon;   
+        savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon; 
 
         switch (savedItem.GetComponent<InteractableItem>().interactedItemType)
         {
@@ -255,22 +228,27 @@ public class PlayerInventory : MonoBehaviour
 
             case ItemTypeUI.CONSUMABLE:
                 
+                savedItem.AddComponent<ConsumableItem>();
+
+                savedItem.GetComponent<ConsumableItem>().itemQuantity = itemFound.GetComponent<ConsumableItem>().itemQuantity;
+
                 bool itemExists = false;
                 for (int i = 0; i < consumablesList.Count; i++)
                 {
-                    Debug.Log("NAMEINLIST: " + consumablesList[i].itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
+                    Debug.Log("NAMEINLIST: " + consumablesList[i].GetComponent<InteractableItem>().itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
 
-                    if (consumablesList[i].itemName == savedItem.GetComponent<InteractableItem>().itemName)
+                    if (consumablesList[i].GetComponent<InteractableItem>().itemName == savedItem.GetComponent<InteractableItem>().itemName)
                     {
                         //Dupicate item, stack
                         itemExists = true;
-                        consumablesList[i].itemQuantity++;
 
-                        Debug.Log(consumablesList[i].UIIcon.name);
-                        if (consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
+                        consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
+
+                        //Debug.Log(consumablesList[i].GetComponent<InteractableItem>().UIIcon.name);
+                        if (UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
                         {
-                            consumablesGameObjects[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].itemQuantity.ToString();
-                            //Debug.Log(consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text);
+                            UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                            Debug.Log(consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString());
                         }
                         break;
                     }
@@ -278,20 +256,22 @@ public class PlayerInventory : MonoBehaviour
 
                 if (!itemExists)
                 {
-                    
-                    //New Item, add
-                    consumablesList.Add(new ConsumableInInventory(savedItem, 1));
-                    
                     //Add icon to UI
                     GameObject invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
                     
-                    consumablesGameObjects.Add(invIcon);
+                    //savedItem.GetComponent<InteractableItem>().UIIcon = invIcon;
+                    
+                    //New Item, add
+                    consumablesList.Add(savedItem);
+                    UIIconsInInventory.Add(invIcon);
 
                     invIcon.transform.parent = consumableInvWindow.transform;
 
-                    if (consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
+                    consumablesList[consumablesList.Count - 1].GetComponent<ConsumableItem>().itemQuantity = 1;
+
+                    if (consumablesList[consumablesList.Count - 1].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
                     {
-                        consumablesList[consumablesList.Count - 1].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = 1.ToString();
+                        consumablesList[consumablesList.Count - 1].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = 1.ToString();
                     }
 
                     invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
@@ -302,6 +282,32 @@ public class PlayerInventory : MonoBehaviour
         }
 
         Destroy(itemFound);
+    }
+
+    public void DecreaseOrRemoveConsumable(GameObject dorItem)
+    {
+        for (int i = 0; i < consumablesList.Count; i++)
+        {
+            //Find Item
+            if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.name)
+            {
+                consumablesList[i].GetComponent<ConsumableItem>().itemQuantity--;
+
+                if (consumablesList[i].GetComponent<ConsumableItem>().itemQuantity > 0)
+                {
+                    //Item has only had its quantity decreased. Update inventory label
+                    consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                }
+                else
+                {
+                    //Remove item from inventory
+                    consumablesList.Remove(consumablesList[i]);
+                    Destroy(consumablesList[i].GetComponent<InteractableItem>().UIIcon.gameObject);
+                }
+
+                Debug.Log("NAME: " + dorItem.name);
+            }
+        }
     }
 
     private void SetInvIconUILocation(GameObject IIU)
