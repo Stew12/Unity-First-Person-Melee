@@ -15,10 +15,12 @@ public class ConsumableItem : MonoBehaviour
 {
     [SerializeField] private ConsumableType consumableType;
 
-    //Restores health, mana etc depeneding on what's selected
+    //Restores health, mana etc depending on what's selected
     [SerializeField] private int restoreAmount;
+
+    //public int itemQuantity;
     
-    public void UseConsumable(PlayerValues playerValues)
+    public void UseConsumable(PlayerValues playerValues, PlayerInventory playerInventory, GameObject item)
     {
         switch (consumableType)
         {
@@ -52,5 +54,8 @@ public class ConsumableItem : MonoBehaviour
                 } 
             break;
         }
+
+        //Consumable item is either decremented or removed from player inventory upon use
+        playerInventory.DecreaseOrRemoveConsumable(item);
     }
 }

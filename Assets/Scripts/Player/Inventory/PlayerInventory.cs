@@ -51,9 +51,6 @@ public class PlayerInventory : MonoBehaviour
     private int inventoryCols = 5;
     [SerializeField] private PlayerController player;
 
-    [Header("Timing")]
-    private IEnumerator coroutine;
-
 
     void Awake()
     {
@@ -71,21 +68,6 @@ public class PlayerInventory : MonoBehaviour
     private void LoadInventory()
     {
 
-    }
-
-    void LateUpdate()
-    {
-        //Constantly update consumable item quantity (will be changed later) 
-        for (int i = 0; i < consumablesList.Count; i++)
-        {
-            if (consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
-            {
-                //Debug.Log("AAAAAAUUNUNBKJBSKJBC>K");
-                //consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = 3.ToString();
-                //consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].itemQuantity.ToString();
-                //Debug.Log(consumablesList[i].itemName + ", " + consumablesList[i].itemQuantity.ToString());
-            }        
-        }
     }
 
     public void InventoryTab(ItemTypeUI itemTypeUI)
@@ -166,40 +148,38 @@ public class PlayerInventory : MonoBehaviour
         selectedItem = item;
         selectedItemGObj = itemGObj;
 
-        // If item STILL null
-        //if (item == null && itemGObj == null)
-        //{
-            if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
+
+        if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
+        {
+            switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
             {
-                switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
-                {
-                    case ItemTypeUI.WEAPON:
-                        EquipWeapon(item);
-                    break;
+                case ItemTypeUI.WEAPON:
+                    EquipWeapon(item);
+                break;
 
-                    case ItemTypeUI.ARMOUR:
+                case ItemTypeUI.ARMOUR:
                         
-                    break;
+                break;
 
-                    case ItemTypeUI.SPELL:
-                        EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
-                    break;
+                case ItemTypeUI.SPELL:
+                    EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                break;
 
-                    case ItemTypeUI.CONSUMABLE:
-                        itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>());
-                    break;
+                case ItemTypeUI.CONSUMABLE:
+                    itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>(), this, item);
+                break;
 
-                    case ItemTypeUI.KEYITEM:
+                case ItemTypeUI.KEYITEM:
 
                 break;
 
-                    case ItemTypeUI.ATTACKITEM:
+                case ItemTypeUI.ATTACKITEM:
             
-                    break;
+                break;
 
-                    default:
+                default:
                         
-                    break;
+                break;
                 }
             }
             else
@@ -217,8 +197,34 @@ public class PlayerInventory : MonoBehaviour
                     }
                 }
             }
-        //}
         
+    }
+
+    public void DecreaseOrRemoveConsumable(GameObject dorItem)
+    {
+        for (int i = 0; i < consumablesList.Count; i++)
+        {
+            //Find Item
+            if (consumablesList[i].UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.name)
+            {
+                consumablesList[i].itemQuantity--;
+
+                if (consumablesList[i].itemQuantity > 0)
+                {
+                    //Item has only had its quantity decreased. Update inventory label
+                    consumablesGameObjects[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].itemQuantity.ToString();
+                }
+                else
+                {
+                    //Remove item from inventory
+                    consumablesList.Remove(consumablesList[i]);
+                    Destroy(consumablesGameObjects[i].gameObject);
+                    consumablesGameObjects.Remove(consumablesGameObjects[i]);
+                }
+
+                Debug.Log("NAME: " + dorItem.name);
+            }
+        }
     }
 
     public void AddToInventory(GameObject itemFound)
