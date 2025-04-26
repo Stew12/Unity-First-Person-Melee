@@ -10,9 +10,14 @@ Weapon sprites going through wall. Other layering issues such as sprites disappe
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
-TextMeshProUGUI having trouble updating quantity even when the debug.log says it has updated variable wise. Maybe a glitch with textmeshproUGUI 
+For sorceress, seems like she will sometimes attack but not shoot a fireball
 
 BALANCING
+
+EXTENSIONS
+
+Add in ability to pick up weapons, armour and spells
+
 
 
 AUDIO
@@ -24,8 +29,6 @@ Likely do this by having custom sped up audio clips that are roughly attributed 
 GAMEPLAY
 
 Durability repair items
-
-Healing items
 
 Player death
 

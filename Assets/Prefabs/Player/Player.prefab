@@ -132,8 +132,8 @@ GameObject:
   - component: {fileID: 1282487068343986871}
   - component: {fileID: 3126781738493668544}
   - component: {fileID: 1282487068343986857}
-  - component: {fileID: 3126781737598039276}
   - component: {fileID: 1282487068343986870}
+  - component: {fileID: 3126781737598039276}
   - component: {fileID: 1282487068343986868}
   - component: {fileID: 1282487068343986867}
   - component: {fileID: 4226839757342427865}
@@ -159,7 +159,7 @@ Transform:
   - {fileID: 3126781738961630637}
   - {fileID: 3126781739497447391}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1282487068343986869
 MonoBehaviour:
@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equippedWeapon: {fileID: 5757983847301490148}
   controller: {fileID: 0}
+  audioSource: {fileID: 0}
   footstepsAudioSource: {fileID: 4226839757342427865}
   playerInventory: {fileID: 0}
   healthBarUI: {fileID: 0}
@@ -215,13 +216,18 @@ MonoBehaviour:
   BLOCK: Sword Block
   noWeaponHand: {fileID: 1439064115}
   attacking: 0
+  weaponSheathed: 0
+  weakPointDamageFactor: 1.35
   attackLayer:
     serializedVersion: 2
     m_Bits: 64
   hitEffect: {fileID: 5334228485563152753, guid: 0134bdc80242c974b88f68d7bb298ed9,
     type: 3}
   swordSwing: {fileID: 8300000, guid: 7923190c5e80b4d4d9396acc5d0b48cf, type: 3}
-  hitSound: {fileID: 8300000, guid: 11245d3945c564b45a1bafad5ecb70e5, type: 3}
+  wallHitSound: {fileID: 0}
+  enemyHitSound: {fileID: 0}
+  parrySound: {fileID: 0}
+  hurtSound: {fileID: 0}
   blockAndParryHitbox: {fileID: 3126781739497447379}
   blocking: 0
   powerTimeFactor: 3.5
@@ -241,6 +247,8 @@ MonoBehaviour:
   dragonSpellSelected: 0
   fireBall: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69,
     type: 3}
+  thunderTarget: {fileID: 0}
+  thunder: {fileID: 0}
   dialogueTextBox: {fileID: 0}
   waiting: 0
   maxDontTakeDamageTime: 0.8
@@ -384,6 +392,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &1282487068343986870
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126781738493668546}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.9918196
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0023254, z: 0}
 --- !u!54 &3126781737598039276
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -400,20 +422,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 32
   m_CollisionDetection: 0
---- !u!136 &1282487068343986870
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3126781738493668546}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.9918196
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.0023254, z: 0}
 --- !u!114 &1282487068343986868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,8 +435,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireBallBreathCastTime: 1
+  thunderBreathTargetCastTime: 0.1
+  thunderBreathCastTime: 1.1
   fireBallBreathDPCost: 5
+  thunderBreathDPCost: 10
   fireBallBreathSpawnHeight: 0.75
+  thunderTargetDistance: 0.75
 --- !u!114 &1282487068343986867
 MonoBehaviour:
   m_ObjectHideFlags: 0

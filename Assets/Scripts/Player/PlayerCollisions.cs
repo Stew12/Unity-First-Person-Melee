@@ -7,19 +7,12 @@ public class PlayerCollisions : MonoBehaviour
 {
 
     public bool canTakeDamage = true;
-
     public bool attackBlocked;
-
     public bool attackParried;
-
     public float blockDefenseFactor = 0.65f;
-
     public float enemyColDelay = 0.00001f;
-
     public Image hurtFlash;
-
     public float hurtFlashTime = 0.1f;
-
     private IEnumerator coroutine;
 
     private void OnTriggerEnter(Collider col)
@@ -28,8 +21,11 @@ public class PlayerCollisions : MonoBehaviour
         {
             case "Enemy":
 
-            coroutine = EnemyCollision(col, enemyColDelay);
-            StartCoroutine(coroutine);
+            if (col.GetComponent<Enemy>().enemyAttacking)
+            {
+                coroutine = EnemyCollision(col, enemyColDelay);
+                StartCoroutine(coroutine);
+            }
 
             break;
 

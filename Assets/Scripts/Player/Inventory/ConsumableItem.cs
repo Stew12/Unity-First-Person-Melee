@@ -7,6 +7,7 @@ public enum ConsumableType
 {
     HEALING,
     MANA,
+    DURABILITY,
     DAMAGING,
     BUFF
 }
@@ -52,6 +53,10 @@ public class ConsumableItem : MonoBehaviour
                 {
                     playerValues.currentDragonPoints = newDP;
                 } 
+            break;
+
+            case ConsumableType.DURABILITY:
+                //TODO: Restore player weapon durability
             break;
         }
 
