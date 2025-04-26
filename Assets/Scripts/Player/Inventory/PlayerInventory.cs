@@ -23,19 +23,16 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private GameObject consumableInvWindow;
 
     [Header("Inventory Lists")]
-    public List<GameObject> weaponsList = new List<GameObject>();
-    public List<GameObject> armourList = new List<GameObject>();
-    //public Dictionary<GameObject, int> consumablesList = new Dictionary<GameObject, int>();
-    public List<GameObject> consumablesList = new List<GameObject>();
-    [SerializeField] private List<GameObject> UIIconsInInventory = new List<GameObject>();
-    
-    // So I can look at consumable list values in inspector (can't see Dictionary in inspector)
-    //public List<GameObject> DEBUGConsumablesList = new List<GameObject>();
-    //public List<int> DEBUGConsumablesQuantities = new List<int>();
-    
-    
-    public List<GameObject> spellsList = new List<GameObject>();
-    //private List<int> itemValuesList = new List<int>();
+    [SerializeField] private int weaponInventoryLength = 15;
+    [SerializeField] private int armourInventoryLength = 15;
+    [SerializeField] private int spellInventoryLength = 15;
+    [SerializeField] private int itemInventoryLength = 15;
+    public GameObject[] weaponsList;
+    public GameObject[] armourList;
+     public GameObject[] spellsList;
+    public GameObject[] consumablesList;
+    [SerializeField] private GameObject[] UIIconsInInventory;
+
     public GameObject[] hotKeyList = new GameObject[9];
 
     [Header("Indices")]
@@ -60,6 +57,14 @@ public class PlayerInventory : MonoBehaviour
         invAudioSource = GetComponent<AudioSource>();
 
         invTabs.SetActive(false);
+
+        weaponsList = new GameObject[weaponInventoryLength];
+        armourList = new GameObject[armourInventoryLength];
+        spellsList = new GameObject[spellInventoryLength];
+        consumablesList = new GameObject[itemInventoryLength];
+        UIIconsInInventory = new GameObject[weaponInventoryLength];
+
+        weaponsList[0] = player.equippedWeapon;
 
         LoadHotkeys();
         LoadInventory();
@@ -229,28 +234,30 @@ public class PlayerInventory : MonoBehaviour
             case ItemTypeUI.CONSUMABLE:
                 
                 savedItem.AddComponent<ConsumableItem>();
-
                 savedItem.GetComponent<ConsumableItem>().itemQuantity = itemFound.GetComponent<ConsumableItem>().itemQuantity;
-
+                
                 bool itemExists = false;
-                for (int i = 0; i < consumablesList.Count; i++)
+                for (int i = 0; i < consumablesList.Length - 1; i++)
                 {
-                    Debug.Log("NAMEINLIST: " + consumablesList[i].GetComponent<InteractableItem>().itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
-
-                    if (consumablesList[i].GetComponent<InteractableItem>().itemName == savedItem.GetComponent<InteractableItem>().itemName)
+                    //Debug.Log("NAMEINLIST: " + consumablesList[i].GetComponent<InteractableItem>().itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
+                    
+                    if (consumablesList[i] != null)
                     {
-                        //Dupicate item, stack
-                        itemExists = true;
-
-                        consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
-
-                        //Debug.Log(consumablesList[i].GetComponent<InteractableItem>().UIIcon.name);
-                        if (UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
+                        if (consumablesList[i].GetComponent<InteractableItem>().itemName == savedItem.GetComponent<InteractableItem>().itemName)
                         {
-                            UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
-                            Debug.Log(consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString());
+                            //Dupicate item, stack
+                            itemExists = true;
+
+                            consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
+
+                            //Debug.Log(consumablesList[i].GetComponent<InteractableItem>().UIIcon.name);
+                            if (UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
+                            {
+                                UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                                Debug.Log(consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString());
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
 
@@ -262,20 +269,28 @@ public class PlayerInventory : MonoBehaviour
                     //savedItem.GetComponent<InteractableItem>().UIIcon = invIcon;
                     
                     //New Item, add
-                    consumablesList.Add(savedItem);
-                    UIIconsInInventory.Add(invIcon);
-
-                    invIcon.transform.parent = consumableInvWindow.transform;
-
-                    consumablesList[consumablesList.Count - 1].GetComponent<ConsumableItem>().itemQuantity = 1;
-
-                    if (consumablesList[consumablesList.Count - 1].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
+                    for (int i = 0; i < consumablesList.Length - 1; i++)
                     {
-                        consumablesList[consumablesList.Count - 1].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = 1.ToString();
-                    }
+                        if (consumablesList[i] == null)
+                        {
+                            consumablesList[i] = savedItem;
+                            UIIconsInInventory[i] = invIcon;
 
-                    invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
-                    SetInvIconUILocation(invIcon);
+                            invIcon.transform.parent = consumableInvWindow.transform;
+
+                            consumablesList[i].GetComponent<ConsumableItem>().itemQuantity = 1;
+                            
+                            if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
+                            {
+                                consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = 1.ToString();
+                            }
+                            
+                            invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
+                            SetInvIconUILocation(invIcon);
+                            
+                            break;
+                        }
+                    }
                 }
 
             break;
@@ -286,26 +301,28 @@ public class PlayerInventory : MonoBehaviour
 
     public void DecreaseOrRemoveConsumable(GameObject dorItem)
     {
-        for (int i = 0; i < consumablesList.Count; i++)
+        for (int i = 0; i < consumablesList.Length - 1; i++)
         {
             //Find Item
-            if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.name)
+            if (consumablesList[i] != null)
             {
-                consumablesList[i].GetComponent<ConsumableItem>().itemQuantity--;
-
-                if (consumablesList[i].GetComponent<ConsumableItem>().itemQuantity > 0)
+                if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.name)
                 {
-                    //Item has only had its quantity decreased. Update inventory label
-                    UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
-                }
-                else
-                {
-                    //Remove item from inventory
-                    Destroy(UIIconsInInventory[i].gameObject);
+                    consumablesList[i].GetComponent<ConsumableItem>().itemQuantity--;
 
-                    UIIconsInInventory.Remove(UIIconsInInventory[i]);
-                    consumablesList.Remove(consumablesList[i]);
-                    
+                    if (consumablesList[i].GetComponent<ConsumableItem>().itemQuantity > 0)
+                    {
+                        //Item has only had its quantity decreased. Update inventory label
+                        UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                    }
+                    else
+                    {
+                        //Remove item from inventory
+                        Destroy(UIIconsInInventory[i].gameObject);
+
+                        consumablesList[i] = null;
+                        UIIconsInInventory[i] = null;
+                    }
                 }
             }
         }
@@ -313,20 +330,20 @@ public class PlayerInventory : MonoBehaviour
 
     private void SetInvIconUILocation(GameObject IIU)
     {
-        int listPos = 0;
+        GameObject[] selectedInvList = null;
 
         switch (IIU.GetComponent<OnInventoryIconClicked>().itemTypeUI)
         {
             case ItemTypeUI.WEAPON:
-                listPos = weaponsList.Count;
+                selectedInvList = weaponsList;
             break;
 
             case ItemTypeUI.ARMOUR:
-                listPos = armourList.Count;
+                selectedInvList = armourList;
             break;
 
             case ItemTypeUI.CONSUMABLE:
-                listPos = consumablesList.Count;
+                selectedInvList = consumablesList;
 
             break;
         }
@@ -340,38 +357,50 @@ public class PlayerInventory : MonoBehaviour
 
         float startingx = -209.8f;
 
-        //DEBUG
-        //listPos += 9;
+        for (int i = 0; i < selectedInvList.Length - 1; i++)
+        {
+            if (selectedInvList[i] != null)
+            {
+                //Debug.Log("UI ICON: " + selectedInvList[i].GetComponent<InteractableItem>().UIIcon.name + ", IIU: " + IIU.name);
+                if (selectedInvList[i].GetComponent<InteractableItem>().UIIcon.name + "(Clone)" == IIU.name)
+                {
+                    int listPos = i + 1;
 
-        // Inv item 1-5
-        if (listPos > 0 && listPos < inventoryCols + 1)
-        {
-            invx = (listPos - 1) * xSpacing;
-            invy = ySpacing;
-        }
-        // Inv item 6-10
-        else if (listPos > inventoryCols && listPos < inventoryCols * 2 + 1)
-        {
-            invx = (listPos - 1 - inventoryCols) * xSpacing;
-            invy = 0;
-        }
-        // Inv item 11-15
-        else if (listPos > inventoryCols * 2 && listPos < inventoryCols * 3 + 1)
-        {
-            invx = (listPos - 1 - inventoryCols * 2) * xSpacing;
-            invy = -ySpacing;
-        }
-        // Cannot fit in inventory
-        else
-        {
-            Debug.LogError("ERROR: list pos is higher than inventory limit");
-        }
+                    // Inv item 1-5
+                    if (listPos > 0 && listPos < inventoryCols + 1)
+                    {
+                        invx = (listPos - 1) * xSpacing;
+                        invy = ySpacing;
+                    }
+                    // Inv item 6-10
+                    else if (listPos > inventoryCols && listPos < inventoryCols * 2 + 1)
+                    {
+                        invx = (listPos - 1 - inventoryCols) * xSpacing;
+                        invy = 0;
+                    }
+                    // Inv item 11-15
+                    else if (listPos > inventoryCols * 2 && listPos < inventoryCols * 3 + 1)
+                    {
+                        invx = (listPos - 1 - inventoryCols * 2) * xSpacing;
+                        invy = -ySpacing;
+                    }
+                    // Cannot fit in inventory
+                    else
+                    {
+                        Debug.LogError("ERROR: list pos is higher than inventory limit");
+                    }
 
-        // Place the UI icon on a position on the UI
-        IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(startingx + invx, invy);
+                    // Place the UI icon on a position on the UI
+                    IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(startingx + invx, invy);
 
-        // Give it the scale to display properly
-        IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f,1,1);
+                    // Give it the scale to display properly
+                    IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f,1,1);
+
+                    break;
+                }
+            }
+
+        }
     }
 
 

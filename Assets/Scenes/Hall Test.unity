@@ -6040,13 +6040,70 @@ MonoBehaviour:
   spellInvWindow: {fileID: 315367985}
   consumableInvWindow: {fileID: 455067035}
   weaponsList:
-  - {fileID: 2117967004886463130, guid: 0db7fed624dbfa1429c8572f4f4a4de1, type: 3}
   - {fileID: 7245439273364376313, guid: 8464fe90bb8c25744a11300c35bab9fd, type: 3}
   - {fileID: 3054693565241576188, guid: d414764ee83ba504984c79a96d56f3e4, type: 3}
-  armourList: []
-  consumablesList: []
-  consumablesGameObjects: []
-  spellsList: []
+  - {fileID: 78370407}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  armourList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spellsList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  consumablesList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  UIIconsInInventory: []
   hotKeyList:
   - {fileID: 7245439273364376313, guid: 8464fe90bb8c25744a11300c35bab9fd, type: 3}
   - {fileID: 3054693565241576188, guid: d414764ee83ba504984c79a96d56f3e4, type: 3}
