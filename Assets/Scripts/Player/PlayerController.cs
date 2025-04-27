@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput.MainActions input;
 
     public GameObject equippedWeapon;
+    public GameObject startingWeaponPickup;
 
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public AudioSource audioSource;

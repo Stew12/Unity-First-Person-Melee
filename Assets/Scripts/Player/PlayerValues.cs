@@ -10,7 +10,14 @@ public class PlayerValues : MonoBehaviour
     public int maxDragonPoints;
     [HideInInspector] public int currentDragonPoints;
 
-    
+    public int strength = 10;
+    public int dexterity = 10;
+    public int magicAttack = 10;
+    public int defense = 10;
+    public int magicDefence = 10;
+    public int maxMomentum = 10;
+    //Resourcefulness- increases effects of consumables
+    public int resourcefulness = 10;    
 
     // Start is called before the first frame update
     void Awake()

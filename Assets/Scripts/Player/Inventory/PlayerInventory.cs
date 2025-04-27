@@ -64,7 +64,7 @@ public class PlayerInventory : MonoBehaviour
         consumablesList = new GameObject[itemInventoryLength];
         UIIconsInInventory = new GameObject[weaponInventoryLength];
 
-        weaponsList[0] = player.equippedWeapon;
+        weaponsList[0] = player.startingWeaponPickup;
 
         LoadHotkeys();
         LoadInventory();
@@ -217,10 +217,49 @@ public class PlayerInventory : MonoBehaviour
         savedItem.GetComponent<InteractableItem>().interactedItemType = itemFound.GetComponent<InteractableItem>().interactedItemType;
         savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon; 
 
+        GameObject invIcon;
+
         switch (savedItem.GetComponent<InteractableItem>().interactedItemType)
         {
             case ItemTypeUI.WEAPON:
+                savedItem.AddComponent<WeaponPickup>();
+                savedItem.GetComponent<WeaponPickup>().weaponHeldObject = itemFound.GetComponent<WeaponPickup>().weaponHeldObject;
+
+                //Add icon to UI
+                invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
                 
+                string[] weaponNames = new string[weaponInventoryLength];
+                for (int j = 0; j < weaponsList.Length - 1; j++)
+                {
+                    if (weaponsList[j] != null)
+                        weaponNames[j] = weaponsList[j].GetComponent<InteractableItem>().itemName;
+                }
+
+                //New Weapon, add
+                for (int i = 0; i < weaponsList.Length - 1; i++)
+                {
+                    if (weaponsList[i] == null)
+                    {
+                        int index = 0;
+
+                        while (weaponNames.Contains(savedItem.GetComponent<InteractableItem>().itemName))
+                        {
+                            index++;
+                            savedItem.GetComponent<InteractableItem>().itemName += index.ToString();
+                        }
+
+                        weaponsList[i] = savedItem;
+
+                        invIcon.transform.parent = weaponInvWindow.transform;
+                        
+                        invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
+                        invIcon.GetComponent<OnInventoryIconClicked>().ITEM = savedItem;
+                        SetInvIconUILocation(invIcon);
+                        
+                        break;
+                    }
+                }
+
             break;
 
             case ItemTypeUI.ARMOUR:
@@ -249,8 +288,7 @@ public class PlayerInventory : MonoBehaviour
                             itemExists = true;
 
                             consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
-
-                            //Debug.Log(consumablesList[i].GetComponent<InteractableItem>().UIIcon.name);
+                            
                             if (UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
                             {
                                 UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
@@ -264,7 +302,7 @@ public class PlayerInventory : MonoBehaviour
                 if (!itemExists)
                 {
                     //Add icon to UI
-                    GameObject invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
+                    invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
                     
                     //savedItem.GetComponent<InteractableItem>().UIIcon = invIcon;
                     
@@ -286,6 +324,7 @@ public class PlayerInventory : MonoBehaviour
                             }
                             
                             invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
+                            invIcon.GetComponent<OnInventoryIconClicked>().ITEM = savedItem;
                             SetInvIconUILocation(invIcon);
                             
                             break;
@@ -357,20 +396,24 @@ public class PlayerInventory : MonoBehaviour
 
         float startingx = -209.8f;
 
+        Debug.Log(selectedInvList[0]);
+
         for (int i = 0; i < selectedInvList.Length - 1; i++)
         {
+            int listPos = i + 1;
+
             if (selectedInvList[i] != null)
             {
                 //Debug.Log("UI ICON: " + selectedInvList[i].GetComponent<InteractableItem>().UIIcon.name + ", IIU: " + IIU.name);
-                if (selectedInvList[i].GetComponent<InteractableItem>().UIIcon.name + "(Clone)" == IIU.name)
+                if (selectedInvList[i].GetComponent<InteractableItem>().itemName == IIU.GetComponent<OnInventoryIconClicked>().ITEM.GetComponent<InteractableItem>().itemName)
                 {
-                    int listPos = i + 1;
-
+                    
                     // Inv item 1-5
                     if (listPos > 0 && listPos < inventoryCols + 1)
                     {
                         invx = (listPos - 1) * xSpacing;
                         invy = ySpacing;
+                        Debug.Log(listPos);
                     }
                     // Inv item 6-10
                     else if (listPos > inventoryCols && listPos < inventoryCols * 2 + 1)
@@ -389,10 +432,10 @@ public class PlayerInventory : MonoBehaviour
                     {
                         Debug.LogError("ERROR: list pos is higher than inventory limit");
                     }
-
+                    
                     // Place the UI icon on a position on the UI
                     IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(startingx + invx, invy);
-
+                    
                     // Give it the scale to display properly
                     IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f,1,1);
 

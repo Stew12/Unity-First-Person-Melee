@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 8173821029719033412}
   - component: {fileID: 8173821029719033467}
   m_Layer: 5
-  m_Name: ItemInvIconMagicVial
+  m_Name: MagicVialItemInvIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

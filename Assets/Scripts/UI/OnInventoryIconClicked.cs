@@ -17,7 +17,7 @@ public enum ItemTypeUI
 public class OnInventoryIconClicked : MonoBehaviour
 {
     private PlayerInventory pInventory;
-    [SerializeField] private GameObject ITEM;
+    public GameObject ITEM;
     public ItemTypeUI itemTypeUI;
 
     public DragonSpells dragonSpells = DragonSpells.NONE;
