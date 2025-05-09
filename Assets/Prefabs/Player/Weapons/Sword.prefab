@@ -222,7 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponClass: 15
-  weaponAttackDamage: 0
+  weaponID: Sword
+  weaponAttackDamage: 1.3
   weaponWeight: 2
   weaponAttackSpeed: 0.4
   weaponAttackDistance: 2.1
@@ -230,6 +231,7 @@ MonoBehaviour:
   weaponAttackDelayDefault: 0
   maxWeaponDurability: 15
   currentWeaponDurability: 14
+  unsheatheSound: {fileID: 8300000, guid: 8a2a626c81d7fa14b87b920803ae01f1, type: 3}
 --- !u!114 &-7868245328247226945
 MonoBehaviour:
   m_ObjectHideFlags: 0

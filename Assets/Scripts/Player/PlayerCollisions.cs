@@ -21,11 +21,12 @@ public class PlayerCollisions : MonoBehaviour
         {
             case "Enemy":
 
-            if (col.GetComponent<Enemy>().enemyAttacking)
-            {
+            //TODO: Only hurt player when attacking. However, right now is buggy
+            //if (col.GetComponent<Enemy>().enemyAttacking)
+            //{
                 coroutine = EnemyCollision(col, enemyColDelay);
                 StartCoroutine(coroutine);
-            }
+            //}
 
             break;
 

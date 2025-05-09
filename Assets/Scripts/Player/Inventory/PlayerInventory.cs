@@ -235,6 +235,10 @@ public class PlayerInventory : MonoBehaviour
                 savedItem.AddComponent<WeaponPickup>();
                 savedItem.GetComponent<WeaponPickup>().weaponHeldObject = itemFound.GetComponent<WeaponPickup>().weaponHeldObject;
 
+                Vector3 weaponSpawnPos = savedItem.GetComponent<WeaponPickup>().weaponHeldObject.transform.position;
+                Quaternion weaponSpawnRot = savedItem.GetComponent<WeaponPickup>().weaponHeldObject.transform.rotation;
+                //Debug.Log(weaponSpawnPos);
+
                 //Add icon to UI
                 invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
                 weaponInStock = Instantiate(savedItem.GetComponent<WeaponPickup>().weaponHeldObject);
@@ -263,8 +267,12 @@ public class PlayerInventory : MonoBehaviour
                         weaponsList[i] = savedItem;
 
                         weaponInStock.transform.SetParent(weaponStock.transform);
+                        weaponInStock.transform.localPosition = weaponSpawnPos;
+                        weaponInStock.transform.localRotation = weaponSpawnRot;
+                        
                         weaponInStock.GetComponent<PlayerWeaponValues>().weaponID = savedItem.GetComponent<InteractableItem>().itemName;
                         weaponInStock.SetActive(false);
+                        
 
                         invIcon.transform.parent = weaponInvWindow.transform;
                         invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
@@ -462,7 +470,44 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void EquipWeapon(GameObject newWeapon)
+    {
+        if (!player.weaponSheathed)
+            {
+                //Get values of initial weapon
+                GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
+                Vector3 weaponPos = player.equippedWeapon.transform.position;
+                
+                //Send initial weapon back to the Weapon Stock and disable it
+                player.equippedWeapon.transform.parent = weaponStock.transform;
+                player.equippedWeapon.SetActive(false);
 
+                //Look through the weapon stock for a weapon matching the hotKey
+                newWeapon.SetActive(true);
+                newWeapon.transform.SetParent(weaponParent.transform);
+                //newWeapon.transform.position = weaponPos;
+                //newWeapon.transform.position = new Vector3(0,0,0);      
+
+                player.equippedWeapon = newWeapon;
+
+                //Set animations for new weapon
+                player.animator = player.equippedWeapon.GetComponent<Animator>();
+                player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
+                player.ResetAttack();
+
+                //Play sound of unsheathing
+                invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+                invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
+            }
+    }
+
+    private void EquipSpell(DragonSpells newSpell)
+    {
+        HUDSpell.sprite = selectedItemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
+
+        player.dragonSpellSelected = newSpell;
+    }
+    
     private void LoadHotkeys()
     {
         //Can't Switch weapons while attacking!
@@ -507,44 +552,6 @@ public class PlayerInventory : MonoBehaviour
 
             }
         }
-    }
-
-    private void EquipWeapon(GameObject newWeapon)
-    {
-        if (!player.weaponSheathed)
-            {
-                //Get values of initial weapon
-                GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
-                Vector3 weaponPos = player.equippedWeapon.transform.position;
-                
-                //Send initial weapon back to the Weapon Stock and disable it
-                player.equippedWeapon.transform.parent = weaponStock.transform;
-                player.equippedWeapon.SetActive(false);
-
-                //Look through the weapon stock for a weapon matching the hotKey
-                newWeapon.SetActive(true);
-                newWeapon.transform.SetParent(weaponParent.transform);
-                //newWeapon.transform.position = weaponPos;
-                newWeapon.transform.position = new Vector3(0,0,0);      
-
-                player.equippedWeapon = newWeapon;
-
-                //Set animations for new weapon
-                player.animator = player.equippedWeapon.GetComponent<Animator>();
-                player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
-                player.ResetAttack();
-
-                //Play sound of unsheathing
-                invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
-            }
-    }
-
-    private void EquipSpell(DragonSpells newSpell)
-    {
-        HUDSpell.sprite = selectedItemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
-
-        player.dragonSpellSelected = newSpell;
     }
 
 }

@@ -138,7 +138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponClass: 12
-  weaponAttackDamage: 0
+  weaponID: Sword
+  weaponAttackDamage: 2
   weaponWeight: 1.8
   weaponAttackSpeed: 0.2
   weaponAttackDistance: 1
@@ -146,6 +147,7 @@ MonoBehaviour:
   weaponAttackDelayDefault: 0
   maxWeaponDurability: 20
   currentWeaponDurability: 0
+  unsheatheSound: {fileID: 0}
 --- !u!114 &-1666482824129788658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotKey: 2
+  originalItemIndex: 0
 --- !u!1 &6373504194369317107
 GameObject:
   m_ObjectHideFlags: 0
