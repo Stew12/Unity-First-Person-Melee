@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumableType: 1
   restoreAmount: 40
+  itemQuantity: 0
 --- !u!212 &7786502534206770191
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -141,6 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06e17a8ff349de4d9597fc51652ae9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Mana Vial
+  itemName: Magic Vial
   interactedItemType: 3
   UIIcon: {fileID: 8173821029719033465, guid: e6e9ee17074d18747a390adafe0ff156, type: 3}

@@ -159,7 +159,16 @@ public class PlayerInventory : MonoBehaviour
             switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
             {
                 case ItemTypeUI.WEAPON:
-                    EquipWeapon(item);
+
+                    foreach (Transform weapon in weaponStock.transform)
+                    {
+                        if (weapon.gameObject.GetComponent<PlayerWeaponValues>().weaponID == itemGObj.GetComponent<OnInventoryIconClicked>().ITEM.GetComponent<InteractableItem>().itemName)
+                        {
+                            EquipWeapon(weapon.gameObject);
+                        }
+                    }
+
+                    
                 break;
 
                 case ItemTypeUI.ARMOUR:
@@ -218,6 +227,7 @@ public class PlayerInventory : MonoBehaviour
         savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon; 
 
         GameObject invIcon;
+        GameObject weaponInStock;
 
         switch (savedItem.GetComponent<InteractableItem>().interactedItemType)
         {
@@ -227,6 +237,7 @@ public class PlayerInventory : MonoBehaviour
 
                 //Add icon to UI
                 invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
+                weaponInStock = Instantiate(savedItem.GetComponent<WeaponPickup>().weaponHeldObject);
                 
                 string[] weaponNames = new string[weaponInventoryLength];
                 for (int j = 0; j < weaponsList.Length - 1; j++)
@@ -242,6 +253,7 @@ public class PlayerInventory : MonoBehaviour
                     {
                         int index = 0;
 
+                        // Create a unique weapon name
                         while (weaponNames.Contains(savedItem.GetComponent<InteractableItem>().itemName))
                         {
                             index++;
@@ -250,8 +262,11 @@ public class PlayerInventory : MonoBehaviour
 
                         weaponsList[i] = savedItem;
 
+                        weaponInStock.transform.SetParent(weaponStock.transform);
+                        weaponInStock.GetComponent<PlayerWeaponValues>().weaponID = savedItem.GetComponent<InteractableItem>().itemName;
+                        weaponInStock.SetActive(false);
+
                         invIcon.transform.parent = weaponInvWindow.transform;
-                        
                         invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
                         invIcon.GetComponent<OnInventoryIconClicked>().ITEM = savedItem;
                         SetInvIconUILocation(invIcon);
@@ -345,7 +360,8 @@ public class PlayerInventory : MonoBehaviour
             //Find Item
             if (consumablesList[i] != null)
             {
-                if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.name)
+                //Debug.Log(consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name + ", " + dorItem.GetComponent<InteractableItem>().itemName);
+                if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().consumable.name == dorItem.GetComponent<InteractableItem>().itemName)
                 {
                     consumablesList[i].GetComponent<ConsumableItem>().itemQuantity--;
 
@@ -471,6 +487,7 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
+    //Disable hotkeys for now
     public void HotKeyedItem(int index, bool weaponSheathed)
     {
         if (!player.attacking)
@@ -482,7 +499,7 @@ public class PlayerInventory : MonoBehaviour
                 
                 //WEAPON
                 //TODO: If is a weapon
-                EquipWeapon(hotKeyList[index - 1]);
+                //EquipWeapon(hotKeyList[index - 1]);
 
                 //SPELL
 

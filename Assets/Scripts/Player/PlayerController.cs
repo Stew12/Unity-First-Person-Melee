@@ -9,7 +9,6 @@ using Unity.VisualScripting;
 using TMPro;
 using JetBrains.Annotations;
 using UnityEditor.Rendering;
-using Unity.VisualScripting.Dependencies.Sqlite;
 
 public class PlayerController : MonoBehaviour
 {

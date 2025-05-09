@@ -27,6 +27,7 @@ public enum WeaponClass
 public class PlayerWeaponValues : MonoBehaviour
 {
     public WeaponClass weaponClass = WeaponClass.SHORTSWORD;
+    public string weaponID = "Sword";
 
     public float weaponAttackDamage = 2;
     //Weight- higher weight slows player down when they attack

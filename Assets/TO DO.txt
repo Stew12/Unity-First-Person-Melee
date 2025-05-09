@@ -14,6 +14,8 @@ For sorceress, seems like she will sometimes attack but not shoot a fireball
 
 when making a new object for saved item, it creates it in scene as well it seems. Find a way to stop that or destroy it after.
 
+weapon switching when picking up a new weapon is bugged
+
 
 BALANCING
 
