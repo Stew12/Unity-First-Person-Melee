@@ -5857,6 +5857,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1439064117, guid: edee1349e414e7c48abf2d456ad0860b, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
       propertyPath: moveSpeed
@@ -6001,6 +6005,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126781738654007223, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945980854232416083, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4945980854232416084, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
