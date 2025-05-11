@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerCollisions : MonoBehaviour
 {
@@ -141,6 +142,12 @@ public class PlayerCollisions : MonoBehaviour
             GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= GetComponent<PlayerController>().weaponDurabilityLossBlock;
         }
 
+        // Player death
+        if (GetComponent<PlayerValues>().currentHealth <= 0)
+        {
+            PlayerDeath();
+        }
+
         hurtFlash.enabled = true;
         coroutine = HurtFlashDisappear(hurtFlashTime);
         StartCoroutine(coroutine);
@@ -150,6 +157,12 @@ public class PlayerCollisions : MonoBehaviour
 
         GetComponent<PlayerController>().audioSource.pitch = 1;
         GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
+    }
+
+    private void PlayerDeath()
+    {
+        //For now, just restart the scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private int CalculateDamage(Collider harmfulEntity, bool blocked)
