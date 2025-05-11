@@ -753,7 +753,7 @@ public class PlayerController : MonoBehaviour
 
     public void BronzeCollect(int coins)
     {
-        GetComponent<PlayerValues>().bronze = (int)(coins * coinToBronzeFactor);
+        GetComponent<PlayerValues>().bronze += (int)(coins * coinToBronzeFactor);
         bronzeAmountLabel.text = GetComponent<PlayerValues>().bronze.ToString();
     }
 

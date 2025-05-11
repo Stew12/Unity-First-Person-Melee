@@ -29,6 +29,7 @@ public class PlayerDragonSpellList : MonoBehaviour
     private bool thunderTargetSpawned; 
     private GameObject spawnedLTarget;
     [SerializeField] private float thunderTargetDistance = 0.75f;
+    [SerializeField] private float thunderTargetyOffset = 0.1f;
 
     public void PrepareDragonSpell(DragonSpells dragonSpell, PlayerController player, PlayerValues playerValues)
     {
@@ -92,10 +93,11 @@ public class PlayerDragonSpellList : MonoBehaviour
 
         if (!thunderTargetSpawned)
         {
-            //Debug.Log(player.gameObject.transform.forward.z);
             // Spawn thunder target
-            //GameObject lTarget = Instantiate(player.thunderTarget, new Vector3 (player.gameObject.transform.forward.x, playerPos.y, player.gameObject.transform.forward.z + thunderTargetDistance), Quaternion.Euler(new Vector3(90, 0, 0)));
-            GameObject lTarget = Instantiate(player.thunderTarget, player.transform.position + player.transform.forward + player.transform.forward * thunderTargetDistance, Quaternion.Euler(new Vector3(90, 0, 0)));
+            
+            Vector3 playerlSpawnPos = new Vector3 (transform.position.x, transform.position.y + thunderTargetyOffset, transform.position.z);
+
+            GameObject lTarget = Instantiate(player.thunderTarget, playerlSpawnPos + player.transform.forward + player.transform.forward * thunderTargetDistance, Quaternion.Euler(new Vector3(90, 0, 0)));
             
             lTarget.transform.parent = player.transform;
 
