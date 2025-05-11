@@ -234,7 +234,10 @@ MonoBehaviour:
   enemyController: {fileID: 0}
   spriteRenderer: {fileID: 0}
   enemyProjectile: {fileID: 0}
+  projectileSpawn: {fileID: 0}
   enemyAOE: {fileID: 0}
+  EnemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
+    type: 3}
   enemyHPBarBG: {fileID: 7299311440119378575}
   mainHitbox: {fileID: 7075933641429308993}
   weakPointHitboxes:

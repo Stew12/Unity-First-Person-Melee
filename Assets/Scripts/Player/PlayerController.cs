@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public Image powerBarUI;
     public Image durabilityBarUI;
     public TextMeshProUGUI durabilityLabel;
+    public TextMeshProUGUI bronzeAmountLabel;
 
     [Header("Controller")]
     public float moveSpeed = 2.5f;
@@ -81,6 +82,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip swordSwing;
     [SerializeField] private AudioClip wallHitSound;
     [SerializeField] private AudioClip enemyHitSound;
+    public AudioClip coinPickupSound;
     public AudioClip parrySound;
     public AudioClip hurtSound;
 
@@ -124,6 +126,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dialog")]
     public TextCrawl dialogueTextBox;
+
+    [Header("Currency")]
+    [SerializeField] private float coinToBronzeFactor = 10;
 
     [Header("Timing")]
     [HideInInspector] public bool waiting = false;
@@ -744,6 +749,12 @@ public class PlayerController : MonoBehaviour
     void ShowItemInfo()
     {
 
+    }
+
+    public void BronzeCollect(int coins)
+    {
+        GetComponent<PlayerValues>().bronze = (int)(coins * coinToBronzeFactor);
+        bronzeAmountLabel.text = GetComponent<PlayerValues>().bronze.ToString();
     }
 
     public void KnockBack(Transform attackingEntityPos)

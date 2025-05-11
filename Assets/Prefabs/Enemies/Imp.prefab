@@ -382,6 +382,8 @@ MonoBehaviour:
   projectileSpawn: {fileID: 0}
   enemyAOE: {fileID: 1872096942104245859, guid: dad915fe99bc30e40b6cfd4f9de5496d,
     type: 3}
+  EnemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
+    type: 3}
   enemyHPBarBG: {fileID: 2432492757766264808}
   mainHitbox: {fileID: 7075933641429308993}
   weakPointHitboxes:

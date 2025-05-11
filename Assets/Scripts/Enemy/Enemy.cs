@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
     public GameObject enemyProjectile;
     public GameObject projectileSpawn;
     public GameObject enemyAOE;
+    [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private GameObject enemyHPBarBG;
     public CapsuleCollider mainHitbox;
     public CapsuleCollider[] weakPointHitboxes;
@@ -47,6 +49,9 @@ public class Enemy : MonoBehaviour
     int currentHealth;
     public int maxHealth;
     public float attackDamage;
+    
+    [Header("Drops")]
+    public int bronze = 3;
 
     [Header("Movement")]
     public float roamSpeed;
@@ -345,10 +350,16 @@ public class Enemy : MonoBehaviour
 
     void EnemyDeath()
     {
-        audioSource.pitch = 1;
-        audioSource.PlayOneShot(enemyDie);
+        //audioSource.pitch = 1;
+        //audioSource.PlayOneShot(enemyDie);
 
-        // TEMPORARY: Destroy Object
+        // Spawn enemy death object and destroy enemy object
+        GameObject EDE = Instantiate(enemyDeathEffect, transform.position, Quaternion.identity);
+
+        EDE.GetComponent<EnemyDeathEffect>().deathSound = enemyDie;
+        EDE.GetComponent<EnemyDeathEffect>().deathEffectTime = enemyDie.length;
+        EDE.GetComponent<EnemyDeathEffect>().coinAmount = bronze;
+        
         Destroy(gameObject);
     }
 }

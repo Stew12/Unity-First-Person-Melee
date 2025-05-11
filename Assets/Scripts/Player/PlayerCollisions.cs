@@ -71,6 +71,21 @@ public class PlayerCollisions : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider col)
+    {
+        switch (col.tag)
+        {
+            case "Detection Radius Exit":
+                Debug.Log("Exited detection radius...");
+                col.GetComponent<DetectionRadius>().PlayerExited();
+            break;
+
+            default:
+
+            break;
+        }
+    }
+
     private IEnumerator EnemyCollision(Collider col, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -197,6 +212,12 @@ public class PlayerCollisions : MonoBehaviour
         return totalDamage;
     }
 
+    public void CoinPickup(int coins)
+    {
+        GetComponent<PlayerController>().BronzeCollect(coins);
+        GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().coinPickupSound);
+    }
+
     IEnumerator HurtFlashDisappear(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -204,18 +225,5 @@ public class PlayerCollisions : MonoBehaviour
         hurtFlash.enabled = false;
     }
 
-    private void OnTriggerExit(Collider col)
-    {
-        switch (col.tag)
-        {
-            case "Detection Radius Exit":
-                Debug.Log("Exited detection radius...");
-                col.GetComponent<DetectionRadius>().PlayerExited();
-            break;
-
-            default:
-
-            break;
-        }
-    }
+    
 }

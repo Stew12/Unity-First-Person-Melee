@@ -19,6 +19,10 @@ public class PlayerValues : MonoBehaviour
     //Resourcefulness- increases effects of consumables
     public int resourcefulness = 10;    
 
+    [Header("Collection")]
+
+    public int bronze = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
