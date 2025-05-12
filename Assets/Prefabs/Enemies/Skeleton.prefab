@@ -236,8 +236,7 @@ MonoBehaviour:
   enemyProjectile: {fileID: 0}
   projectileSpawn: {fileID: 0}
   enemyAOE: {fileID: 0}
-  EnemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
-    type: 3}
+  enemyDeathEffect: {fileID: 0}
   enemyHPBarBG: {fileID: 7299311440119378575}
   mainHitbox: {fileID: 7075933641429308993}
   weakPointHitboxes:
@@ -245,6 +244,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   maxHealth: 200
   attackDamage: 10
+  bronze: 3
   roamSpeed: 0
   chaseSpeed: 0.5
   distanceFromPlayer: 0
