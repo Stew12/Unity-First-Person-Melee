@@ -14,14 +14,17 @@ For sorceress, seems like she will sometimes attack but not shoot a fireball
 
 when making a new object for saved item, it creates it in scene as well it seems. Find a way to stop that or destroy it after.
 
-weapon switching when picking up a new weapon is bugged
+pressing interact twice quickly on a door will make it swing open fast, then shut again. This is actually a cool hidden tech I'd like to
+keep, but stop it from closing again after swinging open fast.
+
+Lighting issues, would at minimum like sprites outside of light to not be visible. Could do a programamtic in range type thing but eh
 
 
 BALANCING
 
 EXTENSIONS
 
-Add in ability to pick up weapons, armour and spells
+Add in ability to pick up armour and spells
 
 
 
@@ -33,9 +36,11 @@ Likely do this by having custom sped up audio clips that are roughly attributed 
 
 GAMEPLAY
 
+Able to transfer between scenes
+
 Durability repair items
 
-Player death
+Player death 'animation'
 
 
 LEVEL
@@ -60,11 +65,7 @@ NPC portrait art (this seems good: https://canonkiller.itch.io/dragonborn-portra
 
 INVENTORY
 
-inventory work - selecting, equipping, etc. 
-
-Tabs for different inventory categories
-
-Adding if waiting to update methods in player control
+control inventory with controller
 
 
 LONG TERM
@@ -76,4 +77,6 @@ new enemy types
 dungeon level
 
 town with NPCs
+
+tutorial area
 

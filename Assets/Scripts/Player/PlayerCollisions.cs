@@ -168,7 +168,8 @@ public class PlayerCollisions : MonoBehaviour
         StartCoroutine(coroutine);
 
         //Knock player backward (relative to the enemy, not the player)
-        GetComponent<PlayerController>().KnockBack(enemy.gameObject.transform);
+        if (enemy.gameObject != null)
+            GetComponent<PlayerController>().KnockBack(enemy.gameObject.transform);
 
         GetComponent<PlayerController>().audioSource.pitch = 1;
         GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);

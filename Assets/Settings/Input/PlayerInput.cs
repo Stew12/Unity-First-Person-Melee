@@ -568,6 +568,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""155a3b76-59c4-48b9-a7fd-6deae0b9cf50"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7a0cc19c-3f8f-4dd0-a81b-3029ad1a9d50"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",

@@ -674,10 +674,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!waiting)
             Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
-        else if (playerInventory.enabled)
-        {
-            playerInventory.ItemIsSelected(null, null);
-        }
+        //else if (playerInventory.enabled)
+        //{
+            //playerInventory.ItemIsSelected(null, null);
+        //}
     }
 
     void InteractRaycast()
