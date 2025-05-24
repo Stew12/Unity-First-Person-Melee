@@ -682,17 +682,17 @@ public class PlayerController : MonoBehaviour
 
     void InteractRaycast()
     {
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
-        { 
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
+        {
             /* If NPC interacted */
-            if(hit.transform.TryGetComponent<NPC>(out NPC N))
-            { 
+            if (hit.transform.TryGetComponent<NPC>(out NPC N))
+            {
                 waiting = true;
                 Cursor.lockState = CursorLockMode.None;
                 dialogueTextBox.transform.parent.gameObject.SetActive(true);
                 N.GetComponent<NPC>().PlayDialogue(dialogueTextBox);
             }
-            
+
             /* If door interacted */
             if (hit.transform.tag == "Door")
             {
@@ -707,8 +707,11 @@ public class PlayerController : MonoBehaviour
             }
             else if (hit.transform.tag == "Player Item")
             {
-                Debug.Log("ITEM HIT");
                 playerInventory.AddToInventory(hit.transform.gameObject);
+            }
+            else if (hit.transform.tag == "Chest")
+            {
+                hit.transform.GetComponent<TreasureChest>().ChestOpen();
             }
         } 
     }

@@ -19,12 +19,13 @@ keep, but stop it from closing again after swinging open fast.
 
 Lighting issues, would at minimum like sprites outside of light to not be visible. Could do a programamtic in range type thing but eh
 
+Blocking can be spammed leading to easy parrying. Likely set a cooldown after releasing a block before can block again.
+
+Treasure chest spawns bigger items such as swords in ground. Find some way to deal with this.
 
 BALANCING
 
 EXTENSIONS
-
-Add in ability to pick up armour and spells
 
 
 
@@ -67,6 +68,8 @@ INVENTORY
 
 control inventory with controller
 
+Add in ability to pick up armour and spells and select them from inventory
+
 
 LONG TERM
 
@@ -79,4 +82,6 @@ dungeon level
 town with NPCs
 
 tutorial area
+
+levelling system
 
