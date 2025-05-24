@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5524950084604808868}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8470525, y: 1.8470525, z: 1.8470525}
+  m_LocalScale: {x: 1.765657, y: 1.765657, z: 1.765657}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8665687354510466113}
@@ -85,7 +85,7 @@ Transform:
   m_GameObject: {fileID: 6284366846588079834}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.0681362, y: 3.0681362, z: 3.0681362}
+  m_LocalScale: {x: 3.1219027, y: 3.1219027, z: 3.1219027}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8665687354510466113}
@@ -146,7 +146,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6286608605994125364}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1097437, y: 1.1097437, z: 1.1097437}
   m_ConstrainProportionsScale: 0
@@ -157,7 +157,7 @@ Transform:
   - {fileID: 6483194115729005214}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6270278121750712902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +177,8 @@ MonoBehaviour:
     type: 3}
   projectileSpawn: {fileID: 8630389437210193126}
   enemyAOE: {fileID: 0}
-  enemyDeathEffect: {fileID: 0}
+  enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
+    type: 3}
   enemyHPBarBG: {fileID: 2338915614995728592}
   mainHitbox: {fileID: 1499837858204121754}
   weakPointHitboxes: []
@@ -199,8 +200,8 @@ MonoBehaviour:
   attackTrajectorySet: 0
   enemyAlert: {fileID: 0}
   enemyAttack: {fileID: 0}
-  enemyHurt: {fileID: 0}
-  enemyDie: {fileID: 0}
+  enemyHurt: {fileID: 8300000, guid: 27fddf1ca53fc0c43811efbeef025e9d, type: 3}
+  enemyDie: {fileID: 8300000, guid: 294157843de34454b82707a4061e78b2, type: 3}
   knockBackSpeed: 3
   maxParryKnockBackTime: 0.45
   knockBackTime: 0
