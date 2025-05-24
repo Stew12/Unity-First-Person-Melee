@@ -25,7 +25,7 @@ public class Billboarding : MonoBehaviour
 
         float singleStep = turnSpeed * Time.deltaTime;
 
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, -targetDirection, singleStep, 0.0f);
 
         //Remove y from new Direction- we do not want billboarded sprites to rotate up or down
         if (!isEnemyProjectile)

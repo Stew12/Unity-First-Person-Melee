@@ -103,7 +103,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     private void FollowPlayerBasic()
     {
          //When chasing, move towards player on X and Z axis
-        enemyClass.GetComponent<Enemy>().enemyController.Move(new Vector3(enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime)); 
+        enemyClass.GetComponent<Enemy>().enemyController.Move(new Vector3(-enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, -enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime)); 
     }
 
     //the enemy moves quickly towards the player
@@ -112,7 +112,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         if (!enemyClass.attackTrajectorySet)
         {
             //Point towards player pos upon spawning
-            trajectory = new Vector3(enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime);
+            trajectory = new Vector3(-enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, -enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime);
             enemyClass.attackTrajectorySet = true;
         }
 

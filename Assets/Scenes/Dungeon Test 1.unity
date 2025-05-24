@@ -445,6 +445,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770191, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dcda34aabfbb7394e98ca69a1b13649d, type: 2}
     - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
         type: 3}
       propertyPath: m_RootOrder
@@ -862,6 +867,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 2126284151353266232, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dcda34aabfbb7394e98ca69a1b13649d, type: 2}
     - target: {fileID: 7075933641429308994, guid: ef83fe617fab5d049b80b731393060c9,
         type: 3}
       propertyPath: chaseSpeed
@@ -1450,6 +1460,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyProjectile: 0
   turnSpeed: 10
+--- !u!114 &543439741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543439736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!4 &544250258 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2639178695112683253, guid: d265a951c51dfbb4db61e51761d27b18,
@@ -2193,27 +2223,27 @@ PrefabInstance:
     - target: {fileID: 1972037518561445367, guid: d9f2a4497dbab2242aaee8e2de67069f,
         type: 3}
       propertyPath: m_Range
-      value: 10
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1972037518561445367, guid: d9f2a4497dbab2242aaee8e2de67069f,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.6792453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1972037518561445367, guid: d9f2a4497dbab2242aaee8e2de67069f,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.6792453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1972037518561445367, guid: d9f2a4497dbab2242aaee8e2de67069f,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.6792453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1972037518561445367, guid: d9f2a4497dbab2242aaee8e2de67069f,
         type: 3}
       propertyPath: m_Intensity
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1972037518561445367, guid: d9f2a4497dbab2242aaee8e2de67069f,
         type: 3}
@@ -3304,11 +3334,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: dcda34aabfbb7394e98ca69a1b13649d, type: 2}
     - target: {fileID: 7075933641429309003, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
@@ -3457,7 +3487,7 @@ PrefabInstance:
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
@@ -4939,7 +4969,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: dcda34aabfbb7394e98ca69a1b13649d, type: 2}
     - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_Name
@@ -5351,6 +5381,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyProjectile: 0
   turnSpeed: 10
+--- !u!114 &1814734446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814734438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!4 &1904728955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9031615789454365113, guid: 997467a0aaef81f489a0efe415506bab,
@@ -5815,6 +5865,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770191, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786502534206770191, guid: 4281bebbd9ee7514db4c31db0e756d65,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dcda34aabfbb7394e98ca69a1b13649d, type: 2}
     - target: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
         type: 3}
       propertyPath: m_RootOrder
@@ -7020,7 +7080,7 @@ PrefabInstance:
     - target: {fileID: 7593769521028356584, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7593769521684208556, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
