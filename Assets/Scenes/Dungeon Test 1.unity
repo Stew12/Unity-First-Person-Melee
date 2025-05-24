@@ -125,6 +125,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &42430345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 143302121417062340, guid: d9f2a4497dbab2242aaee8e2de67069f,
+    type: 3}
+  m_PrefabInstance: {fileID: 726558200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &62767653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2251,6 +2257,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 726558200}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &726558202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42430345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &774395757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3279,6 +3305,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 7075933641429309003, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_Name
@@ -3425,6 +3456,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
       propertyPath: maxHealth
       value: 10
       objectReference: {fileID: 0}
@@ -3518,11 +3554,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: dcda34aabfbb7394e98ca69a1b13649d, type: 2}
     - target: {fileID: 7075933641429309003, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
