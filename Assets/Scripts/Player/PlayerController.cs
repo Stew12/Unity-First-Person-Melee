@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
             if (attackingEntityPos != null)
             {
                 //transform.position += new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime);
-                controller.Move(new Vector3(attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime));
+                controller.Move(new Vector3(-attackingEntityPos.forward.x * knockBackSpeed * Time.deltaTime, 0, -attackingEntityPos.forward.z * knockBackSpeed * Time.deltaTime));
             }
         }
         else

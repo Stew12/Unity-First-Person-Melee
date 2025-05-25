@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Enemy Projectile
+  - Weak Point
+  - Detection Radius Enter
+  - Detection Radius Exit
+  - Door
+  - Enemy Wall
+  - Player Item
+  - Player Projectile
+  - Player AOE
+  - Dialog Text
   layers:
   - Default
   - TransparentFX

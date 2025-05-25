@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
     public GameObject enemyProjectile;
     public GameObject projectileSpawn;
+    public GameObject enemyWeaponAttack;
     public GameObject enemyAOE;
     [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private GameObject enemyHPBarBG;
@@ -166,7 +167,7 @@ public class Enemy : MonoBehaviour
                             if (attackDuration > 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile, enemyAOE);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack);
                             }
                             else if (attackDuration <= 0)
                             {

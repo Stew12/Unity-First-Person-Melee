@@ -20,8 +20,12 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     GameObject enemyGameObject;
     GameObject projectile;
     GameObject AOE;
+    GameObject weaponSlash;
 
     [HideInInspector] public int attackChoice = -1;
+
+    private float slashDistance = -0.8f;
+    private float slashOffset = 0.2f;
 
     public void RoamBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
     {
@@ -66,36 +70,37 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE)
+    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash)
     {
         this.enemyType = enemyType;
         this.enemyClass = enemyClass;
         this.enemyGameObject = enemyGameObject;
         this.projectile = projectile;
         this.AOE = AOE;
+        this.weaponSlash = weaponSlash;
 
         switch (enemyType)
         {
             //SKELETON ATTACKS: RUSH AT PLAYER 
             case EnemyType.SKELETON:
                 //TODO: set trajectory towards player then move ONLY on that trqjectory for rest of attack
-               EnemyAttackListSelect(EnemyAttack.BASICPHYSICAL);
-            break;
+                EnemyAttackListSelect(EnemyAttack.BASICPHYSICAL);
+                break;
 
             //SKELETON ATTACKS: SHOOT FIREBALL AT PLAYER 
             case EnemyType.SORCERESS:
                 EnemyAttackListSelect(EnemyAttack.BASICRANGED);
-            break;
+                break;
 
 
             case EnemyType.IMP:
-                EnemyAttackRandomChoice(new EnemyAttack[] {EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE});
-                
-            break;
+                EnemyAttackRandomChoice(new EnemyAttack[] { EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE });
+
+                break;
 
             default:
 
-            break;
+                break;
         }
     }
 
@@ -118,6 +123,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
         enemyClass.audioSource.pitch = 1;
         enemyClass.audioSource.PlayOneShot(enemyClass.enemyAttack);
+        WeaponSlashEffect();
 
         enemyClass.enemyController.Move(trajectory); 
     }
@@ -143,13 +149,34 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         }
     }
 
+    private void WeaponSlashEffect()
+    {
+        if (weaponSlash != null)
+        {
+            if (enemyClass.canFireProjectile)
+            {
+                enemyClass.canFireProjectile = false;
+
+                Vector3 slashPos = enemyGameObject.transform.localPosition - enemyGameObject.transform.forward - enemyGameObject.transform.forward * slashDistance;
+                slashPos = new Vector3(slashPos.x + slashOffset, slashPos.y + slashOffset, slashPos.z);
+
+                GameObject spawnedSlash = Instantiate(weaponSlash, slashPos, enemyGameObject.transform.rotation);
+                spawnedSlash.transform.parent = enemyGameObject.transform;
+
+                spawnedSlash.GetComponent<EnemyAOEAttack>().enemyCasterClass = enemyClass;
+                spawnedSlash.GetComponent<EnemyAOEAttack>().rangeTime = enemyClass.attackDuration;
+                spawnedSlash.GetComponent<EnemyAOEAttack>().projectileDamage = enemyClass.attackDamage;
+            }
+        }
+    }
+
     private void DuplicateSelf()
     {
         //if (enemyClass.canFireProjectile)
         //{
-          //  enemyClass.canFireProjectile = false;
+        //  enemyClass.canFireProjectile = false;
 
-            //GameObject spawnedEnemy = Instantiate(AOE, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
+        //GameObject spawnedEnemy = Instantiate(AOE, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
         //}
     }
 

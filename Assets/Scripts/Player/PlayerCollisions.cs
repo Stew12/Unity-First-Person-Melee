@@ -22,14 +22,14 @@ public class PlayerCollisions : MonoBehaviour
         {
             case "Enemy":
 
-            //TODO: Only hurt player when attacking. However, right now is buggy
-            //if (col.GetComponent<Enemy>().enemyAttacking)
-            //{
+                //TODO: Only hurt player when attacking. However, right now is buggy
+                //if (col.GetComponent<Enemy>().enemyAttacking)
+                //{
                 coroutine = EnemyCollision(col, enemyColDelay);
                 StartCoroutine(coroutine);
-            //}
+                //}
 
-            break;
+                break;
 
             case "Enemy Projectile":
                 if (canTakeDamage)
@@ -43,22 +43,36 @@ public class PlayerCollisions : MonoBehaviour
                         GetComponent<PlayerController>().KnockBack(col.GetComponent<EnemyAOEAttack>().enemyCasterClass.gameObject.transform);
                     }
 
-                    //Projectiles can be blocked, but not parried
-                    TakeDamage(col, true);
-                    canTakeDamage = false;
+                    //Projectiles can be blocked, but not parried. However sword slashes can be parried, which are classified as projectiles but fucntionally aren't.
+                    if (!attackParried)
+                    {
+                        TakeDamage(col, true);
+                        canTakeDamage = false;
 
-                    GetComponent<PlayerController>().DontTakeDamage();
+                        GetComponent<PlayerController>().DontTakeDamage();
 
-                    if (col.GetComponent<EnemyProjectile>() != null)
-                        Destroy(col.gameObject);
+                        if (col.GetComponent<EnemyProjectile>() != null)
+                            Destroy(col.gameObject);
+                    }
+                    else
+                    {
+                        //Larger momentum increase when parrying.
+                        GetComponent<PlayerController>().MomentumIncrease(true);
+
+                        //Knock ENEMY backward (relative to the player)
+                        col.GetComponent<EnemyAOEAttack>().enemyCasterClass.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
+
+                        GetComponent<PlayerController>().audioSource.pitch = 1;
+                        GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
+                    }
                 }
-            break;
+                break;
 
             case "Detection Radius Enter":
                 Debug.Log("Entered detection radius!");
                 col.GetComponent<DetectionRadius>().PlayerEntered();
-            break;
-            
+                break;
+
             // case "Enemy Wall":
             //     //Ignore the collision of any 'enemy wall' objects
             //     Physics.IgnoreCollision(GetComponent<PlayerController>().controller, col.GetComponent<Collider>());
@@ -67,7 +81,7 @@ public class PlayerCollisions : MonoBehaviour
 
             default:
 
-            break;
+                break;
         }
     }
 
@@ -78,11 +92,11 @@ public class PlayerCollisions : MonoBehaviour
             case "Detection Radius Exit":
                 Debug.Log("Exited detection radius...");
                 col.GetComponent<DetectionRadius>().PlayerExited();
-            break;
+                break;
 
             default:
 
-            break;
+                break;
         }
     }
 
@@ -91,53 +105,53 @@ public class PlayerCollisions : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         //Take damage from enemy
-                if (canTakeDamage)
+        if (canTakeDamage)
+        {
+            //TODO: make it that player can't parry enemy while they're winding up
+
+            //BUG TBF: enemy hitting parry and player hitbox causes the hitbox collision to return a parry, but 
+            //since it happens same time as enemy hitting player hitbox, seems to not be ready by playercontroller, causing a 'false parry'
+
+            //if (col.GetComponent<Enemy>().enemyAttacking)
+            //{
+            if (!attackParried)
+            {
+                TakeDamage(col, true);
+            }
+            else
+            {
+                // Attack parry
+                if (col.GetComponent<Enemy>().enemyAttacking)
                 {
-                    //TODO: make it that player can't parry enemy while they're winding up
+                    //Larger momentum increase when parrying.
+                    GetComponent<PlayerController>().MomentumIncrease(true);
 
-                    //BUG TBF: enemy hitting parry and player hitbox causes the hitbox collision to return a parry, but 
-                    //since it happens same time as enemy hitting player hitbox, seems to not be ready by playercontroller, causing a 'false parry'
-                        
-                    //if (col.GetComponent<Enemy>().enemyAttacking)
-                    //{
-                        if (!attackParried)
-                        {
-                            TakeDamage(col, true);
-                        }
-                        else 
-                        {
-                            // Attack parry
-                            if (col.GetComponent<Enemy>().enemyAttacking)
-                            {
-                                //Larger momentum increase when parrying.
-                                GetComponent<PlayerController>().MomentumIncrease(true);
+                    //Knock ENEMY backward (relative to the player)
+                    col.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
 
-                                //Knock ENEMY backward (relative to the player)
-                                col.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
-
-                                GetComponent<PlayerController>().audioSource.pitch = 1;
-                                GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
-                            }
-                            else
-                            {
-                                TakeDamage(col, true);
-                            }
-                        }
-                        
-                        attackParried = false;
-
-                        canTakeDamage = false;
-
-                        GetComponent<PlayerController>().DontTakeDamage();
-                    //}
-
+                    GetComponent<PlayerController>().audioSource.pitch = 1;
+                    GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
                 }
+                else
+                {
+                    TakeDamage(col, true);
+                }
+            }
 
-                col.GetComponent<Enemy>().Wait();
+            attackParried = false;
+
+            canTakeDamage = false;
+
+            GetComponent<PlayerController>().DontTakeDamage();
+            //}
+
+        }
+
+        col.GetComponent<Enemy>().Wait();
     }
 
     private void TakeDamage(Collider enemy, bool canBlock)
-    {   
+    {
 
 
         // If attack is not blocked or parried, take full damage, if blocked, take a percentage of the damage,
@@ -170,6 +184,8 @@ public class PlayerCollisions : MonoBehaviour
         //Knock player backward (relative to the enemy, not the player)
         if (enemy.gameObject != null)
             GetComponent<PlayerController>().KnockBack(enemy.gameObject.transform);
+        else if (enemy.GetComponent<EnemyAOEAttack>() != null)
+            GetComponent<PlayerController>().KnockBack(enemy.GetComponent<EnemyAOEAttack>().enemyCasterClass.gameObject.transform);
 
         GetComponent<PlayerController>().audioSource.pitch = 1;
         GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
