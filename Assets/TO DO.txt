@@ -21,19 +21,28 @@ Lighting issues, would at minimum like sprites outside of light to not be visibl
 
 Blocking can be spammed leading to easy parrying. Likely set a cooldown after releasing a block before can block again.
 
-Treasure chest spawns bigger items such as swords in ground. Find some way to deal with this.
+Treasure chest spawns bigger items such as swords in ground. Find some way to deal with this. Idea: have weapons be rotated on their sides
+
+Player knockback needs to be changed in accordance with enemy billboarding changes
+
+enemy sprites no longer turn red before attacking due to shader- have a slightly larger transparent red sprite appear around them instead
+
+
+
+
 
 BALANCING
 
 EXTENSIONS
 
-
+Have enemies spawn a sword slash effect etc when attacking
 
 AUDIO
 
 make footsteps tempo play faster if moving faster, rather than pitch- 
 Likely do this by having custom sped up audio clips that are roughly attributed to each section of the movement guage when boosting
 
+Sound effect for doors opening
 
 GAMEPLAY
 
@@ -43,6 +52,8 @@ Durability repair items
 
 Player death 'animation'
 
+Have the hand of the player on its own be animated, not the the weapon, that way we can add in new weapons by simply making it a child of the hand.
+
 
 LEVEL
 
@@ -51,6 +62,8 @@ Switch opens door
 Switch moves/rotates platform
 
 Platform rotates/moves and stops at intervals
+
+Full tutorial area
 
 
 NPC

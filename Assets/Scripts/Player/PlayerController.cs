@@ -310,7 +310,8 @@ public class PlayerController : MonoBehaviour
         input.Boost.performed += ctx => Boost();
         input.Interact.performed += ctx => Interact();
         input.Sheathe.performed += ctx => SheatheWeaponToggle();
-        input.Repair.performed += ctx => RepairWeapon();
+        input.ItemQuickSelect.started += ctx => ItemQuickSelect();
+        input.ItemQuickSelect.canceled += ctx => ItemStopSelecting();
         input.Inventory.performed += ctx => InventoryToggle();
         input.EquipItem.performed += ctx => EquipItem();
         input.OpenItemInfo.performed += ctx => ShowItemInfo();
@@ -651,18 +652,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void RepairWeapon()
+    private void ItemQuickSelect()
     {
-        if (!blocking)
-        {
-            //Repair currently equipped weapon if repair kit available
+        playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<ItemQuickSelect>().StartFillUseCircle();
+    }
 
-        }
-        else
-        {
-            //TODO: if button held down long enough while blocking, perform a weapon destruction attack
-            //WeaponDestructionAttack();
-        }
+    private void ItemStopSelecting()
+    {
+        playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<ItemQuickSelect>().StopFillUseCircle();
     }
 
     private void WeaponDestructionAttack()

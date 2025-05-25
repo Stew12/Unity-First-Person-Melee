@@ -41,10 +41,13 @@ public class PlayerInventory : MonoBehaviour
     public int itemInvIndex = 1;
     public int spellInvIndex = 1;
 
+    [Header("UI")]
+    [SerializeField] private Image HUDSpell;
+    public Image HUDItem;
+
     [Header("Other Variables")]
     public GameObject weaponStock;
     private AudioSource invAudioSource;
-    [SerializeField] private Image HUDSpell;
     private int inventoryCols = 5;
     [SerializeField] private PlayerController player;
 
@@ -168,49 +171,55 @@ public class PlayerInventory : MonoBehaviour
                         }
                     }
 
-                    
-                break;
+
+                    break;
 
                 case ItemTypeUI.ARMOUR:
-                        
-                break;
+
+                    break;
 
                 case ItemTypeUI.SPELL:
                     EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
-                break;
+                    break;
 
                 case ItemTypeUI.CONSUMABLE:
                     itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>(), this, item);
-                break;
+                    break;
 
                 case ItemTypeUI.KEYITEM:
 
-                break;
+                    break;
 
                 case ItemTypeUI.ATTACKITEM:
-            
-                break;
+
+                    break;
 
                 default:
-                        
-                break;
-                }
+
+                    break;
             }
-            else
+        }
+        else
+        {
+            foreach (Transform icon in selectedInvWindow.transform)
             {
-                foreach (Transform icon in selectedInvWindow.transform)
+                if (icon.gameObject != selectedItemGObj)
                 {
-                    if (icon.gameObject != selectedItemGObj)
+                    icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
+                }
+                else
+                {
+                    Debug.Log(icon.gameObject);
+                    icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+
+                    if (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI == ItemTypeUI.CONSUMABLE)
                     {
-                        icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(false);
-                    }
-                    else
-                    {
-                        Debug.Log(icon.gameObject);
-                        icon.gameObject.GetComponent<OnInventoryIconClicked>().Selected(true);
+                        HUDItem.sprite = itemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
+                        HUDItem.GetComponent<ItemQuickSelect>().itemInQS = true;
                     }
                 }
             }
+        }
         
     }
 
@@ -385,6 +394,9 @@ public class PlayerInventory : MonoBehaviour
 
                         consumablesList[i] = null;
                         UIIconsInInventory[i] = null;
+
+                        HUDItem.GetComponent<ItemQuickSelect>().itemInQS = false;
+                        HUDItem.GetComponent<ItemQuickSelect>().MakeImageBlank();
                     }
                 }
             }
