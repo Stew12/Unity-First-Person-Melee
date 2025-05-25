@@ -42,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
     public int spellInvIndex = 1;
 
     [Header("UI")]
-    [SerializeField] private Image HUDSpell;
+    public Image HUDSpell;
     public Image HUDItem;
 
     [Header("Other Variables")]
@@ -159,45 +159,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
         {
-            switch (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
-            {
-                case ItemTypeUI.WEAPON:
-
-                    foreach (Transform weapon in weaponStock.transform)
-                    {
-                        if (weapon.gameObject.GetComponent<PlayerWeaponValues>().weaponID == itemGObj.GetComponent<OnInventoryIconClicked>().ITEM.GetComponent<InteractableItem>().itemName)
-                        {
-                            EquipWeapon(weapon.gameObject);
-                        }
-                    }
-
-
-                    break;
-
-                case ItemTypeUI.ARMOUR:
-
-                    break;
-
-                case ItemTypeUI.SPELL:
-                    EquipSpell(itemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
-                    break;
-
-                case ItemTypeUI.CONSUMABLE:
-                    itemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>(), this, item);
-                    break;
-
-                case ItemTypeUI.KEYITEM:
-
-                    break;
-
-                case ItemTypeUI.ATTACKITEM:
-
-                    break;
-
-                default:
-
-                    break;
-            }
+            UseItem();
         }
         else
         {
@@ -215,7 +177,7 @@ public class PlayerInventory : MonoBehaviour
                     if (itemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI == ItemTypeUI.CONSUMABLE)
                     {
                         HUDItem.sprite = itemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
-                        HUDItem.GetComponent<ItemQuickSelect>().itemInQS = true;
+                        HUDItem.GetComponent<QuickSelect>().itemInQS = true;
                     }
                 }
             }
@@ -223,17 +185,63 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
+    public void UseItem()
+    {
+        if (selectedItem != null && selectedItemGObj != null)
+        {
+            switch (selectedItemGObj.GetComponent<OnInventoryIconClicked>().itemTypeUI)
+            {
+                case ItemTypeUI.WEAPON:
+
+                    foreach (Transform weapon in weaponStock.transform)
+                    {
+                        if (weapon.gameObject.GetComponent<PlayerWeaponValues>().weaponID == selectedItemGObj.GetComponent<OnInventoryIconClicked>().ITEM.GetComponent<InteractableItem>().itemName)
+                        {
+                            EquipWeapon(weapon.gameObject);
+                        }
+                    }
+
+
+                    break;
+
+                case ItemTypeUI.ARMOUR:
+
+                    break;
+
+                case ItemTypeUI.SPELL:
+                    EquipSpell(selectedItemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                    break;
+
+                case ItemTypeUI.CONSUMABLE:
+                    selectedItemGObj.GetComponent<OnInventoryIconClicked>().consumable.GetComponent<ConsumableItem>().UseConsumable(player.gameObject.GetComponent<PlayerValues>(), this, selectedItem);
+                    break;
+
+                case ItemTypeUI.KEYITEM:
+
+                    break;
+
+                case ItemTypeUI.ATTACKITEM:
+
+                    break;
+
+                default:
+
+                    break;
+            }
+        }
+    }
+
     public void AddToInventory(GameObject itemFound)
     {
         GameObject savedItem = new GameObject();
-        
+
         //savedItem = itemFound;
 
         savedItem.AddComponent<InteractableItem>();
-        
+
         savedItem.GetComponent<InteractableItem>().itemName = itemFound.GetComponent<InteractableItem>().itemName;
         savedItem.GetComponent<InteractableItem>().interactedItemType = itemFound.GetComponent<InteractableItem>().interactedItemType;
-        savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon; 
+        savedItem.GetComponent<InteractableItem>().UIIcon = itemFound.GetComponent<InteractableItem>().UIIcon;
 
         GameObject invIcon;
         GameObject weaponInStock;
@@ -251,7 +259,7 @@ public class PlayerInventory : MonoBehaviour
                 //Add icon to UI
                 invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
                 weaponInStock = Instantiate(savedItem.GetComponent<WeaponPickup>().weaponHeldObject);
-                
+
                 string[] weaponNames = new string[weaponInventoryLength];
                 for (int j = 0; j < weaponsList.Length - 1; j++)
                 {
@@ -278,40 +286,40 @@ public class PlayerInventory : MonoBehaviour
                         weaponInStock.transform.SetParent(weaponStock.transform);
                         weaponInStock.transform.localPosition = weaponSpawnPos;
                         weaponInStock.transform.localRotation = weaponSpawnRot;
-                        
+
                         weaponInStock.GetComponent<PlayerWeaponValues>().weaponID = savedItem.GetComponent<InteractableItem>().itemName;
                         weaponInStock.SetActive(false);
-                        
+
 
                         invIcon.transform.parent = weaponInvWindow.transform;
                         invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
                         invIcon.GetComponent<OnInventoryIconClicked>().ITEM = savedItem;
                         SetInvIconUILocation(invIcon);
-                        
+
                         break;
                     }
                 }
 
-            break;
+                break;
 
             case ItemTypeUI.ARMOUR:
-                
-            break;
+
+                break;
 
             case ItemTypeUI.SPELL:
-                
-            break;
+
+                break;
 
             case ItemTypeUI.CONSUMABLE:
-                
+
                 savedItem.AddComponent<ConsumableItem>();
                 savedItem.GetComponent<ConsumableItem>().itemQuantity = itemFound.GetComponent<ConsumableItem>().itemQuantity;
-                
+
                 bool itemExists = false;
                 for (int i = 0; i < consumablesList.Length - 1; i++)
                 {
                     //Debug.Log("NAMEINLIST: " + consumablesList[i].GetComponent<InteractableItem>().itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
-                    
+
                     if (consumablesList[i] != null)
                     {
                         if (consumablesList[i].GetComponent<InteractableItem>().itemName == savedItem.GetComponent<InteractableItem>().itemName)
@@ -320,7 +328,7 @@ public class PlayerInventory : MonoBehaviour
                             itemExists = true;
 
                             consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
-                            
+
                             if (UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
                             {
                                 UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
@@ -335,9 +343,9 @@ public class PlayerInventory : MonoBehaviour
                 {
                     //Add icon to UI
                     invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
-                    
+
                     //savedItem.GetComponent<InteractableItem>().UIIcon = invIcon;
-                    
+
                     //New Item, add
                     for (int i = 0; i < consumablesList.Length - 1; i++)
                     {
@@ -349,22 +357,22 @@ public class PlayerInventory : MonoBehaviour
                             invIcon.transform.parent = consumableInvWindow.transform;
 
                             consumablesList[i].GetComponent<ConsumableItem>().itemQuantity = 1;
-                            
+
                             if (consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText != null)
                             {
                                 consumablesList[i].GetComponent<InteractableItem>().UIIcon.GetComponent<OnInventoryIconClicked>().quantityText.text = 1.ToString();
                             }
-                            
+
                             invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
                             invIcon.GetComponent<OnInventoryIconClicked>().ITEM = savedItem;
                             SetInvIconUILocation(invIcon);
-                            
+
                             break;
                         }
                     }
                 }
 
-            break;
+                break;
         }
 
         Destroy(itemFound);
@@ -395,8 +403,8 @@ public class PlayerInventory : MonoBehaviour
                         consumablesList[i] = null;
                         UIIconsInInventory[i] = null;
 
-                        HUDItem.GetComponent<ItemQuickSelect>().itemInQS = false;
-                        HUDItem.GetComponent<ItemQuickSelect>().MakeImageBlank();
+                        HUDItem.GetComponent<QuickSelect>().itemInQS = false;
+                        HUDItem.GetComponent<QuickSelect>().MakeImageBlank();
                     }
                 }
             }

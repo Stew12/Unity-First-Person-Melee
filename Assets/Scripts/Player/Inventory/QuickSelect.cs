@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemQuickSelect : MonoBehaviour
+public enum QuickSelectType
 {
+    ITEMSELECT,
+    SPELLSELECT
+}
+
+public class QuickSelect : MonoBehaviour
+{
+    [SerializeField] private QuickSelectType quickSelectType;
+    private PlayerController player;
+
     public bool itemInQS = false;
     private bool useCircIncreasing = false;
 
-    [SerializeField] private float useCircleIncreaseAmount = 0.1f;
+    [SerializeField] private float useCircleIncreaseAmount = 2f;
 
     //White circle goes around green circle gradually. When full, use item.
     [SerializeField] private Image useCircle;
@@ -29,8 +38,18 @@ public class ItemQuickSelect : MonoBehaviour
             {
                 if (useCircle.fillAmount >= 1)
                 {
-                    // Use selected item
-                    Debug.Log("Use item!");
+                    if (quickSelectType == QuickSelectType.ITEMSELECT)
+                    {
+                        // Use selected item
+                        player.GetComponent<PlayerController>().playerInventory.GetComponent<PlayerInventory>().UseItem();
+                    }
+                    else
+                    {
+                        // Use selected spell
+                        player.GetComponent<PlayerController>().CastDragonSpell();
+                        useCircIncreasing = false;
+                    }
+
                     useCircle.fillAmount = 0;
                 }
                 else
@@ -48,8 +67,10 @@ public class ItemQuickSelect : MonoBehaviour
         }
     }
 
-    public void StartFillUseCircle()
+    public void StartFillUseCircle(PlayerController player)
     {
+        this.player = player;
+
         useCircIncreasing = true;
     }
 

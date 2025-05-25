@@ -180,6 +180,34 @@ public class PlayerController : MonoBehaviour
        NewLevelLoad();
     }
 
+    void AssignInputs()
+    {
+        input.Jump.performed += ctx => Jump();
+        input.Attack.started += ctx => Attack();
+        input.Block.started += ctx => Block();
+        input.Cast.started += ctx => StartCast();
+        input.Cast.canceled += ctx => StopCast();
+        input.Boost.performed += ctx => Boost();
+        input.Interact.performed += ctx => Interact();
+        input.Sheathe.performed += ctx => SheatheWeaponToggle();
+        input.ItemQuickSelect.started += ctx => ItemQuickSelect();
+        input.ItemQuickSelect.canceled += ctx => ItemStopSelecting();
+        input.Inventory.performed += ctx => InventoryToggle();
+        input.EquipItem.performed += ctx => EquipItem();
+        input.OpenItemInfo.performed += ctx => ShowItemInfo();
+        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
+
+        input._1.performed += ctx => ItemSwitch(1);
+        input._2.performed += ctx => ItemSwitch(2);
+        input._3.performed += ctx => ItemSwitch(3);
+        input._4.performed += ctx => ItemSwitch(4);
+        input._5.performed += ctx => ItemSwitch(5);
+        input._6.performed += ctx => ItemSwitch(6);
+        input._7.performed += ctx => ItemSwitch(7);
+        input._8.performed += ctx => ItemSwitch(8);
+        input._9.performed += ctx => ItemSwitch(9);
+    }
+
     void Update()
     {
         isGrounded = controller.isGrounded;
@@ -299,33 +327,6 @@ public class PlayerController : MonoBehaviour
         //     attackPowerBuilding = true;
         // }
 
-    }
-
-    void AssignInputs()
-    {
-        input.Jump.performed += ctx => Jump();
-        input.Attack.started += ctx => Attack();
-        input.Block.started += ctx => Block();
-        input.Cast.performed += ctx => Cast();
-        input.Boost.performed += ctx => Boost();
-        input.Interact.performed += ctx => Interact();
-        input.Sheathe.performed += ctx => SheatheWeaponToggle();
-        input.ItemQuickSelect.started += ctx => ItemQuickSelect();
-        input.ItemQuickSelect.canceled += ctx => ItemStopSelecting();
-        input.Inventory.performed += ctx => InventoryToggle();
-        input.EquipItem.performed += ctx => EquipItem();
-        input.OpenItemInfo.performed += ctx => ShowItemInfo();
-        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
-
-        input._1.performed += ctx => ItemSwitch(1);
-        input._2.performed += ctx => ItemSwitch(2);
-        input._3.performed += ctx => ItemSwitch(3);
-        input._4.performed += ctx => ItemSwitch(4);
-        input._5.performed += ctx => ItemSwitch(5);
-        input._6.performed += ctx => ItemSwitch(6);
-        input._7.performed += ctx => ItemSwitch(7);
-        input._8.performed += ctx => ItemSwitch(8);
-        input._9.performed += ctx => ItemSwitch(9);
     }
 
     void MoveInput(Vector2 input)
@@ -573,21 +574,31 @@ public class PlayerController : MonoBehaviour
         blocking = false;
     }
 
-    private void Cast()
+    private void StartCast()
     {
         //TODO spell casted depends on which spell is currently selected
         if (!waiting)
         {
-            if (GetComponent<PlayerValues>().currentDragonPoints > 0)
-            {
-                GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
-            }
-            else
-            {
-                //TODO: Notify player they cannot cast the spell e.g. a sound effect
-            }
+            playerInventory.GetComponent<PlayerInventory>().HUDSpell.GetComponent<QuickSelect>().StartFillUseCircle(this);
         }
         
+    }
+
+    private void StopCast()
+    {
+        playerInventory.GetComponent<PlayerInventory>().HUDSpell.GetComponent<QuickSelect>().StopFillUseCircle();
+    }
+
+    public void CastDragonSpell()
+    {
+        if (GetComponent<PlayerValues>().currentDragonPoints > 0)
+        {
+            GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
+        }
+        else
+        {
+            //TODO: Notify player they cannot cast the spell e.g. a sound effect
+        }
     }
 
     private void Boost()
@@ -601,7 +612,7 @@ public class PlayerController : MonoBehaviour
 
                 equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay -= currMomentumValue;
                 moveSpeed += 2 * currMomentumValue;
-                
+
                 maxPowerTime /= moveSpeed / powerBarSpeedupFactor;
 
             }
@@ -654,12 +665,15 @@ public class PlayerController : MonoBehaviour
 
     private void ItemQuickSelect()
     {
-        playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<ItemQuickSelect>().StartFillUseCircle();
+        if (!waiting)
+        {
+            playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<QuickSelect>().StartFillUseCircle(this);
+        }
     }
 
     private void ItemStopSelecting()
     {
-        playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<ItemQuickSelect>().StopFillUseCircle();
+            playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<QuickSelect>().StopFillUseCircle();
     }
 
     private void WeaponDestructionAttack()
