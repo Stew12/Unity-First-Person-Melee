@@ -109,6 +109,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""LanternToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""56de3467-bc06-41fe-98fc-66e804d608f7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""53bfa57f-666c-4d8d-bb52-513106024b55"",
@@ -229,6 +238,51 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": ""ItemQuickSelect"",
                     ""type"": ""Button"",
                     ""id"": ""b34ce2fe-1713-4629-bbd5-29f2ff90abcb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySelectLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""c880f61b-c6e5-4622-8a77-29f2f3384c12"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySelectRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7ca7718-cb64-4d8d-886d-8bb0b8f0b0fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySelectUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""224bf969-e45d-4915-b170-4a8bf6c751f1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventorySelectDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""1fc81643-1875-4739-9c3c-8c71c55a0482"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventoryConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3e10ad2-1b89-4b33-a457-94baabcf4465"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -697,6 +751,182 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""ItemQuickSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""660fc761-3dd0-4b83-a7d0-f41221860b34"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83f33cc9-4cf5-4401-bb73-38def9a1106b"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91076dda-05d9-43a0-8dd0-df1069d783db"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c0df4eb-adc0-454f-9476-3be21d295258"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb0826b1-c284-40a9-a525-71cedaf3511a"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd26f995-ea64-4a4b-aad1-23c12f5d3e7b"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8cbf642c-a244-42af-8319-abf781503d36"",
+                    ""path"": ""<Joystick>/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70825d77-604f-46df-bbf9-4de033655d4c"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a9a40d8-8fb5-4902-a475-28930458e042"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12c9597b-050a-47b3-9315-029aaee982bb"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd756e4b-d40c-407f-9562-4d41a3e57ec7"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19ab9640-7036-4b50-baa6-26c31e4e9a3c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventorySelectDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dba75207-c5cb-4bc3-beb8-1363d49ff0f1"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dff33ae4-c663-4659-b45f-7972215f960a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7652a577-dc86-4d87-bc3a-f354f026d738"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LanternToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a542098-dbc5-4666-a20e-c75dc35068ac"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LanternToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -720,6 +950,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
         m_Main_Sheathe = m_Main.FindAction("Sheathe", throwIfNotFound: true);
+        m_Main_LanternToggle = m_Main.FindAction("LanternToggle", throwIfNotFound: true);
         m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
         m_Main_EquipItem = m_Main.FindAction("EquipItem", throwIfNotFound: true);
         m_Main_OpenItemInfo = m_Main.FindAction("OpenItemInfo", throwIfNotFound: true);
@@ -734,6 +965,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main__9 = m_Main.FindAction("9", throwIfNotFound: true);
         m_Main_SelectOptionNextDialog = m_Main.FindAction("SelectOptionNextDialog", throwIfNotFound: true);
         m_Main_ItemQuickSelect = m_Main.FindAction("ItemQuickSelect", throwIfNotFound: true);
+        m_Main_InventorySelectLeft = m_Main.FindAction("InventorySelectLeft", throwIfNotFound: true);
+        m_Main_InventorySelectRight = m_Main.FindAction("InventorySelectRight", throwIfNotFound: true);
+        m_Main_InventorySelectUp = m_Main.FindAction("InventorySelectUp", throwIfNotFound: true);
+        m_Main_InventorySelectDown = m_Main.FindAction("InventorySelectDown", throwIfNotFound: true);
+        m_Main_InventoryConfirm = m_Main.FindAction("InventoryConfirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -802,6 +1038,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Cast;
     private readonly InputAction m_Main_Boost;
     private readonly InputAction m_Main_Sheathe;
+    private readonly InputAction m_Main_LanternToggle;
     private readonly InputAction m_Main_Inventory;
     private readonly InputAction m_Main_EquipItem;
     private readonly InputAction m_Main_OpenItemInfo;
@@ -816,6 +1053,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main__9;
     private readonly InputAction m_Main_SelectOptionNextDialog;
     private readonly InputAction m_Main_ItemQuickSelect;
+    private readonly InputAction m_Main_InventorySelectLeft;
+    private readonly InputAction m_Main_InventorySelectRight;
+    private readonly InputAction m_Main_InventorySelectUp;
+    private readonly InputAction m_Main_InventorySelectDown;
+    private readonly InputAction m_Main_InventoryConfirm;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -829,6 +1071,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
         public InputAction @Sheathe => m_Wrapper.m_Main_Sheathe;
+        public InputAction @LanternToggle => m_Wrapper.m_Main_LanternToggle;
         public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
         public InputAction @EquipItem => m_Wrapper.m_Main_EquipItem;
         public InputAction @OpenItemInfo => m_Wrapper.m_Main_OpenItemInfo;
@@ -843,6 +1086,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @_9 => m_Wrapper.m_Main__9;
         public InputAction @SelectOptionNextDialog => m_Wrapper.m_Main_SelectOptionNextDialog;
         public InputAction @ItemQuickSelect => m_Wrapper.m_Main_ItemQuickSelect;
+        public InputAction @InventorySelectLeft => m_Wrapper.m_Main_InventorySelectLeft;
+        public InputAction @InventorySelectRight => m_Wrapper.m_Main_InventorySelectRight;
+        public InputAction @InventorySelectUp => m_Wrapper.m_Main_InventorySelectUp;
+        public InputAction @InventorySelectDown => m_Wrapper.m_Main_InventorySelectDown;
+        public InputAction @InventoryConfirm => m_Wrapper.m_Main_InventoryConfirm;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -879,6 +1127,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sheathe.started -= m_Wrapper.m_MainActionsCallbackInterface.OnSheathe;
                 @Sheathe.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnSheathe;
                 @Sheathe.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnSheathe;
+                @LanternToggle.started -= m_Wrapper.m_MainActionsCallbackInterface.OnLanternToggle;
+                @LanternToggle.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnLanternToggle;
+                @LanternToggle.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnLanternToggle;
                 @Inventory.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
@@ -921,6 +1172,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ItemQuickSelect.started -= m_Wrapper.m_MainActionsCallbackInterface.OnItemQuickSelect;
                 @ItemQuickSelect.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnItemQuickSelect;
                 @ItemQuickSelect.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnItemQuickSelect;
+                @InventorySelectLeft.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectLeft;
+                @InventorySelectLeft.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectLeft;
+                @InventorySelectLeft.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectLeft;
+                @InventorySelectRight.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectRight;
+                @InventorySelectRight.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectRight;
+                @InventorySelectRight.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectRight;
+                @InventorySelectUp.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectUp;
+                @InventorySelectUp.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectUp;
+                @InventorySelectUp.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectUp;
+                @InventorySelectDown.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectDown;
+                @InventorySelectDown.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectDown;
+                @InventorySelectDown.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventorySelectDown;
+                @InventoryConfirm.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryConfirm;
+                @InventoryConfirm.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryConfirm;
+                @InventoryConfirm.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryConfirm;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -952,6 +1218,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sheathe.started += instance.OnSheathe;
                 @Sheathe.performed += instance.OnSheathe;
                 @Sheathe.canceled += instance.OnSheathe;
+                @LanternToggle.started += instance.OnLanternToggle;
+                @LanternToggle.performed += instance.OnLanternToggle;
+                @LanternToggle.canceled += instance.OnLanternToggle;
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
@@ -994,6 +1263,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @ItemQuickSelect.started += instance.OnItemQuickSelect;
                 @ItemQuickSelect.performed += instance.OnItemQuickSelect;
                 @ItemQuickSelect.canceled += instance.OnItemQuickSelect;
+                @InventorySelectLeft.started += instance.OnInventorySelectLeft;
+                @InventorySelectLeft.performed += instance.OnInventorySelectLeft;
+                @InventorySelectLeft.canceled += instance.OnInventorySelectLeft;
+                @InventorySelectRight.started += instance.OnInventorySelectRight;
+                @InventorySelectRight.performed += instance.OnInventorySelectRight;
+                @InventorySelectRight.canceled += instance.OnInventorySelectRight;
+                @InventorySelectUp.started += instance.OnInventorySelectUp;
+                @InventorySelectUp.performed += instance.OnInventorySelectUp;
+                @InventorySelectUp.canceled += instance.OnInventorySelectUp;
+                @InventorySelectDown.started += instance.OnInventorySelectDown;
+                @InventorySelectDown.performed += instance.OnInventorySelectDown;
+                @InventorySelectDown.canceled += instance.OnInventorySelectDown;
+                @InventoryConfirm.started += instance.OnInventoryConfirm;
+                @InventoryConfirm.performed += instance.OnInventoryConfirm;
+                @InventoryConfirm.canceled += instance.OnInventoryConfirm;
             }
         }
     }
@@ -1018,6 +1302,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCast(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
         void OnSheathe(InputAction.CallbackContext context);
+        void OnLanternToggle(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnEquipItem(InputAction.CallbackContext context);
         void OnOpenItemInfo(InputAction.CallbackContext context);
@@ -1032,5 +1317,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void On_9(InputAction.CallbackContext context);
         void OnSelectOptionNextDialog(InputAction.CallbackContext context);
         void OnItemQuickSelect(InputAction.CallbackContext context);
+        void OnInventorySelectLeft(InputAction.CallbackContext context);
+        void OnInventorySelectRight(InputAction.CallbackContext context);
+        void OnInventorySelectUp(InputAction.CallbackContext context);
+        void OnInventorySelectDown(InputAction.CallbackContext context);
+        void OnInventoryConfirm(InputAction.CallbackContext context);
     }
 }

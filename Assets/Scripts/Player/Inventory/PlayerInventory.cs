@@ -7,6 +7,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum InventoryDir
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+}
+
 public class PlayerInventory : MonoBehaviour
 {
     [Header("Items and Tabs")]
@@ -27,9 +35,10 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private int armourInventoryLength = 15;
     [SerializeField] private int spellInventoryLength = 15;
     [SerializeField] private int itemInventoryLength = 15;
+    public int currInventoryIndex = 0;
     public GameObject[] weaponsList;
     public GameObject[] armourList;
-     public GameObject[] spellsList;
+    public GameObject[] spellsList;
     public GameObject[] consumablesList;
     [SerializeField] private GameObject[] UIIconsInInventory;
 
@@ -89,31 +98,31 @@ public class PlayerInventory : MonoBehaviour
         {
             case ItemTypeUI.WEAPON:
                 selectedInvWindow = weaponInvWindow;
-            break;
+                break;
 
             case ItemTypeUI.ARMOUR:
                 selectedInvWindow = armourInvWindow;
-            break;
+                break;
 
             case ItemTypeUI.SPELL:
                 selectedInvWindow = spellInvWindow;
-            break;
+                break;
 
             case ItemTypeUI.CONSUMABLE:
                 selectedInvWindow = consumableInvWindow;
-            break;
+                break;
 
             case ItemTypeUI.KEYITEM:
                 selectedInvWindow = consumableInvWindow;
-            break;
+                break;
 
             case ItemTypeUI.ATTACKITEM:
                 selectedInvWindow = consumableInvWindow;
-            break;
+                break;
 
             default:
-                
-            break;
+
+                break;
         }
 
         selectedInvWindow.SetActive(true);
@@ -150,14 +159,28 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public void ItemIsSelected(GameObject item, GameObject itemGObj)
+    public void SetInventoryIndex(GameObject inventoryIcon)
+    {
+        for (int i = 0; i < UIIconsInInventory.Length; i++)
+        {
+            if (UIIconsInInventory[i] == inventoryIcon)
+            {
+                // Inventory index will index from 1, 0 means there is no index currently
+                currInventoryIndex = i + 1;
+                //Debug.Log("I: " + currInventoryIndex);
+            }
+        }
+
+         
+    }
+
+    public void ItemIsSelected(GameObject item, GameObject itemGObj, bool confirmable)
     {
         // Make item not null if item selected
         selectedItem = item;
         selectedItemGObj = itemGObj;
 
-
-        if (itemGObj.GetComponent<OnInventoryIconClicked>().selected)
+        if (itemGObj.GetComponent<OnInventoryIconClicked>().selected && confirmable)
         {
             UseItem();
         }
@@ -182,7 +205,76 @@ public class PlayerInventory : MonoBehaviour
                 }
             }
         }
-        
+
+    }
+
+    public void SelectInventoryPos(InventoryDir inventoryDir)
+    {
+        //GameObject[] currInventory = UIIconsInInventory;
+
+        //Debug.Log("Selected");
+        if (currInventoryIndex == 0)
+        {
+            // Find first available item icon
+            for (int i = 0; i < UIIconsInInventory.Length; i++)
+            {
+                if (UIIconsInInventory[i] != null)
+                {
+                    ItemIsSelected(UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i].gameObject, false);
+                    break;
+                }
+            }
+
+            currInventoryIndex = 1;
+        }
+        else
+        {
+
+            switch (inventoryDir)
+            {
+                case InventoryDir.UP:
+
+
+                    break;
+
+                case InventoryDir.DOWN:
+
+
+                    break;
+
+                case InventoryDir.LEFT:
+                // MOVE LEFT
+                    for (int i = currInventoryIndex; i > 0; i--)
+                    {
+                        if (UIIconsInInventory[i - 2] != null)
+                        {
+                            ItemIsSelected(UIIconsInInventory[i - 2].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i - 2].gameObject, false);
+                            currInventoryIndex--;
+                            break;
+                        }
+                    }
+                    break;
+
+                case InventoryDir.RIGHT:
+                // MOVE RIGHT
+                    for (int i = currInventoryIndex; i < UIIconsInInventory.Length; i++)
+                    {
+                        if (UIIconsInInventory[i] != null)
+                        {
+                            Debug.Log("RIGHT");
+                            ItemIsSelected(UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i].gameObject, false);
+                            currInventoryIndex++;
+                            break;
+                        }
+                    }
+                    break;
+
+            }
+
+
+        }
+
+
     }
 
     public void UseItem()
@@ -419,16 +511,16 @@ public class PlayerInventory : MonoBehaviour
         {
             case ItemTypeUI.WEAPON:
                 selectedInvList = weaponsList;
-            break;
+                break;
 
             case ItemTypeUI.ARMOUR:
                 selectedInvList = armourList;
-            break;
+                break;
 
             case ItemTypeUI.CONSUMABLE:
                 selectedInvList = consumablesList;
 
-            break;
+                break;
         }
 
         // Get UI position
@@ -436,7 +528,7 @@ public class PlayerInventory : MonoBehaviour
         float invy = 0;
 
         float xSpacing = 106.2f;
-        float ySpacing = 100; 
+        float ySpacing = 100;
 
         float startingx = -209.8f;
 
@@ -451,7 +543,7 @@ public class PlayerInventory : MonoBehaviour
                 //Debug.Log("UI ICON: " + selectedInvList[i].GetComponent<InteractableItem>().UIIcon.name + ", IIU: " + IIU.name);
                 if (selectedInvList[i].GetComponent<InteractableItem>().itemName == IIU.GetComponent<OnInventoryIconClicked>().ITEM.GetComponent<InteractableItem>().itemName)
                 {
-                    
+
                     // Inv item 1-5
                     if (listPos > 0 && listPos < inventoryCols + 1)
                     {
@@ -476,12 +568,12 @@ public class PlayerInventory : MonoBehaviour
                     {
                         Debug.LogError("ERROR: list pos is higher than inventory limit");
                     }
-                    
+
                     // Place the UI icon on a position on the UI
                     IIU.GetComponent<RectTransform>().anchoredPosition = new Vector2(startingx + invx, invy);
-                    
+
                     // Give it the scale to display properly
-                    IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f,1,1);
+                    IIU.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1, 1);
 
                     break;
                 }
@@ -493,32 +585,32 @@ public class PlayerInventory : MonoBehaviour
     private void EquipWeapon(GameObject newWeapon)
     {
         if (!player.weaponSheathed)
-            {
-                //Get values of initial weapon
-                GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
-                Vector3 weaponPos = player.equippedWeapon.transform.position;
-                
-                //Send initial weapon back to the Weapon Stock and disable it
-                player.equippedWeapon.transform.parent = weaponStock.transform;
-                player.equippedWeapon.SetActive(false);
+        {
+            //Get values of initial weapon
+            GameObject weaponParent = player.equippedWeapon.transform.parent.gameObject;
+            Vector3 weaponPos = player.equippedWeapon.transform.position;
 
-                //Look through the weapon stock for a weapon matching the hotKey
-                newWeapon.SetActive(true);
-                newWeapon.transform.SetParent(weaponParent.transform);
-                //newWeapon.transform.position = weaponPos;
-                //newWeapon.transform.position = new Vector3(0,0,0);      
+            //Send initial weapon back to the Weapon Stock and disable it
+            player.equippedWeapon.transform.parent = weaponStock.transform;
+            player.equippedWeapon.SetActive(false);
 
-                player.equippedWeapon = newWeapon;
+            //Look through the weapon stock for a weapon matching the hotKey
+            newWeapon.SetActive(true);
+            newWeapon.transform.SetParent(weaponParent.transform);
+            //newWeapon.transform.position = weaponPos;
+            //newWeapon.transform.position = new Vector3(0,0,0);      
 
-                //Set animations for new weapon
-                player.animator = player.equippedWeapon.GetComponent<Animator>();
-                player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
-                player.ResetAttack();
+            player.equippedWeapon = newWeapon;
 
-                //Play sound of unsheathing
-                invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-                invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
-            }
+            //Set animations for new weapon
+            player.animator = player.equippedWeapon.GetComponent<Animator>();
+            player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
+            player.ResetAttack();
+
+            //Play sound of unsheathing
+            invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
+        }
     }
 
     private void EquipSpell(DragonSpells newSpell)
@@ -527,29 +619,29 @@ public class PlayerInventory : MonoBehaviour
 
         player.dragonSpellSelected = newSpell;
     }
-    
+
     private void LoadHotkeys()
     {
         //Can't Switch weapons while attacking!
-        
-            if (player.equippedWeapon.GetComponent<HotKey>().hotKey > 0 && player.equippedWeapon.GetComponent<HotKey>().hotKey < 10)
+
+        if (player.equippedWeapon.GetComponent<HotKey>().hotKey > 0 && player.equippedWeapon.GetComponent<HotKey>().hotKey < 10)
+        {
+            hotKeyList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon;
+        }
+
+        foreach (Transform weapon in weaponStock.transform)
+        {
+            if (weapon.gameObject.GetComponent<HotKey>().hotKey > 0 && weapon.GetComponent<HotKey>().hotKey < 10)
             {
-                hotKeyList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon;
+                hotKeyList[weapon.gameObject.GetComponent<HotKey>().hotKey - 1] = weapon.gameObject;
+                //weapon.GetComponent<HotKey>().originalItemIndex = i;
+                //Debug.Log("DU: " + i);
             }
 
-            foreach (Transform weapon in weaponStock.transform)
-            {
-                if (weapon.gameObject.GetComponent<HotKey>().hotKey > 0 && weapon.GetComponent<HotKey>().hotKey < 10)
-                {
-                    hotKeyList[weapon.gameObject.GetComponent<HotKey>().hotKey - 1] = weapon.gameObject;
-                    //weapon.GetComponent<HotKey>().originalItemIndex = i;
-                    //Debug.Log("DU: " + i);
-                }
+            //i++;
+        }
 
-                //i++;
-            }
 
-        
     }
 
     //Disable hotkeys for now
@@ -561,7 +653,7 @@ public class PlayerInventory : MonoBehaviour
             //Hot keys might be a stretch feature as using the inventory is surprsingly smooth
             if (hotKeyList[index - 1] != null)
             {
-                
+
                 //WEAPON
                 //TODO: If is a weapon
                 //EquipWeapon(hotKeyList[index - 1]);

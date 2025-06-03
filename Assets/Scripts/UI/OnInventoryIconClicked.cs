@@ -54,8 +54,9 @@ public class OnInventoryIconClicked : MonoBehaviour
 
     public void InvIconClicked()
     {
-        pInventory.ItemIsSelected(ITEM, this.gameObject);
-        
+        pInventory.ItemIsSelected(ITEM, this.gameObject, true);
+
+        pInventory.SetInventoryIndex(this.gameObject);
     }
 
     public void Selected(bool s)

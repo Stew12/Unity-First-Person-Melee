@@ -74,6 +74,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool weaponSheathed = false; 
     public float weakPointDamageFactor = 1.35f;
 
+    [Header("Lighting")]
+    [SerializeField] private GameObject lantern;
+
     [Header("Effects")]
     public LayerMask attackLayer;
     public GameObject hitEffect;
@@ -189,13 +192,19 @@ public class PlayerController : MonoBehaviour
         input.Cast.canceled += ctx => StopCast();
         input.Boost.performed += ctx => Boost();
         input.Interact.performed += ctx => Interact();
+        input.LanternToggle.performed += ctx => LanternToggle();
         input.Sheathe.performed += ctx => SheatheWeaponToggle();
         input.ItemQuickSelect.started += ctx => ItemQuickSelect();
         input.ItemQuickSelect.canceled += ctx => ItemStopSelecting();
-        input.Inventory.performed += ctx => InventoryToggle();
-        input.EquipItem.performed += ctx => EquipItem();
         input.OpenItemInfo.performed += ctx => ShowItemInfo();
         input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
+
+        input.Inventory.performed += ctx => InventoryToggle();
+        input.EquipItem.performed += ctx => EquipItem();
+        input.InventorySelectUp.performed += ctx => InventorySelect(InventoryDir.UP);
+        input.InventorySelectDown.performed += ctx => InventorySelect(InventoryDir.DOWN);
+        input.InventorySelectLeft.performed += ctx => InventorySelect(InventoryDir.LEFT);
+        input.InventorySelectRight.performed += ctx => InventorySelect(InventoryDir.RIGHT);
 
         input._1.performed += ctx => ItemSwitch(1);
         input._2.performed += ctx => ItemSwitch(2);
@@ -663,6 +672,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void LanternToggle()
+    {
+        if (lantern.activeSelf)
+        {
+            lantern.SetActive(false);
+        }
+        else
+        {
+            lantern.SetActive(true);
+        }
+    }
+
     private void ItemQuickSelect()
     {
         if (!waiting)
@@ -755,9 +776,17 @@ public class PlayerController : MonoBehaviour
             playerInventory.InventoryToggle();
     }
 
+    void InventorySelect(InventoryDir iDir)
+    {
+        if (playerInventory.inventoryInterface.activeInHierarchy)
+        {
+            playerInventory.GetComponent<PlayerInventory>().SelectInventoryPos(iDir);
+        }
+    }
+
     void EquipItem()
     {
-
+        
     }
 
     void ShowItemInfo()
