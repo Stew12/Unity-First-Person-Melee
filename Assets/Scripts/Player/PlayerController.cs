@@ -786,7 +786,10 @@ public class PlayerController : MonoBehaviour
 
     void EquipItem()
     {
-        
+        if (playerInventory.inventoryInterface.activeInHierarchy && playerInventory.GetComponent<PlayerInventory>().selectedItem != null)
+        {
+            playerInventory.GetComponent<PlayerInventory>().ItemIsSelected(playerInventory.GetComponent<PlayerInventory>().selectedItem, playerInventory.GetComponent<PlayerInventory>().selectedItemGObj, true);
+        }
     }
 
     void ShowItemInfo()

@@ -19,8 +19,8 @@ public enum InventoryDir
 public class PlayerInventory : MonoBehaviour
 {
     [Header("Items and Tabs")]
-    private GameObject selectedItem;
-    private GameObject selectedItemGObj;
+    [HideInInspector] public GameObject selectedItem;
+    [HideInInspector] public GameObject selectedItemGObj;
     [SerializeField] private GameObject selectedInvWindow;
     [SerializeField] private GameObject invTabs;
     [HideInInspector] public GameObject inventoryInterface;
@@ -81,12 +81,9 @@ public class PlayerInventory : MonoBehaviour
         spellsList = new GameObject[spellInventoryLength];
         consumablesList = new GameObject[itemInventoryLength];
 
-        //weaponsUIIcons = new GameObject[weaponInventoryLength];
-       // armourUIIcons = new GameObject[armourInventoryLength];
-        //spellsUIIcons = new GameObject[spellInventoryLength];
-        //consumablesUIIcons = new GameObject[itemInventoryLength];
-
         weaponsList[0] = player.startingWeaponPickup;
+
+        //TODO: add spells here
 
         LoadHotkeys();
         LoadInventory();
@@ -415,14 +412,14 @@ public class PlayerInventory : MonoBehaviour
                 weaponInStock = Instantiate(savedItem.GetComponent<WeaponPickup>().weaponHeldObject);
 
                 string[] weaponNames = new string[weaponInventoryLength];
-                for (int j = 0; j < weaponsList.Length - 1; j++)
+                for (int j = 0; j < weaponsList.Length; j++)
                 {
                     if (weaponsList[j] != null)
                         weaponNames[j] = weaponsList[j].GetComponent<InteractableItem>().itemName;
                 }
 
                 //New Weapon, add
-                for (int i = 0; i < weaponsList.Length - 1; i++)
+                for (int i = 0; i < weaponsList.Length; i++)
                 {
                     if (weaponsList[i] == null)
                     {
@@ -444,7 +441,6 @@ public class PlayerInventory : MonoBehaviour
 
                         weaponInStock.GetComponent<PlayerWeaponValues>().weaponID = savedItem.GetComponent<InteractableItem>().itemName;
                         weaponInStock.SetActive(false);
-
 
                         invIcon.transform.parent = weaponInvWindow.transform;
                         invIcon.GetComponent<OnInventoryIconClicked>().ItemSetup();
@@ -471,7 +467,7 @@ public class PlayerInventory : MonoBehaviour
                 savedItem.GetComponent<ConsumableItem>().itemQuantity = itemFound.GetComponent<ConsumableItem>().itemQuantity;
 
                 bool itemExists = false;
-                for (int i = 0; i < consumablesList.Length - 1; i++)
+                for (int i = 0; i < consumablesList.Length; i++)
                 {
                     //Debug.Log("NAMEINLIST: " + consumablesList[i].GetComponent<InteractableItem>().itemName + ", NAME OF PICKED UP ITEM: " + savedItem.GetComponent<InteractableItem>().itemName);
 
@@ -595,9 +591,7 @@ public class PlayerInventory : MonoBehaviour
 
         float startingx = -209.8f;
 
-        Debug.Log(selectedInvList[0]);
-
-        for (int i = 0; i < selectedInvList.Length - 1; i++)
+        for (int i = 0; i < selectedInvList.Length; i++)
         {
             int listPos = i + 1;
 

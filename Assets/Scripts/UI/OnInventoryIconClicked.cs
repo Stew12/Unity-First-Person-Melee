@@ -36,7 +36,7 @@ public class OnInventoryIconClicked : MonoBehaviour
     {
         ItemSetup();
     }
-    
+
     public void ItemSetup()
     {
         if (transform.parent != null)
