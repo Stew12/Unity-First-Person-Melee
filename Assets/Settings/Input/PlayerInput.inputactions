@@ -265,6 +265,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "InventoryChangeTabLeft",
+                    "type": "Button",
+                    "id": "3a727f65-fcc5-4fa5-a2f4-5587423fd5d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InventoryChangeTabRight",
+                    "type": "Button",
+                    "id": "5cec262d-35a1-43ea-bc65-adb5330e7b6c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -876,7 +894,7 @@
                 {
                     "name": "",
                     "id": "dff33ae4-c663-4659-b45f-7972215f960a",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -903,6 +921,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "LanternToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c6cb887-8931-42ae-8325-5bbf9a64fba0",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryChangeTabLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99e6b3d6-9b8a-4cfc-a6e5-669b97a71c94",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryChangeTabLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "338041ee-fca7-4ba9-9593-0286725a770d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryChangeTabRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a95543e-c95a-4f4e-bfd3-dfc4605b24f2",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryChangeTabRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

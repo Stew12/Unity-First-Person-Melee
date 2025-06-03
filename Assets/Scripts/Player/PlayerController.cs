@@ -206,6 +206,9 @@ public class PlayerController : MonoBehaviour
         input.InventorySelectLeft.performed += ctx => InventorySelect(InventoryDir.LEFT);
         input.InventorySelectRight.performed += ctx => InventorySelect(InventoryDir.RIGHT);
 
+        input.InventoryChangeTabLeft.performed += ctx => InventoryTabChange(InventoryDir.LEFT);
+        input.InventoryChangeTabRight.performed += ctx => InventoryTabChange(InventoryDir.RIGHT);
+
         input._1.performed += ctx => ItemSwitch(1);
         input._2.performed += ctx => ItemSwitch(2);
         input._3.performed += ctx => ItemSwitch(3);
@@ -784,9 +787,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void InventoryTabChange(InventoryDir iDir)
+    {
+        if (playerInventory.inventoryInterface.activeInHierarchy)
+        {
+            playerInventory.GetComponent<PlayerInventory>().SelectInventoryTab(iDir);
+        }
+    }
+
     void EquipItem()
     {
-        if (playerInventory.inventoryInterface.activeInHierarchy && playerInventory.GetComponent<PlayerInventory>().selectedItem != null)
+        if (playerInventory.inventoryInterface.activeInHierarchy && playerInventory.GetComponent<PlayerInventory>().selectedItem != null && playerInventory.currInventoryIndex != 0)
         {
             playerInventory.GetComponent<PlayerInventory>().ItemIsSelected(playerInventory.GetComponent<PlayerInventory>().selectedItem, playerInventory.GetComponent<PlayerInventory>().selectedItemGObj, true);
         }

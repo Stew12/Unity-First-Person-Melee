@@ -23,14 +23,15 @@ public class PlayerInventory : MonoBehaviour
     [HideInInspector] public GameObject selectedItemGObj;
     [SerializeField] private GameObject selectedInvWindow;
     [SerializeField] private GameObject invTabs;
+    [SerializeField] private GameObject[] inventoryTabsArray;
     [HideInInspector] public GameObject inventoryInterface;
-    ItemTypeUI itemTypeUI;
 
     [Header("Inventory Windows")]
     [SerializeField] private GameObject weaponInvWindow;
     [SerializeField] private GameObject armourInvWindow;
     [SerializeField] private GameObject spellInvWindow;
     [SerializeField] private GameObject consumableInvWindow;
+    public int tabIndex = 1; //Index from 1
 
     [Header("Inventory Lists")]
     [SerializeField] private int weaponInventoryLength = 15;
@@ -105,26 +106,32 @@ public class PlayerInventory : MonoBehaviour
         {
             case ItemTypeUI.WEAPON:
                 selectedInvWindow = weaponInvWindow;
+                tabIndex = 1;
                 break;
 
             case ItemTypeUI.ARMOUR:
                 selectedInvWindow = armourInvWindow;
+                tabIndex = 2;
                 break;
 
             case ItemTypeUI.SPELL:
                 selectedInvWindow = spellInvWindow;
+                tabIndex = 3;
                 break;
 
             case ItemTypeUI.CONSUMABLE:
                 selectedInvWindow = consumableInvWindow;
+                tabIndex = 4;
                 break;
 
             case ItemTypeUI.KEYITEM:
                 selectedInvWindow = consumableInvWindow;
+                tabIndex = 4;
                 break;
 
             case ItemTypeUI.ATTACKITEM:
                 selectedInvWindow = consumableInvWindow;
+                tabIndex = 4;
                 break;
 
             default:
@@ -134,6 +141,15 @@ public class PlayerInventory : MonoBehaviour
 
         selectedInvWindow.SetActive(true);
         inventoryInterface = selectedInvWindow;
+
+        // Make selected tab solid and all other tabs transparent
+
+        for (int i = 0; i < inventoryTabsArray.Length; i++)
+        {
+            inventoryTabsArray[i].GetComponent<OnInventoryTabClicked>().TabIsSelected(false);
+        }
+        inventoryTabsArray[tabIndex - 1].GetComponent<OnInventoryTabClicked>().TabIsSelected(true);
+            
 
         if (selectedItemGObj != null)
             selectedItemGObj.GetComponent<OnInventoryIconClicked>().Selected(false);
@@ -181,7 +197,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 // Inventory index will index from 1, 0 means there is no index currently
                 currInventoryIndex = i + 1;
-                //Debug.Log("I: " + currInventoryIndex);
             }
         }
 
@@ -314,6 +329,45 @@ public class PlayerInventory : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SelectInventoryTab(InventoryDir inventoryDir)
+    {
+        if (inventoryDir == InventoryDir.RIGHT)
+        {
+            tabIndex++;
+
+            if (tabIndex > inventoryTabsArray.Length)
+                tabIndex = 1;
+        }
+        else if (inventoryDir == InventoryDir.LEFT)
+        {
+            tabIndex--;
+
+            if (tabIndex < 1)
+                tabIndex = inventoryTabsArray.Length;
+        }
+
+        ItemTypeUI ttUI = ItemTypeUI.WEAPON;
+
+        switch (tabIndex)
+        {
+            case 1:
+                ttUI = ItemTypeUI.WEAPON;
+                break;
+            case 2:
+                ttUI = ItemTypeUI.ARMOUR;
+                break;
+            case 3:
+                ttUI = ItemTypeUI.SPELL;
+                break;
+            case 4:
+                ttUI = ItemTypeUI.CONSUMABLE;
+                break;
+                
+        }
+
+        InventoryTab(ttUI);
     }
 
     private void DecreaseInvIndex(GameObject[] UIIconsInInventory)

@@ -1498,6 +1498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0d3da1a83cf2d43a3ef4bbd00aa4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedItem: {fileID: 0}
+  selectedItemGObj: {fileID: 0}
   selectedInvWindow: {fileID: 3815989696431413462}
   invTabs: {fileID: 7593769519962787779}
   inventoryInterface: {fileID: 0}
@@ -1509,6 +1511,7 @@ MonoBehaviour:
   armourInventoryLength: 15
   spellInventoryLength: 15
   itemInventoryLength: 15
+  currInventoryIndex: 0
   weaponsList:
   - {fileID: 0}
   - {fileID: 0}
@@ -1573,7 +1576,70 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  UIIconsInInventory: []
+  weaponsUIIcons:
+  - {fileID: 7593769520919506522}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  armourUIIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spellsUIIcons:
+  - {fileID: 7593769521684208559}
+  - {fileID: 7593769520028560816}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  consumablesUIIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   hotKeyList:
   - {fileID: 7245439273364376313, guid: 8464fe90bb8c25744a11300c35bab9fd, type: 3}
   - {fileID: 3054693565241576188, guid: d414764ee83ba504984c79a96d56f3e4, type: 3}
@@ -4038,7 +4104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7593769521368436960
 RectTransform:
   m_ObjectHideFlags: 0

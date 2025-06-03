@@ -287,6 +287,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventoryChangeTabLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a727f65-fcc5-4fa5-a2f4-5587423fd5d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventoryChangeTabRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cec262d-35a1-43ea-bc65-adb5330e7b6c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -898,7 +916,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dff33ae4-c663-4659-b45f-7972215f960a"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -925,6 +943,50 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LanternToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c6cb887-8931-42ae-8325-5bbf9a64fba0"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryChangeTabLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99e6b3d6-9b8a-4cfc-a6e5-669b97a71c94"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryChangeTabLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""338041ee-fca7-4ba9-9593-0286725a770d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryChangeTabRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a95543e-c95a-4f4e-bfd3-dfc4605b24f2"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryChangeTabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -970,6 +1032,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_InventorySelectUp = m_Main.FindAction("InventorySelectUp", throwIfNotFound: true);
         m_Main_InventorySelectDown = m_Main.FindAction("InventorySelectDown", throwIfNotFound: true);
         m_Main_InventoryConfirm = m_Main.FindAction("InventoryConfirm", throwIfNotFound: true);
+        m_Main_InventoryChangeTabLeft = m_Main.FindAction("InventoryChangeTabLeft", throwIfNotFound: true);
+        m_Main_InventoryChangeTabRight = m_Main.FindAction("InventoryChangeTabRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1058,6 +1122,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_InventorySelectUp;
     private readonly InputAction m_Main_InventorySelectDown;
     private readonly InputAction m_Main_InventoryConfirm;
+    private readonly InputAction m_Main_InventoryChangeTabLeft;
+    private readonly InputAction m_Main_InventoryChangeTabRight;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -1091,6 +1157,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @InventorySelectUp => m_Wrapper.m_Main_InventorySelectUp;
         public InputAction @InventorySelectDown => m_Wrapper.m_Main_InventorySelectDown;
         public InputAction @InventoryConfirm => m_Wrapper.m_Main_InventoryConfirm;
+        public InputAction @InventoryChangeTabLeft => m_Wrapper.m_Main_InventoryChangeTabLeft;
+        public InputAction @InventoryChangeTabRight => m_Wrapper.m_Main_InventoryChangeTabRight;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1187,6 +1255,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @InventoryConfirm.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryConfirm;
                 @InventoryConfirm.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryConfirm;
                 @InventoryConfirm.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryConfirm;
+                @InventoryChangeTabLeft.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabLeft;
+                @InventoryChangeTabLeft.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabLeft;
+                @InventoryChangeTabLeft.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabLeft;
+                @InventoryChangeTabRight.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabRight;
+                @InventoryChangeTabRight.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabRight;
+                @InventoryChangeTabRight.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabRight;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -1278,6 +1352,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @InventoryConfirm.started += instance.OnInventoryConfirm;
                 @InventoryConfirm.performed += instance.OnInventoryConfirm;
                 @InventoryConfirm.canceled += instance.OnInventoryConfirm;
+                @InventoryChangeTabLeft.started += instance.OnInventoryChangeTabLeft;
+                @InventoryChangeTabLeft.performed += instance.OnInventoryChangeTabLeft;
+                @InventoryChangeTabLeft.canceled += instance.OnInventoryChangeTabLeft;
+                @InventoryChangeTabRight.started += instance.OnInventoryChangeTabRight;
+                @InventoryChangeTabRight.performed += instance.OnInventoryChangeTabRight;
+                @InventoryChangeTabRight.canceled += instance.OnInventoryChangeTabRight;
             }
         }
     }
@@ -1322,5 +1402,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInventorySelectUp(InputAction.CallbackContext context);
         void OnInventorySelectDown(InputAction.CallbackContext context);
         void OnInventoryConfirm(InputAction.CallbackContext context);
+        void OnInventoryChangeTabLeft(InputAction.CallbackContext context);
+        void OnInventoryChangeTabRight(InputAction.CallbackContext context);
     }
 }
