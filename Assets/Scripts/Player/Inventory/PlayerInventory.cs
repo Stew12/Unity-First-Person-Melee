@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
@@ -23,6 +24,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private GameObject selectedInvWindow;
     [SerializeField] private GameObject invTabs;
     [HideInInspector] public GameObject inventoryInterface;
+    ItemTypeUI itemTypeUI;
 
     [Header("Inventory Windows")]
     [SerializeField] private GameObject weaponInvWindow;
@@ -40,7 +42,10 @@ public class PlayerInventory : MonoBehaviour
     public GameObject[] armourList;
     public GameObject[] spellsList;
     public GameObject[] consumablesList;
-    [SerializeField] private GameObject[] UIIconsInInventory;
+    public GameObject[] weaponsUIIcons;
+    public GameObject[] armourUIIcons;
+    public GameObject[] spellsUIIcons;
+    public GameObject[] consumablesUIIcons;
 
     public GameObject[] hotKeyList = new GameObject[9];
 
@@ -58,6 +63,7 @@ public class PlayerInventory : MonoBehaviour
     public GameObject weaponStock;
     private AudioSource invAudioSource;
     private int inventoryCols = 5;
+    private int inventoryRows = 3;
     [SerializeField] private PlayerController player;
 
 
@@ -74,7 +80,11 @@ public class PlayerInventory : MonoBehaviour
         armourList = new GameObject[armourInventoryLength];
         spellsList = new GameObject[spellInventoryLength];
         consumablesList = new GameObject[itemInventoryLength];
-        UIIconsInInventory = new GameObject[weaponInventoryLength];
+
+        //weaponsUIIcons = new GameObject[weaponInventoryLength];
+       // armourUIIcons = new GameObject[armourInventoryLength];
+        //spellsUIIcons = new GameObject[spellInventoryLength];
+        //consumablesUIIcons = new GameObject[itemInventoryLength];
 
         weaponsList[0] = player.startingWeaponPickup;
 
@@ -87,14 +97,14 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public void InventoryTab(ItemTypeUI itemTypeUI)
+    public void InventoryTab(ItemTypeUI tabTypeUI)
     {
         weaponInvWindow.SetActive(false);
         armourInvWindow.SetActive(false);
         spellInvWindow.SetActive(false);
         consumableInvWindow.SetActive(false);
 
-        switch (itemTypeUI)
+        switch (tabTypeUI)
         {
             case ItemTypeUI.WEAPON:
                 selectedInvWindow = weaponInvWindow;
@@ -127,6 +137,11 @@ public class PlayerInventory : MonoBehaviour
 
         selectedInvWindow.SetActive(true);
         inventoryInterface = selectedInvWindow;
+
+        if (selectedItemGObj != null)
+            selectedItemGObj.GetComponent<OnInventoryIconClicked>().Selected(false);
+
+        currInventoryIndex = 0;
     }
 
     public void InventoryToggle()
@@ -161,6 +176,8 @@ public class PlayerInventory : MonoBehaviour
 
     public void SetInventoryIndex(GameObject inventoryIcon)
     {
+        GameObject[] UIIconsInInventory = GetCurrentUIIconsType();
+
         for (int i = 0; i < UIIconsInInventory.Length; i++)
         {
             if (UIIconsInInventory[i] == inventoryIcon)
@@ -208,9 +225,33 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
+    private GameObject[] GetCurrentUIIconsType()
+    {
+        GameObject[] UIIconType = new GameObject[0];
+
+        if (selectedInvWindow == weaponInvWindow)
+        {
+            UIIconType = weaponsUIIcons;
+        }
+        else if (selectedInvWindow == armourInvWindow)
+        {
+            UIIconType = armourUIIcons;
+        }
+        else if (selectedInvWindow == spellInvWindow)
+        {
+            UIIconType = spellsUIIcons;
+        }
+        else if (selectedInvWindow == consumableInvWindow)
+        {
+            UIIconType = consumablesUIIcons;
+        }                
+
+        return UIIconType;
+    }
+
     public void SelectInventoryPos(InventoryDir inventoryDir)
     {
-        //GameObject[] currInventory = UIIconsInInventory;
+        GameObject[] UIIconsInInventory = GetCurrentUIIconsType();
 
         //Debug.Log("Selected");
         if (currInventoryIndex == 0)
@@ -221,11 +262,10 @@ public class PlayerInventory : MonoBehaviour
                 if (UIIconsInInventory[i] != null)
                 {
                     ItemIsSelected(UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i].gameObject, false);
+                    currInventoryIndex = 1;
                     break;
                 }
             }
-
-            currInventoryIndex = 1;
         }
         else
         {
@@ -233,48 +273,70 @@ public class PlayerInventory : MonoBehaviour
             switch (inventoryDir)
             {
                 case InventoryDir.UP:
-
-
-                    break;
-
-                case InventoryDir.DOWN:
-
-
-                    break;
-
-                case InventoryDir.LEFT:
-                // MOVE LEFT
-                    for (int i = currInventoryIndex; i > 0; i--)
+                    // MOVE UP
+                    for (int i = currInventoryIndex - inventoryCols; i > 0; i--)
                     {
-                        if (UIIconsInInventory[i - 2] != null)
+                        if (UIIconsInInventory[i-1] != null)
                         {
-                            ItemIsSelected(UIIconsInInventory[i - 2].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i - 2].gameObject, false);
-                            currInventoryIndex--;
+                            ItemIsSelected(UIIconsInInventory[i-1].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i-1].gameObject, false);
+                            SetInventoryIndex(UIIconsInInventory[i-1]);
                             break;
                         }
                     }
                     break;
 
+                case InventoryDir.DOWN:
+                    // MOVE DOWN
+                    for (int i = currInventoryIndex + inventoryCols; i < UIIconsInInventory.Length; i++)
+                    {
+                        if (UIIconsInInventory[i-1] != null)
+                        {
+                            ItemIsSelected(UIIconsInInventory[i-1].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i-1].gameObject, false);
+                            SetInventoryIndex(UIIconsInInventory[i-1]);
+                            break;
+                        }
+                    }
+                    break;
+
+                case InventoryDir.LEFT:
+                    // MOVE LEFT
+                    DecreaseInvIndex(UIIconsInInventory);
+                    break;
+
                 case InventoryDir.RIGHT:
-                // MOVE RIGHT
+                    // MOVE RIGHT
                     for (int i = currInventoryIndex; i < UIIconsInInventory.Length; i++)
                     {
                         if (UIIconsInInventory[i] != null)
                         {
-                            Debug.Log("RIGHT");
                             ItemIsSelected(UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i].gameObject, false);
                             currInventoryIndex++;
                             break;
                         }
                     }
                     break;
-
             }
-
-
         }
+    }
 
+    private void DecreaseInvIndex(GameObject[] UIIconsInInventory)
+    {
+        try
+        {
+            for (int i = currInventoryIndex; i > 0; i--)
+            {
+                if (UIIconsInInventory[i - 2] != null)
+                {
 
+                    ItemIsSelected(UIIconsInInventory[i - 2].GetComponent<OnInventoryIconClicked>().ITEM, UIIconsInInventory[i - 2].gameObject, false);
+                    currInventoryIndex--;
+                    break;
+
+                }
+            }
+        }
+        catch (IndexOutOfRangeException)
+        { }
     }
 
     public void UseItem()
@@ -374,6 +436,7 @@ public class PlayerInventory : MonoBehaviour
                         }
 
                         weaponsList[i] = savedItem;
+                        weaponsUIIcons[i] = invIcon;
 
                         weaponInStock.transform.SetParent(weaponStock.transform);
                         weaponInStock.transform.localPosition = weaponSpawnPos;
@@ -421,10 +484,10 @@ public class PlayerInventory : MonoBehaviour
 
                             consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
 
-                            if (UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
+                            if (consumablesUIIcons[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
                             {
-                                UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
-                                Debug.Log(consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString());
+                                consumablesUIIcons[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                                //Debug.Log(consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString());
                             }
                             break;
                         }
@@ -444,7 +507,7 @@ public class PlayerInventory : MonoBehaviour
                         if (consumablesList[i] == null)
                         {
                             consumablesList[i] = savedItem;
-                            UIIconsInInventory[i] = invIcon;
+                            consumablesUIIcons[i] = invIcon;
 
                             invIcon.transform.parent = consumableInvWindow.transform;
 
@@ -471,7 +534,7 @@ public class PlayerInventory : MonoBehaviour
     }
 
     public void DecreaseOrRemoveConsumable(GameObject dorItem)
-    {
+    {   
         for (int i = 0; i < consumablesList.Length - 1; i++)
         {
             //Find Item
@@ -485,15 +548,15 @@ public class PlayerInventory : MonoBehaviour
                     if (consumablesList[i].GetComponent<ConsumableItem>().itemQuantity > 0)
                     {
                         //Item has only had its quantity decreased. Update inventory label
-                        UIIconsInInventory[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
+                        consumablesUIIcons[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
                     }
                     else
                     {
                         //Remove item from inventory
-                        Destroy(UIIconsInInventory[i].gameObject);
+                        Destroy(consumablesUIIcons[i].gameObject);
 
                         consumablesList[i] = null;
-                        UIIconsInInventory[i] = null;
+                        consumablesUIIcons[i] = null;
 
                         HUDItem.GetComponent<QuickSelect>().itemInQS = false;
                         HUDItem.GetComponent<QuickSelect>().MakeImageBlank();
