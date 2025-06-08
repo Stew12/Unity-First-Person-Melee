@@ -149,7 +149,9 @@ public class PlayerController : MonoBehaviour
     public bool stopWhenAttacking = false;
 
     void Awake()
-    { 
+    {
+        DontDestroyOnLoad(gameObject);
+        
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();

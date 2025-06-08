@@ -440,7 +440,7 @@ public class PlayerInventory : MonoBehaviour
     {
         GameObject savedItem = new GameObject();
 
-        //savedItem = itemFound;
+        savedItem.transform.parent = gameObject.transform;
 
         savedItem.AddComponent<InteractableItem>();
 
@@ -532,12 +532,14 @@ public class PlayerInventory : MonoBehaviour
                             //Dupicate item, stack
                             itemExists = true;
 
+                            // Delete duplicate gameobjects of item being spawned in
+                            Destroy(savedItem);
+
                             consumablesList[i].GetComponent<ConsumableItem>().itemQuantity++;
 
                             if (consumablesUIIcons[i].GetComponent<OnInventoryIconClicked>().quantityText != null)
                             {
                                 consumablesUIIcons[i].GetComponent<OnInventoryIconClicked>().quantityText.text = consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString();
-                                //Debug.Log(consumablesList[i].GetComponent<ConsumableItem>().itemQuantity.ToString());
                             }
                             break;
                         }
@@ -548,8 +550,6 @@ public class PlayerInventory : MonoBehaviour
                 {
                     //Add icon to UI
                     invIcon = Instantiate(savedItem.GetComponent<InteractableItem>().UIIcon);
-
-                    //savedItem.GetComponent<InteractableItem>().UIIcon = invIcon;
 
                     //New Item, add
                     for (int i = 0; i < consumablesList.Length - 1; i++)
@@ -603,17 +603,23 @@ public class PlayerInventory : MonoBehaviour
                     else
                     {
                         //Remove item from inventory
-                        Destroy(consumablesUIIcons[i].gameObject);
-
-                        consumablesList[i] = null;
-                        consumablesUIIcons[i] = null;
-
-                        HUDItem.GetComponent<QuickSelect>().itemInQS = false;
-                        HUDItem.GetComponent<QuickSelect>().MakeImageBlank();
+                        RemoveFromInventory(consumablesList, consumablesUIIcons, i);
                     }
                 }
             }
         }
+    }
+
+    private void RemoveFromInventory(GameObject[] inventoryList, GameObject[] inventoryListUIIcons, int index)
+    {
+        Destroy(inventoryList[index]);
+        Destroy(inventoryListUIIcons[index].gameObject);
+
+        inventoryList[index] = null;
+        inventoryListUIIcons[index] = null;
+
+        HUDItem.GetComponent<QuickSelect>().itemInQS = false;
+        HUDItem.GetComponent<QuickSelect>().MakeImageBlank();
     }
 
     private void SetInvIconUILocation(GameObject IIU)

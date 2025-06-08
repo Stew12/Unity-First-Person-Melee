@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Mathematics;
 
 public class PlayerCollisions : MonoBehaviour
 {
@@ -71,6 +72,13 @@ public class PlayerCollisions : MonoBehaviour
             case "Detection Radius Enter":
                 Debug.Log("Entered detection radius!");
                 col.GetComponent<DetectionRadius>().PlayerEntered();
+                break;
+
+            // Load into next scene
+            case "Scene Transition":
+    
+                StartCoroutine(LoadScene(col.GetComponent<SceneChange>()));
+
                 break;
 
             // case "Enemy Wall":
@@ -152,8 +160,6 @@ public class PlayerCollisions : MonoBehaviour
 
     private void TakeDamage(Collider enemy, bool canBlock)
     {
-
-
         // If attack is not blocked or parried, take full damage, if blocked, take a percentage of the damage,
         if (!attackBlocked || !canBlock)
         {
@@ -197,6 +203,25 @@ public class PlayerCollisions : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    IEnumerator LoadScene(SceneChange sceneChange)
+    {
+        GameObject loadingScreen = Instantiate(sceneChange.loadingScreen, Vector3.zero, Quaternion.identity);
+        loadingScreen.transform.parent = GameObject.Find("Canvas").transform;
+        GetComponent<PlayerController>().waiting = true;
+
+        SceneManager.LoadScene(sceneChange.nextScene.name);
+
+        yield return new WaitForSeconds(sceneChange.loadTime);
+
+        //Destroy(duplicatePlayer);
+        Destroy(loadingScreen);
+
+        transform.position = sceneChange.playerSpawnPos;
+        //transform.rotation = spawnRot; 
+
+        GetComponent<PlayerController>().waiting = false;
+    }
+
     private int CalculateDamage(Collider harmfulEntity, bool blocked)
     {
         int totalDamage = 0;
@@ -206,18 +231,18 @@ public class PlayerCollisions : MonoBehaviour
             {
                 case "Enemy":
                     totalDamage = (int)harmfulEntity.GetComponent<Enemy>().attackDamage;
-                break;
+                    break;
 
                 case "Enemy Projectile":
                     if (harmfulEntity.GetComponent<EnemyProjectile>() != null)
                         totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
                     else if (harmfulEntity.GetComponent<EnemyAOEAttack>() != null)
                         totalDamage = (int)harmfulEntity.GetComponent<EnemyAOEAttack>().projectileDamage;
-                break;
+                    break;
 
                 default:
                     Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");
-                break;
+                    break;
             }
 
             if (blocked)
