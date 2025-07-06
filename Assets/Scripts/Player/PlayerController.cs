@@ -34,6 +34,10 @@ public class PlayerController : MonoBehaviour
     public Image durabilityBarUI;
     public TextMeshProUGUI durabilityLabel;
     public TextMeshProUGUI bronzeAmountLabel;
+    public TextMeshProUGUI statusMessage;
+    public string lockedDoorStatusMessage = "Locked...";
+    //public string lockedOpenDoorStatusMessage = "Can't be moved.";
+    public string openDoorStatusMessage = "You heard something moving.";
 
     [Header("Controller")]
     public float moveSpeed = 2.5f;
@@ -143,6 +147,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxPowerTime = 0;
     [SerializeField] private float powerTime = 0;
     [HideInInspector] public float parryWindowTime = 0;
+    private float statusMessageVisibleTime = 1;    
 
     [Header("Debug")]
 
@@ -167,6 +172,8 @@ public class PlayerController : MonoBehaviour
         momentumBarUI.fillAmount = 0;
         dragonPointBarUI.fillAmount = 1;
         powerBarUI.fillAmount = 0;
+
+        statusMessage.gameObject.SetActive(false);
 
         moveSpeedDefault = moveSpeed;
        // animator.speed += 2;
@@ -735,11 +742,33 @@ public class PlayerController : MonoBehaviour
             {
                 if (hit.transform.parent.GetComponent<Door>() != null)
                 {
-                    hit.transform.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
+                    //Check if door unlocked
+                    if (!hit.transform.parent.GetComponent<Door>().locked)
+                    {
+                        hit.transform.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
+                    }
+                    else
+                    {
+                        if (hit.transform.parent.GetComponent<Door>().closed)
+                        {
+                            StatusMessageShow(lockedDoorStatusMessage);
+                        }
+                    }
                 }
                 else
                 {
-                    hit.transform.parent.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
+                    //Check if door unlocked
+                    if (!hit.transform.parent.parent.GetComponent<Door>().locked)
+                    {
+                        hit.transform.parent.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
+                    }
+                    else
+                    {
+                        if (hit.transform.parent.parent.GetComponent<Door>().closed)
+                        {
+                            StatusMessageShow(lockedDoorStatusMessage);
+                        }
+                    }
                 }
             }
             else if (hit.transform.tag == "Player Item")
@@ -749,6 +778,10 @@ public class PlayerController : MonoBehaviour
             else if (hit.transform.tag == "Chest")
             {
                 hit.transform.GetComponent<TreasureChest>().ChestOpen();
+            }
+            else if (hit.transform.tag == "Button")
+            {
+                hit.transform.parent.GetComponent<DungeonButton>().ButtonActivation(this);
             }
         } 
     }
@@ -855,6 +888,20 @@ public class PlayerController : MonoBehaviour
     void ItemSwitch(int hotKeyNumber)
     {
         playerInventory.HotKeyedItem(hotKeyNumber, weaponSheathed);
+    }
+
+    public void StatusMessageShow(string sMessage)
+    {
+        statusMessage.gameObject.SetActive(true);
+        statusMessage.text = sMessage;
+        StartCoroutine(StatusMessageDisappear(statusMessageVisibleTime));
+    }
+
+    private IEnumerator StatusMessageDisappear(float visTime)
+    {
+        yield return new WaitForSeconds(visTime);
+
+        statusMessage.gameObject.SetActive(false);
     }
 
     // TODO: use this method upon entering each new scene (Temporarily called in Awake())

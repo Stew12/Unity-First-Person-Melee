@@ -69,6 +69,14 @@ public class PlayerCollisions : MonoBehaviour
                 }
                 break;
 
+            case "Trap":
+                if (canTakeDamage)
+                {
+                    TakeDamage(col, false);
+                }
+
+                break;
+
             case "Detection Radius Enter":
                 Debug.Log("Entered detection radius!");
                 col.GetComponent<DetectionRadius>().PlayerEntered();
@@ -201,6 +209,8 @@ public class PlayerCollisions : MonoBehaviour
     {
         //For now, just restart the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Destroy(gameObject);
+        Destroy(GameObject.Find("Canvas"));
     }
 
     IEnumerator LoadScene(SceneChange sceneChange)
@@ -238,6 +248,10 @@ public class PlayerCollisions : MonoBehaviour
                         totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
                     else if (harmfulEntity.GetComponent<EnemyAOEAttack>() != null)
                         totalDamage = (int)harmfulEntity.GetComponent<EnemyAOEAttack>().projectileDamage;
+                    break;
+
+                case "Trap":
+                    totalDamage = harmfulEntity.GetComponent<Trap>().damage;
                     break;
 
                 default:

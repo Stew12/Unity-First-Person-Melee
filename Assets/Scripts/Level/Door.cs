@@ -3,14 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DoorDir
+{
+    FRONT,
+    BACK
+}
+
 public class Door : MonoBehaviour
 {
+    public bool locked = false;
+
     public BoxCollider LeftFront;
     public BoxCollider RightFront;
     public BoxCollider LeftBack;
     public BoxCollider RightBack;
 
-    private bool closed = true;
+    public DoorDir buttonOpenDir = DoorDir.FRONT;
+
+    [HideInInspector] public bool closed = true;
     private bool openedForward = false; /* Else, opened backward */
 
     private Animator animator;
@@ -59,11 +69,9 @@ public class Door : MonoBehaviour
             closed = true;
 
         }
-
-
     }
 
-    public void ChangeDoorAnimationState(string newState) 
+    public void ChangeDoorAnimationState(string newState)
     {
         // STOP THE SAME ANIMATION FROM INTERRUPTING WITH ITSELF //
         if (currentAnimationState == newState) return;
