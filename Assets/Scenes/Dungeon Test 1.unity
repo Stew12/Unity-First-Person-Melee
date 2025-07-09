@@ -6740,7 +6740,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c113a78a19b3634ea7a11ebcf33c6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spikeHitbox: {fileID: 1647729588}
   spikesUp: 0
+  autoImpaling: 1
+  spikeActivationTime: 1
+  timeBeforeSpikeRetraction: 3.5
+  spikeCoolDownTime: 4
 --- !u!65 &1647729593
 BoxCollider:
   m_ObjectHideFlags: 0

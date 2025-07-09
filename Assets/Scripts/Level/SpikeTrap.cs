@@ -7,26 +7,44 @@ using UnityEngine;
 public class SpikeTrap : MonoBehaviour
 {
     private Animator animator;
+    [SerializeField] private BoxCollider spikeHitbox;
 
     private string currentAnimationState;
     private string SPIKESUPANIM = "spikeTrapImpale";
+    private string SPIKESREADYANIM = "spikeTrapReadyImpale";
     private string SPIKESDOWNANIM = "spikeTrapRetract";
 
-    public bool spikesUp = false;
+    [HideInInspector] public bool spikesUp = false;
+    private bool spikesReady = false;
+    [SerializeField] private bool autoImpaling = false;
 
-    [SerializeField] private float spikeActivationTime = 0.2f;
-    [SerializeField] private float timeBeforeSpikeRetraction = 2f;
+    [SerializeField] private float spikeActivationTime = 1f;
+    [SerializeField] private float timeBeforeSpikeRetraction = 3.5f;
+    [SerializeField] private float spikeCoolDownTime = 2f;
 
     // Start is called before the first frame update
     void Awake()
     {
         animator = GetComponent<Animator>();
+        spikeHitbox.enabled = false;
+    }
+
+    void Update()
+    {
+        if (autoImpaling)
+        {
+            if (!spikesReady)
+            {
+                StartCoroutine(SpikesAutoImpale());
+                spikesReady = true;
+            }
+        }
     }
 
     // Player or enemy touches base of trap
     private void OnTriggerEnter(Collider col)
     {
-        if (!spikesUp)
+        if (!spikesUp && !autoImpaling)
         {
             if (col.tag == "Player" || col.tag == "Enemy")
             {
@@ -39,9 +57,9 @@ public class SpikeTrap : MonoBehaviour
     {
         if (impale)
         {
-            // Activate spike trap
-            ChangeSpikeTrapAnimationState(SPIKESUPANIM);
-            StartCoroutine(MakeSpikesDeadly());
+            // Ready spike trap
+            ChangeSpikeTrapAnimationState(SPIKESREADYANIM);
+            StartCoroutine(SpikesFullImpale());
             StartCoroutine(SpikesRetraction());
         }
         else
@@ -49,7 +67,7 @@ public class SpikeTrap : MonoBehaviour
             //Deactivate spike trap
             ChangeSpikeTrapAnimationState(SPIKESDOWNANIM);
         }
-        
+
     }
 
     private void ChangeSpikeTrapAnimationState(string newState)
@@ -62,11 +80,13 @@ public class SpikeTrap : MonoBehaviour
         animator.CrossFadeInFixedTime(currentAnimationState, 0.2f);
     }
 
-    private IEnumerator MakeSpikesDeadly()
+    private IEnumerator SpikesFullImpale()
     {
         yield return new WaitForSeconds(spikeActivationTime);
 
+        ChangeSpikeTrapAnimationState(SPIKESUPANIM);
         spikesUp = true;
+        spikeHitbox.enabled = true;
     }
 
     private IEnumerator SpikesRetraction()
@@ -75,5 +95,15 @@ public class SpikeTrap : MonoBehaviour
 
         SpikeTrapTriggered(false);
         spikesUp = false;
+        spikesReady = false;
+        spikeHitbox.enabled = false;
     }
+
+    private IEnumerator SpikesAutoImpale()
+    {
+        yield return new WaitForSeconds(spikeCoolDownTime);
+
+        SpikeTrapTriggered(true);
+    }
+
 }

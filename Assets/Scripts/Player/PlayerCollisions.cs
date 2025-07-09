@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.Mathematics;
+using System;
 
 public class PlayerCollisions : MonoBehaviour
 {
@@ -72,10 +73,15 @@ public class PlayerCollisions : MonoBehaviour
             case "Trap":
                 if (canTakeDamage)
                 {
-                    TakeDamage(col, false);
+                    if (col.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || col.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
+                    {
+                        //Console.WriteLine("AAAAAA");
+                        TakeDamage(col, false);
+                        canTakeDamage = false;
+                    }
                 }
-
                 break;
+
 
             case "Detection Radius Enter":
                 Debug.Log("Entered detection radius!");
@@ -100,6 +106,29 @@ public class PlayerCollisions : MonoBehaviour
                 break;
         }
     }
+
+    // private void OnTriggerStay(Collider col)
+    // {
+    //     switch (col.tag)
+    //     {
+    //         case "Trap":
+    //             if (canTakeDamage)
+    //             {
+    //                 if (col.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || col.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
+    //                 {
+    //                     Console.WriteLine("AAAAAA");
+    //                     TakeDamage(col, false);
+    //                     canTakeDamage = false;
+    //                 }
+    //             }
+
+    //             break;
+
+    //         default:
+
+    //             break;
+    //     }
+    // }
 
     private void OnTriggerExit(Collider col)
     {
@@ -251,11 +280,8 @@ public class PlayerCollisions : MonoBehaviour
                     break;
 
                 case "Trap":
-                    if (harmfulEntity.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || harmfulEntity.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
-                    {
-                        totalDamage = harmfulEntity.GetComponent<Trap>().damage;
-                    }
-                        break;
+                    totalDamage = harmfulEntity.GetComponent<Trap>().damage;
+                    break;
 
                 default:
                     Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");
