@@ -251,8 +251,11 @@ public class PlayerCollisions : MonoBehaviour
                     break;
 
                 case "Trap":
-                    totalDamage = harmfulEntity.GetComponent<Trap>().damage;
-                    break;
+                    if (harmfulEntity.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || harmfulEntity.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
+                    {
+                        totalDamage = harmfulEntity.GetComponent<Trap>().damage;
+                    }
+                        break;
 
                 default:
                     Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");

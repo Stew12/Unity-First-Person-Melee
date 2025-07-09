@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
+    private Animator animator;
+
     public int damage = 15;
+
+    
 }
