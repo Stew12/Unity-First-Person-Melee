@@ -117,7 +117,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         if (!enemyClass.attackTrajectorySet)
         {
             //Point towards player pos upon spawning
-            trajectory = new Vector3(-enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed * Time.deltaTime, 0, -enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed * Time.deltaTime);
+            trajectory = new Vector3(-enemyGameObject.transform.forward.x * enemyClass.attackMoveTowardsSpeed, 0, -enemyGameObject.transform.forward.z * enemyClass.attackMoveTowardsSpeed);
             enemyClass.attackTrajectorySet = true;
         }
 
@@ -125,7 +125,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         enemyClass.audioSource.PlayOneShot(enemyClass.enemyAttack);
         WeaponSlashEffect();
 
-        enemyClass.enemyController.Move(trajectory); 
+        enemyClass.enemyController.Move(trajectory * Time.deltaTime); 
     }
 
     private void BasicRangedAttack()

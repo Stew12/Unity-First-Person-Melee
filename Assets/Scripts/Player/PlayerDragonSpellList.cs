@@ -17,19 +17,23 @@ public class PlayerDragonSpellList : MonoBehaviour
     private IEnumerator coroutine;
     private PlayerController player;
 
-    [Header("Dragon Spell Values")]
+    [Header("Fireball")]
     public float fireBallBreathCastTime = 1;
-    [SerializeField] private float thunderBreathTargetCastTime = 0.1f;
-    [SerializeField] private float thunderBreathCastTime = 1.1f;
-
     public float fireBallBreathDPCost = 5;
     public float thunderBreathDPCost = 10;
     [SerializeField] private float fireBallBreathSpawnHeight = 0.75f;
-    
+    [SerializeField] private float fireBallBreathSpawnHorizOffset = 0.6f;
+
+
+    [Header("Thunder Target")]
+    [SerializeField] private float thunderBreathTargetCastTime = 0.1f;
+    [SerializeField] private float thunderBreathCastTime = 1.1f;
     private bool thunderTargetSpawned; 
     private GameObject spawnedLTarget;
     [SerializeField] private float thunderTargetDistance = 0.75f;
     [SerializeField] private float thunderTargetyOffset = 0.1f;
+    
+    
 
     public void PrepareDragonSpell(DragonSpells dragonSpell, PlayerController player, PlayerValues playerValues)
     {
@@ -42,7 +46,7 @@ public class PlayerDragonSpellList : MonoBehaviour
             case DragonSpells.FIREBALLBREATH:
                 castTime = fireBallBreathCastTime;
                 dragonPointCost = fireBallBreathDPCost;
-            break;
+                break;
 
             case DragonSpells.THUNDERBREATH:
                 if (!thunderTargetSpawned)
@@ -52,7 +56,7 @@ public class PlayerDragonSpellList : MonoBehaviour
 
                 if (thunderTargetSpawned)
                     dragonPointCost = fireBallBreathDPCost;
-            break;
+                break;
         }
 
         playerValues.currentDragonPoints -= (int)dragonPointCost;
@@ -84,7 +88,7 @@ public class PlayerDragonSpellList : MonoBehaviour
     {
         Vector3 playerPos = player.gameObject.transform.position;
         //Fire a fireball
-        GameObject fb = Instantiate(player.fireBall, new Vector3(playerPos.x, playerPos.y + fireBallBreathSpawnHeight - 0.5f, playerPos.z), Quaternion.identity);
+        GameObject fb = Instantiate(player.fireBall, new Vector3(playerPos.x, playerPos.y + fireBallBreathSpawnHeight, playerPos.z + fireBallBreathSpawnHorizOffset), Quaternion.identity);
     }
 
     private void ThunderBreath()

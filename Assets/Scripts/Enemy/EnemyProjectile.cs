@@ -39,7 +39,7 @@ public class EnemyProjectile : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDirection);
 
             //Point towards player pos upon spawning
-            trajectory = new Vector3(gameObject.transform.forward.x * projectileSpeed * Time.deltaTime, gameObject.transform.forward.y * projectileSpeed * Time.deltaTime, gameObject.transform.forward.z *  projectileSpeed * Time.deltaTime);
+            trajectory = new Vector3(gameObject.transform.forward.x * projectileSpeed, gameObject.transform.forward.y * projectileSpeed, gameObject.transform.forward.z *  projectileSpeed);
 
             trajectorySet = true;
         }
@@ -54,7 +54,7 @@ public class EnemyProjectile : MonoBehaviour
         else
         {
             //Continue in that same direction even if player moves away
-            transform.position += trajectory;
+            transform.position += trajectory * Time.deltaTime;
             //rigidbody.AddForce(trajectory);
         }
     }

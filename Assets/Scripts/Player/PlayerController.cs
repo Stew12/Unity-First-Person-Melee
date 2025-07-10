@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI durabilityLabel;
     public TextMeshProUGUI bronzeAmountLabel;
     public TextMeshProUGUI statusMessage;
+    [SerializeField] private TextMeshProUGUI pausedText;
     public string lockedDoorStatusMessage = "Locked...";
     //public string lockedOpenDoorStatusMessage = "Can't be moved.";
     public string openDoorStatusMessage = "You heard something moving.";
@@ -139,6 +140,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Timing")]
     [HideInInspector] public bool waiting = false;
+    private bool paused = false;
     public float maxDontTakeDamageTime = 0.8f;
     private float dontTakeDamageTime = 0;
     public float maxKnockBackTime = 0.45f;
@@ -156,7 +158,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        
+
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -176,20 +178,21 @@ public class PlayerController : MonoBehaviour
         statusMessage.gameObject.SetActive(false);
 
         moveSpeedDefault = moveSpeed;
-       // animator.speed += 2;
+        // animator.speed += 2;
 
-       //Set required elements to inactive
-       blockAndParryHitbox.SetActive(false);
-       GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
-       dialogueTextBox.transform.parent.gameObject.SetActive(false);
-       noWeaponHand.SetActive(false);
+        //Set required elements to inactive
+        blockAndParryHitbox.SetActive(false);
+        GetComponent<PlayerCollisions>().hurtFlash.enabled = false;
+        dialogueTextBox.transform.parent.gameObject.SetActive(false);
+        pausedText.gameObject.SetActive(false);
+        noWeaponHand.SetActive(false);
 
-       // Set animations for equipped weapon
-       GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
+        // Set animations for equipped weapon
+        GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
 
-       maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
+        maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
 
-       NewLevelLoad();
+        NewLevelLoad();
     }
 
     void AssignInputs()
@@ -208,6 +211,7 @@ public class PlayerController : MonoBehaviour
         input.OpenItemInfo.performed += ctx => ShowItemInfo();
         input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
 
+        input.Pause.performed += ctx => PauseToggle(false);
         input.Inventory.performed += ctx => InventoryToggle();
         input.EquipItem.performed += ctx => EquipItem();
         input.InventorySelectUp.performed += ctx => InventorySelect(InventoryDir.UP);
@@ -805,6 +809,31 @@ public class PlayerController : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 waiting = false;
             }
+        }
+    }
+
+    void PauseToggle(bool forcePauseOn)
+    {
+        if (!paused || forcePauseOn)
+        {
+            //Pause
+            pausedText.gameObject.SetActive(true);
+            paused = true;
+
+            Time.timeScale = 0;
+
+            if (playerInventory.inventoryInterface.activeInHierarchy)
+            {
+                playerInventory.InventoryToggle();
+            }
+        }
+        else
+        {
+            //Unpause
+            pausedText.gameObject.SetActive(false);
+            paused = false;
+
+            Time.timeScale = 1;
         }
     }
 

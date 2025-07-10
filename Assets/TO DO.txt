@@ -10,20 +10,22 @@ Weapon sprites going through wall. Other layering issues such as sprites disappe
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
-For sorceress, seems like she will sometimes attack but not shoot a fireball
+For sorceress, seems like she will sometimes attack but not shoot a fireball 
+
+Also seems that Sorceress does not shoot fireballs in built game
 
 when making a new object for saved item, it creates it in scene as well it seems. Find a way to stop that or destroy it after.
 
 pressing interact twice quickly on a door will make it swing open fast, then shut again. This is actually a cool hidden tech I'd like to
 keep, but stop it from closing again after swinging open fast.
 
-Lighting issues, would at minimum like sprites outside of light to not be visible. Could do a programamtic in range type thing but eh
+Lighting issues, 'selective double torch' glitch
 
 Blocking can be spammed leading to easy parrying. Likely set a cooldown after releasing a block before can block again.
 
 Treasure chest spawns bigger items such as swords in ground. Find some way to deal with this. Idea: have weapons be rotated on their sides
 
-Player knockback needs to be changed in accordance with enemy billboarding changes
+Player knockback might need to be changed in accordance with enemy billboarding changes
 
 enemy sprites no longer turn red before attacking due to shader- have a slightly larger transparent red sprite appear around them instead
 

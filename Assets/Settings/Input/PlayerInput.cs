@@ -118,6 +118,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""81249db7-aa4b-4161-8d39-7bd647223b6f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""53bfa57f-666c-4d8d-bb52-513106024b55"",
@@ -989,6 +998,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""InventoryChangeTabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfb2ca46-141f-4701-b263-12a273d3004e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e8d7a2c-30d1-4c5d-b216-3260fce05ac8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1013,6 +1044,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
         m_Main_Sheathe = m_Main.FindAction("Sheathe", throwIfNotFound: true);
         m_Main_LanternToggle = m_Main.FindAction("LanternToggle", throwIfNotFound: true);
+        m_Main_Pause = m_Main.FindAction("Pause", throwIfNotFound: true);
         m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
         m_Main_EquipItem = m_Main.FindAction("EquipItem", throwIfNotFound: true);
         m_Main_OpenItemInfo = m_Main.FindAction("OpenItemInfo", throwIfNotFound: true);
@@ -1103,6 +1135,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Boost;
     private readonly InputAction m_Main_Sheathe;
     private readonly InputAction m_Main_LanternToggle;
+    private readonly InputAction m_Main_Pause;
     private readonly InputAction m_Main_Inventory;
     private readonly InputAction m_Main_EquipItem;
     private readonly InputAction m_Main_OpenItemInfo;
@@ -1138,6 +1171,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
         public InputAction @Sheathe => m_Wrapper.m_Main_Sheathe;
         public InputAction @LanternToggle => m_Wrapper.m_Main_LanternToggle;
+        public InputAction @Pause => m_Wrapper.m_Main_Pause;
         public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
         public InputAction @EquipItem => m_Wrapper.m_Main_EquipItem;
         public InputAction @OpenItemInfo => m_Wrapper.m_Main_OpenItemInfo;
@@ -1198,6 +1232,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @LanternToggle.started -= m_Wrapper.m_MainActionsCallbackInterface.OnLanternToggle;
                 @LanternToggle.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnLanternToggle;
                 @LanternToggle.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnLanternToggle;
+                @Pause.started -= m_Wrapper.m_MainActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnPause;
                 @Inventory.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventory;
@@ -1295,6 +1332,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @LanternToggle.started += instance.OnLanternToggle;
                 @LanternToggle.performed += instance.OnLanternToggle;
                 @LanternToggle.canceled += instance.OnLanternToggle;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
@@ -1383,6 +1423,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnBoost(InputAction.CallbackContext context);
         void OnSheathe(InputAction.CallbackContext context);
         void OnLanternToggle(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnEquipItem(InputAction.CallbackContext context);
         void OnOpenItemInfo(InputAction.CallbackContext context);

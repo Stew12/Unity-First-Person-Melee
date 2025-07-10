@@ -18,7 +18,7 @@ public class PlayerProjectile : MonoBehaviour
         Transform cameraPos = Camera.main.transform;
 
         //Point towards player pos upon spawning
-        trajectory = new Vector3(cameraPos.forward.x * projectileSpeed * Time.deltaTime, cameraPos.forward.y * projectileSpeed * Time.deltaTime, cameraPos.forward.z *  projectileSpeed * Time.deltaTime);
+        trajectory = new Vector3(cameraPos.forward.x * projectileSpeed, cameraPos.forward.y * projectileSpeed, cameraPos.forward.z *  projectileSpeed);
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class PlayerProjectile : MonoBehaviour
         else
         {
             //Continue in that same direction even if player moves away
-            transform.position += trajectory;
+            transform.position += trajectory * Time.deltaTime;
         }
     }
 }

@@ -304,6 +304,10 @@ MonoBehaviour:
   durabilityBarUI: {fileID: 0}
   durabilityLabel: {fileID: 0}
   bronzeAmountLabel: {fileID: 0}
+  statusMessage: {fileID: 0}
+  pausedText: {fileID: 0}
+  lockedDoorStatusMessage: Locked...
+  openDoorStatusMessage: You heard something moving.
   moveSpeed: 2.1
   moveSpeedDefault: 0
   moveSpeedSheathedFactor: 1.6
