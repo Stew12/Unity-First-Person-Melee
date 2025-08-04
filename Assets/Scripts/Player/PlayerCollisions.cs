@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.Mathematics;
 using System;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerCollisions : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class PlayerCollisions : MonoBehaviour
                 break;
 
             case "Trap":
+                //Debug.Log(canTakeDamage);
                 if (canTakeDamage)
                 {
                     if (col.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || col.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
@@ -80,6 +82,10 @@ public class PlayerCollisions : MonoBehaviour
                         canTakeDamage = false;
                     }
                 }
+                break;
+
+            case "Pressure Plate":
+                col.GetComponent<DungeonButton>().ButtonActivation(GetComponent<PlayerController>());
                 break;
 
 
@@ -106,29 +112,6 @@ public class PlayerCollisions : MonoBehaviour
                 break;
         }
     }
-
-    // private void OnTriggerStay(Collider col)
-    // {
-    //     switch (col.tag)
-    //     {
-    //         case "Trap":
-    //             if (canTakeDamage)
-    //             {
-    //                 if (col.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || col.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
-    //                 {
-    //                     Console.WriteLine("AAAAAA");
-    //                     TakeDamage(col, false);
-    //                     canTakeDamage = false;
-    //                 }
-    //             }
-
-    //             break;
-
-    //         default:
-
-    //             break;
-    //     }
-    // }
 
     private void OnTriggerExit(Collider col)
     {
@@ -184,10 +167,6 @@ public class PlayerCollisions : MonoBehaviour
             }
 
             attackParried = false;
-
-            canTakeDamage = false;
-
-            GetComponent<PlayerController>().DontTakeDamage();
             //}
 
         }
@@ -213,6 +192,9 @@ public class PlayerCollisions : MonoBehaviour
             //Reduce durability on weapon
             GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= GetComponent<PlayerController>().weaponDurabilityLossBlock;
         }
+
+        canTakeDamage = false;
+        GetComponent<PlayerController>().DontTakeDamage();
 
         // Player death
         if (GetComponent<PlayerValues>().currentHealth <= 0)

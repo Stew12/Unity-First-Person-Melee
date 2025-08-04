@@ -11,15 +11,14 @@ public class SwingingBladeTrap : MonoBehaviour
     private string BLADELEFT = "SwingingBladeLeft";
     private string BLADERIGHT = "SwingingBladeRight";
 
-    //[HideInInspector] public bool spikesUp = false;
-    private bool sBladeReady = false;
+    [HideInInspector] public bool sBladeReady = false;
     [SerializeField] private bool autoSwinging = false;
 
     [SerializeField] private float sBladeActivationTime = 1f;
     //[SerializeField] private float timeBeforesBladeOff = 3.5f;
     [SerializeField] private float sBladeCoolDownTime = 2f;
 
-    [SerializeField] private bool rightSwing = true;
+    public bool rightSwing = true;
 
     // Start is called before the first frame update
     void Awake()

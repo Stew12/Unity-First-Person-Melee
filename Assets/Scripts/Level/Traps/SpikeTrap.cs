@@ -55,6 +55,7 @@ public class SpikeTrap : MonoBehaviour
 
     public void SpikeTrapTriggered(bool impale)
     {
+
         if (impale)
         {
             // Ready spike trap

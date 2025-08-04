@@ -41,6 +41,26 @@ public class DungeonButton : MonoBehaviour
             }
         }
         //TODO spike trap
-        //else if (connectedDevice.GetComponent<Door>() != null)
+        else if (connectedDevice.GetComponent<SpikeTrap>() != null)
+        {
+            if (!connectedDevice.GetComponent<SpikeTrap>().spikesUp)
+            {
+                connectedDevice.GetComponent<SpikeTrap>().SpikeTrapTriggered(true);
+            }
+        }
+        else if (connectedDevice.GetComponent<FIreTrap>() != null)
+        {
+            if (!connectedDevice.GetComponent<FIreTrap>().fireOn)
+            {
+                connectedDevice.GetComponent<FIreTrap>().FireTrapTriggered(true);
+            }
+        }
+        else if (connectedDevice.GetComponent<SwingingBladeTrap>() != null)
+        {
+            if (!connectedDevice.GetComponent<SwingingBladeTrap>().sBladeReady)
+            {
+                connectedDevice.GetComponent<SwingingBladeTrap>().SBladeTrapTriggered(connectedDevice.GetComponent<SwingingBladeTrap>().rightSwing);
+            }
+        }
     }
 }
