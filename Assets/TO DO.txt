@@ -29,15 +29,17 @@ Player knockback might need to be changed in accordance with enemy billboarding 
 
 enemy sprites no longer turn red before attacking due to shader- have a slightly larger transparent red sprite appear around them instead
 
+ART STYLE
 
+Make it so that enemy sprite flips upon physical attack
 
-
+UI art style update
 
 BALANCING
 
 EXTENSIONS
 
-Have enemies spawn a sword slash effect etc when attacking
+Have enemies spawn a sword slash effect etc when attacking- this is done but need adjusting
 
 AUDIO
 

@@ -135,9 +135,6 @@ public class PlayerController : MonoBehaviour
     [Header("Dialog")]
     public TextCrawl dialogueTextBox;
 
-    [Header("Currency")]
-    [SerializeField] private float coinToBronzeFactor = 10;
-
     [Header("Timing")]
     [HideInInspector] public bool waiting = false;
     private bool paused = false;
@@ -149,7 +146,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxPowerTime = 0;
     [SerializeField] private float powerTime = 0;
     [HideInInspector] public float parryWindowTime = 0;
-    private float statusMessageVisibleTime = 1;    
+    [SerializeField] private float statusMessageVisibleTime = 1;   
+
+    [Header("Currency")]
+    [SerializeField] private float coinToBronzeFactor = 10; 
 
     [Header("Debug")]
 
@@ -861,7 +861,7 @@ public class PlayerController : MonoBehaviour
 
     void EquipItem()
     {
-        if (playerInventory.inventoryInterface.activeInHierarchy && playerInventory.GetComponent<PlayerInventory>().selectedItem != null && playerInventory.currInventoryIndex != 0)
+        if (playerInventory != null && playerInventory.inventoryInterface.activeInHierarchy && playerInventory.GetComponent<PlayerInventory>().selectedItem != null && playerInventory.currInventoryIndex != 0)
         {
             playerInventory.GetComponent<PlayerInventory>().ItemIsSelected(playerInventory.GetComponent<PlayerInventory>().selectedItem, playerInventory.GetComponent<PlayerInventory>().selectedItemGObj, true);
         }
