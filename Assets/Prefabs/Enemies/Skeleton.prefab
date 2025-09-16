@@ -309,7 +309,7 @@ Transform:
   - {fileID: 7634305740113712457}
   - {fileID: 1090029255633448365}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7075933641429308994
 MonoBehaviour:
@@ -346,6 +346,8 @@ MonoBehaviour:
   distanceFromPlayer: 0
   waiting: 0
   gravity: -9.8
+  flipSpriteOnAttack: 1
+  slashOffset: 0.6
   attackMoveTowardsSpeed: 9
   attackDistance: 0
   aggroAttackDistance: 2.4

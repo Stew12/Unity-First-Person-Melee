@@ -63,6 +63,10 @@ public class Enemy : MonoBehaviour
     Vector3 _EnemyVelocity;
     public float gravity = -9.8f;
 
+    [Header("Visual")]
+    [SerializeField] private bool flipSpriteOnAttack = false;
+    [SerializeField] private float slashOffset = 0.2f;
+
 
     [Header("Attacking")]
     public float attackMoveTowardsSpeed;
@@ -167,13 +171,25 @@ public class Enemy : MonoBehaviour
                             if (attackDuration > 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
+
+                                if (flipSpriteOnAttack)
+                                {
+                                    //Flip sprite to give better illusion of attacking
+                                    GetComponent<SpriteRenderer>().flipX = true;
+                                }
                             }
                             else if (attackDuration <= 0)
                             {
                                 //Reset to before attack
                                 enemyAttacking = false;
                                 enemyAttackProcess = false;
+
+                                if (flipSpriteOnAttack)
+                                {
+                                    GetComponent<SpriteRenderer>().flipX = false;
+                                }
+                                
                                 enemyState = EnemyState.CHASING;
 
                                 attackTrajectorySet = false;
@@ -182,7 +198,7 @@ public class Enemy : MonoBehaviour
 
                                 enemyBehaviourAndAttackList.attackChoice = -1;
 
-                            }
+                                }
                         }
 
                     break;

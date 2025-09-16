@@ -22,10 +22,10 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     GameObject AOE;
     GameObject weaponSlash;
 
-    [HideInInspector] public int attackChoice = -1;
+    private float slashOffset = 0.2f;
+    public int attackChoice = -1;
 
     private float slashDistance = -0.8f;
-    private float slashOffset = 0.2f;
 
     public void RoamBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
     {
@@ -70,7 +70,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash)
+    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
     {
         this.enemyType = enemyType;
         this.enemyClass = enemyClass;
@@ -78,6 +78,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         this.projectile = projectile;
         this.AOE = AOE;
         this.weaponSlash = weaponSlash;
+        this.slashOffset = slashOffset;
 
         switch (enemyType)
         {
@@ -158,7 +159,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
                 enemyClass.canFireProjectile = false;
 
                 Vector3 slashPos = enemyGameObject.transform.localPosition - enemyGameObject.transform.forward - enemyGameObject.transform.forward * slashDistance;
-                slashPos = new Vector3(slashPos.x + slashOffset, slashPos.y + slashOffset, slashPos.z);
+                slashPos = new Vector3(slashPos.x, slashPos.y + slashOffset, slashPos.z);
 
                 GameObject spawnedSlash = Instantiate(weaponSlash, slashPos, enemyGameObject.transform.rotation);
                 spawnedSlash.transform.parent = enemyGameObject.transform;
