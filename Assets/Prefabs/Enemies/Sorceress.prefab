@@ -553,6 +553,8 @@ MonoBehaviour:
   projectileSpawn: {fileID: 8630389437210193126}
   enemyWeaponAttack: {fileID: 0}
   enemyAOE: {fileID: 0}
+  enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
+    type: 3}
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
   enemyHPBarBG: {fileID: 2338915614995728592}
@@ -569,6 +571,8 @@ MonoBehaviour:
   gravity: -9.8
   flipSpriteOnAttack: 0
   slashOffset: 0.2
+  attackWarningSpriteScale: 1.1
+  attackWarningHeightUp: 0.05
   attackMoveTowardsSpeed: 5
   attackDistance: 0
   aggroAttackDistance: 30

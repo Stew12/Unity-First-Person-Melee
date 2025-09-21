@@ -38,6 +38,8 @@ public class Enemy : MonoBehaviour
     public GameObject projectileSpawn;
     public GameObject enemyWeaponAttack;
     public GameObject enemyAOE;
+    [SerializeField] private GameObject enemyAttackWarningSource;
+    private GameObject attkWarning;
     [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private GameObject enemyHPBarBG;
     public CapsuleCollider mainHitbox;
@@ -66,6 +68,8 @@ public class Enemy : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private bool flipSpriteOnAttack = false;
     [SerializeField] private float slashOffset = 0.2f;
+    [SerializeField] private float attackWarningSpriteScale = 1.1f;
+    [SerializeField] private float attackWarningHeightUp = 0.3f;
 
 
     [Header("Attacking")]
@@ -276,21 +280,37 @@ public class Enemy : MonoBehaviour
     
     private void attackSetup()
     {
-        spriteRenderer.color = Color.red;
+        createAttackWarning();
 
         canFireProjectile = true;
 
         enemyAttackProcess = true;
 
-        coroutine = ExecuteEnemyAttack(attackWindUpTime);
-        StartCoroutine(coroutine);
+        StartCoroutine(ExecuteEnemyAttack(attackWindUpTime));
 
     }
 
-    private IEnumerator ExecuteEnemyAttack(float waitTime) 
+    private void createAttackWarning()
+    {
+        attkWarning = Instantiate(enemyAttackWarningSource, new Vector3(transform.position.x, transform.position.y + attackWarningHeightUp, transform.position.z), transform.rotation);
+
+        if (GetComponent<SpriteRenderer>() != null)
+        {
+            attkWarning.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
+        }
+        else
+        {
+            attkWarning.GetComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
+        }
+        
+        attkWarning.transform.localScale = transform.localScale * attackWarningSpriteScale;
+    }
+
+    private IEnumerator ExecuteEnemyAttack(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
+        Destroy(attkWarning);
         enemyAttacking = true;
         spriteRenderer.color = Color.white;
         attackDuration = maxAttackDuration;
