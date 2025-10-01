@@ -115,7 +115,7 @@ MonoBehaviour:
   enemyCasterClass: {fileID: 0}
   projectileDamage: 0
   rangeTime: 0
-  parryable: 0
+  parryable: 1
 --- !u!82 &29669276367854902
 AudioSource:
   m_ObjectHideFlags: 0
