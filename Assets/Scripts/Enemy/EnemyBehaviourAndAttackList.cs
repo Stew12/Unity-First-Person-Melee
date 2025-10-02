@@ -70,9 +70,34 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public void AttackBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
+    public EnemyAttack selectEnemyAttack(EnemyType enemyType)
     {
         this.enemyType = enemyType;
+
+        switch (enemyType)
+        {
+            //SKELETON ATTACKS: RUSH AT PLAYER 
+            case EnemyType.SKELETON:
+                //TODO: set trajectory towards player then move ONLY on that trqjectory for rest of attack
+                return EnemyAttack.BASICPHYSICAL;
+
+            //SKELETON ATTACKS: SHOOT FIREBALL AT PLAYER 
+            case EnemyType.SORCERESS:
+                return EnemyAttack.BASICRANGED;
+
+            case EnemyType.IMP:
+                return EnemyAttackRandomChoice(new EnemyAttack[] { EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE });
+
+    
+            default:
+                return EnemyAttack.BASICPHYSICAL;
+        }
+
+
+    }
+
+    public void AttackBehaviourList(EnemyAttack enemyAttack, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
+    {
         this.enemyClass = enemyClass;
         this.enemyGameObject = enemyGameObject;
         this.projectile = projectile;
@@ -80,29 +105,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         this.weaponSlash = weaponSlash;
         this.slashOffset = slashOffset;
 
-        switch (enemyType)
-        {
-            //SKELETON ATTACKS: RUSH AT PLAYER 
-            case EnemyType.SKELETON:
-                //TODO: set trajectory towards player then move ONLY on that trqjectory for rest of attack
-                EnemyAttackListSelect(EnemyAttack.BASICPHYSICAL);
-                break;
-
-            //SKELETON ATTACKS: SHOOT FIREBALL AT PLAYER 
-            case EnemyType.SORCERESS:
-                EnemyAttackListSelect(EnemyAttack.BASICRANGED);
-                break;
-
-
-            case EnemyType.IMP:
-                EnemyAttackRandomChoice(new EnemyAttack[] { EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE });
-
-                break;
-
-            default:
-
-                break;
-        }
+        EnemyAttackListSelect(enemyAttack);
     }
 
     //Pursues the player at a designated speed
@@ -181,7 +184,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         //}
     }
 
-    private void EnemyAttackRandomChoice(EnemyAttack[] enemyAttacks)
+    private EnemyAttack EnemyAttackRandomChoice(EnemyAttack[] enemyAttacks)
     {
         if (attackChoice == -1)
         {
@@ -189,8 +192,8 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
             attackChoice = Random.Range(0, maxRandom);
         }
-        
-        EnemyAttackListSelect(enemyAttacks[attackChoice]);
+
+        return enemyAttacks[attackChoice];
     }
 
     private void EnemyAttackListSelect(EnemyAttack enemyAttack)

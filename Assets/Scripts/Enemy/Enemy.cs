@@ -39,7 +39,9 @@ public class Enemy : MonoBehaviour
     public GameObject enemyWeaponAttack;
     public GameObject enemyAOE;
     [SerializeField] private GameObject enemyAttackWarningSource;
+    [SerializeField] private GameObject enemyAttackWarningRadius;
     private GameObject attkWarning;
+    private GameObject attkWarningRad;
     [SerializeField] private GameObject enemyDeathEffect;
     [SerializeField] private GameObject enemyHPBarBG;
     public CapsuleCollider mainHitbox;
@@ -69,8 +71,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool flipSpriteOnAttack = false;
     [SerializeField] private float slashOffset = 0.2f;
     [SerializeField] private float attackWarningSpriteScale = 1.1f;
-    [SerializeField] private float attackWarningHeightUp = 0.3f;
-
+    [SerializeField] private float attackWarningHeightUp = 0.05f;
+    [SerializeField] private float attackWarningRadYOffset = 0.6f;
 
     [Header("Attacking")]
     public float attackMoveTowardsSpeed;
@@ -107,15 +109,6 @@ public class Enemy : MonoBehaviour
 
     [Header("State Machine")]
     public EnemyState enemyState;
-
-    public enum EnemyAttackType
-    {
-        BASIC,
-        RANGED
-    }
-
-    [Header("Attack list")]
-    public EnemyAttackType enemyAttackType;
 
     void Awake()
     {
@@ -160,11 +153,15 @@ public class Enemy : MonoBehaviour
 
                     case EnemyState.ATTACKING:
 
-                        if(!enemyAttackProcess)
+                        EnemyAttack eAttack = EnemyAttack.BASICPHYSICAL;
+
+                        eAttack = enemyBehaviourAndAttackList.selectEnemyAttack(enemyType);
+
+                        if (!enemyAttackProcess)
                         {
                             if (attackCoolDownTime <= 0)
                             {
-                                attackSetup();
+                                attackSetup(eAttack);
                             }
                         }
 
@@ -175,7 +172,7 @@ public class Enemy : MonoBehaviour
                             if (attackDuration > 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(enemyType, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(eAttack, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
 
                                 if (flipSpriteOnAttack)
                                 {
@@ -278,9 +275,14 @@ public class Enemy : MonoBehaviour
     }
 
     
-    private void attackSetup()
+    private void attackSetup(EnemyAttack EA)
     {
         createAttackWarning();
+
+        if (EA == EnemyAttack.BASICAOE)
+        {
+            createAttackWarningRadius();
+        }
 
         canFireProjectile = true;
 
@@ -306,11 +308,19 @@ public class Enemy : MonoBehaviour
         attkWarning.transform.localScale = transform.localScale * attackWarningSpriteScale;
     }
 
+    private void createAttackWarningRadius()
+    {
+        attkWarningRad = Instantiate(enemyAttackWarningRadius, new Vector3(transform.position.x, transform.position.y - attackWarningRadYOffset, transform.position.z), Quaternion.Euler(90, 0, 0));
+    }
+
     private IEnumerator ExecuteEnemyAttack(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
         Destroy(attkWarning);
+
+        if (attkWarningRad != null) Destroy(attkWarningRad);
+
         enemyAttacking = true;
         spriteRenderer.color = Color.white;
         attackDuration = maxAttackDuration;
@@ -392,6 +402,9 @@ public class Enemy : MonoBehaviour
 
         // Spawn enemy death object and destroy enemy object
         GameObject EDE = Instantiate(enemyDeathEffect, transform.position, Quaternion.identity);
+
+        if (attkWarning != null) Destroy(attkWarning);
+        if (attkWarningRad != null) Destroy(attkWarningRad);
 
         EDE.GetComponent<EnemyDeathEffect>().deathSound = enemyDie;
         EDE.GetComponent<EnemyDeathEffect>().deathEffectTime = enemyDie.length;

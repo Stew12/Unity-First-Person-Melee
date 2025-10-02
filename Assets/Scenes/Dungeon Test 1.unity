@@ -4750,7 +4750,7 @@ PrefabInstance:
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: chaseSpeed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
@@ -4785,9 +4785,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
+      propertyPath: attackWarningRadYOffset
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
       propertyPath: attackWarningSpriteScale
       value: 1.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
+      propertyPath: enemyAttackWarningRadius
+      value: 
+      objectReference: {fileID: 3937243831462665012, guid: 03a40108982bcdc46b0abf50726c8539,
+        type: 3}
     - target: {fileID: 7075933641429308997, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_RootOrder
@@ -9169,6 +9180,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 492865513}
     m_Modifications:
+    - target: {fileID: 7075933641429308994, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: attackWarningHeightUp
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: attackWarningSpriteScale
+      value: 0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: enemyAttackWarningRadius
+      value: 
+      objectReference: {fileID: 3937243831462665012, guid: 03a40108982bcdc46b0abf50726c8539,
+        type: 3}
     - target: {fileID: 7075933641429308997, guid: ef83fe617fab5d049b80b731393060c9,
         type: 3}
       propertyPath: m_RootOrder
@@ -9666,17 +9693,17 @@ PrefabInstance:
     - target: {fileID: 7593769519860796478, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.38679248
+      value: 0.114139065
       objectReference: {fileID: 0}
     - target: {fileID: 7593769519860796478, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.38679248
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7593769519860796478, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.38679248
+      value: 0.6320754
       objectReference: {fileID: 0}
     - target: {fileID: 7593769519909719856, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
@@ -9871,7 +9898,7 @@ PrefabInstance:
     - target: {fileID: 7593769521127118180, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_fontSize
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7593769521127118180, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
@@ -9882,12 +9909,12 @@ PrefabInstance:
     - target: {fileID: 7593769521127118180, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_fontColor.a
-      value: 0.3137255
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7593769521127118180, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7593769521127118180, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
@@ -9898,7 +9925,7 @@ PrefabInstance:
     - target: {fileID: 7593769521127118180, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 1358954495
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7593769521153516689, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
         type: 3}
