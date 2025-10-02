@@ -88,7 +88,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
             case EnemyType.IMP:
                 return EnemyAttackRandomChoice(new EnemyAttack[] { EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE });
 
-    
+
             default:
                 return EnemyAttack.BASICPHYSICAL;
         }
@@ -139,6 +139,8 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
             enemyClass.canFireProjectile = false;
             GameObject spawnedProjectile = Instantiate(projectile, enemyClass.projectileSpawn.transform.position, Quaternion.identity);
             spawnedProjectile.GetComponent<EnemyProjectile>().enemyCasterClass = enemyClass;
+
+            Debug.Log("Projectile fired!");
         }
     }
 
@@ -202,15 +204,15 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         {
             case EnemyAttack.BASICPHYSICAL:
                 BasicPhysicalAttack();
-            break;
+                break;
 
             case EnemyAttack.BASICRANGED:
                 BasicRangedAttack();
-            break;
+                break;
 
             case EnemyAttack.BASICAOE:
                 BasicAOEAttack();
-            break;
+                break;
 
         }
     }

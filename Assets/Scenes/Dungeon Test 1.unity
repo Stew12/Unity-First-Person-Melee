@@ -1873,6 +1873,7 @@ Transform:
   - {fileID: 116734302}
   - {fileID: 595945848}
   - {fileID: 8665687352586714768}
+  - {fileID: 1058798785}
   - {fileID: 469886355}
   - {fileID: 1971859046}
   - {fileID: 144198518}
@@ -3905,6 +3906,88 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 654106099}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1058798784
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 492865513}
+    m_Modifications:
+    - target: {fileID: 6270278121750712902, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: maxAttackDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286608605994125364, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_Name
+      value: Sorceress
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 24b79c5ce40a1ec40a97d44b55b4f93e, type: 3}
+--- !u!4 &1058798785 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1058798784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1064527174
 GameObject:
   m_ObjectHideFlags: 0
@@ -4639,6 +4722,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
+      propertyPath: enemyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: 55187a9703d68a945afb9d75e9c4f890,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -4772,7 +4860,7 @@ PrefabInstance:
     - target: {fileID: 7075933641429309022, guid: 55187a9703d68a945afb9d75e9c4f890,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -6633,7 +6721,7 @@ PrefabInstance:
     - target: {fileID: 869919609862909348, guid: 32c17d99f73b6254caa52f2475f01b56,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -9064,6 +9152,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sorceress
       objectReference: {fileID: 0}
+    - target: {fileID: 6286608605994125364, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8573265339125465467, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -9087,17 +9180,17 @@ PrefabInstance:
     - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.63
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.83
+      value: -0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8665687354510466113, guid: 24b79c5ce40a1ec40a97d44b55b4f93e,
         type: 3}
@@ -9809,6 +9902,11 @@ PrefabInstance:
       propertyPath: bronzeAmountLabel
       value: 
       objectReference: {fileID: 2076769239}
+    - target: {fileID: 1282487068343986868, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: fireBallBreathSpawnHorizOffset
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1282487068343986871, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
       propertyPath: hurtFlash

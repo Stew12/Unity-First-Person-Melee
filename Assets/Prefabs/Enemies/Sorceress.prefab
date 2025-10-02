@@ -531,7 +531,7 @@ Transform:
   - {fileID: 3227852604660379414}
   - {fileID: 6483194115729005214}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &6270278121750712902
 MonoBehaviour:
@@ -555,6 +555,7 @@ MonoBehaviour:
   enemyAOE: {fileID: 0}
   enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
     type: 3}
+  enemyAttackWarningRadius: {fileID: 0}
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
   enemyHPBarBG: {fileID: 2338915614995728592}
@@ -573,6 +574,7 @@ MonoBehaviour:
   slashOffset: 0.2
   attackWarningSpriteScale: 1.1
   attackWarningHeightUp: 0.05
+  attackWarningRadYOffset: 0.6
   attackMoveTowardsSpeed: 5
   attackDistance: 0
   aggroAttackDistance: 30
@@ -590,13 +592,12 @@ MonoBehaviour:
   attackWindUpTime: 0.85
   maxAttackCoolDownTime: 3
   attackCoolDownTime: 0
-  maxAttackDuration: 0.01
+  maxAttackDuration: 0.2
   attackDuration: 0
   maxWaitTime: 0.7
   hpBarShowTime: 0.8
   waitTime: 0
   enemyState: 0
-  enemyAttackType: 0
 --- !u!136 &1499837858204121754
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -920,7 +921,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8630389437210193126}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.2919517, y: 9.71254, z: -12.555236}
+  m_LocalPosition: {x: 0, y: 0, z: -7.3}
   m_LocalScale: {x: 23.718307, y: 23.718307, z: 23.718307}
   m_ConstrainProportionsScale: 0
   m_Children: []

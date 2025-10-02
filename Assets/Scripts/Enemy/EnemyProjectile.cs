@@ -17,12 +17,12 @@ public class EnemyProjectile : MonoBehaviour
     private bool trajectorySet = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         cam = Camera.main;
 
         //transform.rotation = Quaternion.Euler(0f,0f,0f);
-        Debug.Log("Proj rot " + transform.rotation.x);
+        //Debug.Log("Proj rot " + transform.rotation.x);
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class EnemyProjectile : MonoBehaviour
         if (rangeTime <= 0)
         {
             EnemyCasterCanFire();
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         else
         {

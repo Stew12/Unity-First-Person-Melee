@@ -169,11 +169,10 @@ public class Enemy : MonoBehaviour
 
                         if (enemyAttacking)
                         {
-                            if (attackDuration > 0)
+                            if (attackDuration >= 0)
                             {
                                 //ATTACK OCCURS HERE!
                                 enemyBehaviourAndAttackList.AttackBehaviourList(eAttack, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
-
                                 if (flipSpriteOnAttack)
                                 {
                                     //Flip sprite to give better illusion of attacking
@@ -190,7 +189,7 @@ public class Enemy : MonoBehaviour
                                 {
                                     GetComponent<SpriteRenderer>().flipX = false;
                                 }
-                                
+
                                 enemyState = EnemyState.CHASING;
 
                                 attackTrajectorySet = false;
@@ -199,7 +198,7 @@ public class Enemy : MonoBehaviour
 
                                 enemyBehaviourAndAttackList.attackChoice = -1;
 
-                                }
+                            }
                         }
 
                     break;
