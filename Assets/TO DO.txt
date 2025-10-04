@@ -10,10 +10,6 @@ Weapon sprites going through wall. Other layering issues such as sprites disappe
 
 Weapon switching- if change weapon in the middle of an animation it will get stuck there, look into this k ALSO happens with sheathing
 
-For sorceress, seems like she will sometimes attack but not shoot a fireball 
-
-Also seems that Sorceress does not shoot fireballs in built game
-
 when making a new object for saved item, it creates it in scene as well it seems. Find a way to stop that or destroy it after.
 
 pressing interact twice quickly on a door will make it swing open fast, then shut again. This is actually a cool hidden tech I'd like to
@@ -23,15 +19,11 @@ Lighting issues, 'selective double torch' glitch
 
 Blocking can be spammed leading to easy parrying. Likely set a cooldown after releasing a block before can block again.
 
+Blocking bug: sometimes seems that blocking doesnt seem to happen or one attack will be blocked without block happening, then next non-blocked attack will be treated as blocked.
+
 Treasure chest spawns bigger items such as swords in ground. Find some way to deal with this. Idea: have weapons be rotated on their sides
 
-Player knockback might need to be changed in accordance with enemy billboarding changes
-
-enemy sprites no longer turn red before attacking due to shader- have a slightly larger transparent red sprite appear around them instead
-
 ART STYLE
-
-Make it so that enemy sprite flips upon physical attack
 
 UI art style update
 
@@ -39,14 +31,10 @@ BALANCING
 
 EXTENSIONS
 
-Have enemies spawn a sword slash effect etc when attacking- this is done but need adjusting
-
 AUDIO
 
 make footsteps tempo play faster if moving faster, rather than pitch- 
 Likely do this by having custom sped up audio clips that are roughly attributed to each section of the movement guage when boosting
-
-Sound effect for doors opening
 
 GAMEPLAY
 
@@ -60,8 +48,6 @@ Have the hand of the player on its own be animated, not the the weapon, that way
 
 
 LEVEL
-
-Switch opens door
 
 Switch moves/rotates platform
 
@@ -82,8 +68,6 @@ NPC portrait art (this seems good: https://canonkiller.itch.io/dragonborn-portra
 
 
 INVENTORY
-
-control inventory with controller
 
 Add in ability to pick up armour and spells and select them from inventory
 
