@@ -22,8 +22,11 @@ public class Door : MonoBehaviour
 
     [HideInInspector] public bool closed = true;
     private bool openedForward = false; /* Else, opened backward */
+    [SerializeField] private float openedPitch = 0.8f;
+    [SerializeField] private float closedPitch = 0.7f;
 
     private Animator animator;
+    private AudioSource audioSource;
     string currentAnimationState;
     private string DOOROPENFORWARD = "doorOpenForward";
     private string DOORCLOSEFORWARD = "doorCloseForward";
@@ -34,6 +37,7 @@ public class Door : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void DoorOpenOrClose(BoxCollider collider)
@@ -53,6 +57,8 @@ public class Door : MonoBehaviour
             }
 
             closed = false;
+
+            audioSource.pitch = openedPitch;
         }
         else
         {
@@ -68,7 +74,10 @@ public class Door : MonoBehaviour
 
             closed = true;
 
+            audioSource.pitch = closedPitch;
         }
+
+        audioSource.Play();
     }
 
     public void ChangeDoorAnimationState(string newState)

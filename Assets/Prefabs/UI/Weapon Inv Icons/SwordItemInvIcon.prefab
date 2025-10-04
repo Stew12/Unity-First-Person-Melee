@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c105abfdc49574cbc4e48f5a456c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ITEM: {fileID: 7786502534206770190, guid: aecb32b4bc94b1440ba86170b929a26b, type: 3}
+  ITEM: {fileID: 1967638653261711436, guid: 2e85113378d226443bcbb8a590cb0fa2, type: 3}
   itemTypeUI: 0
   dragonSpells: 0
   consumable: {fileID: 0}
@@ -182,7 +182,7 @@ RectTransform:
   m_GameObject: {fileID: 526734180212155688}
   m_LocalRotation: {x: -0, y: -0, z: -0.35150516, w: 0.93618596}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.80004, y: 1.6483928, z: 1}
+  m_LocalScale: {x: 0.80004, y: 1.3321487, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 526734179472673323}
@@ -190,7 +190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -41.159}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.9, y: 4.7}
+  m_AnchoredPosition: {x: -0.5, y: -1.1}
   m_SizeDelta: {x: 38.7319, y: 39.7323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &526734180212155861
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c67971e1c87dd7945af99f9201f529fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6442ec27f42e4984cb8a959ee95078c8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

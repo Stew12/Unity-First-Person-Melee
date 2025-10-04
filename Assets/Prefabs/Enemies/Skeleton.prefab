@@ -333,6 +333,7 @@ MonoBehaviour:
   enemyAOE: {fileID: 0}
   enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
     type: 3}
+  enemyAttackWarningRadius: {fileID: 0}
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
   enemyHPBarBG: {fileID: 7299311440119378575}
@@ -352,6 +353,7 @@ MonoBehaviour:
   slashOffset: 0.6
   attackWarningSpriteScale: 1.1
   attackWarningHeightUp: 0.05
+  attackWarningRadYOffset: 0.6
   attackMoveTowardsSpeed: 9
   attackDistance: 0
   aggroAttackDistance: 2.4
@@ -375,7 +377,6 @@ MonoBehaviour:
   hpBarShowTime: 0.8
   waitTime: 0
   enemyState: 0
-  enemyAttackType: 0
 --- !u!212 &7075933641429309002
 SpriteRenderer:
   m_ObjectHideFlags: 0

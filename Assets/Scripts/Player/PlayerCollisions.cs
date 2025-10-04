@@ -40,10 +40,10 @@ public class PlayerCollisions : MonoBehaviour
                     if (col.GetComponent<EnemyProjectile>() != null)
                         col.GetComponent<EnemyProjectile>().EnemyCasterCanFire();
 
-                    else if (col.GetComponent<EnemyAOEAttack>() != null)
+                    else if (col.GetComponent<EnemyAttackDisjoint>() != null)
                     {
-                        col.GetComponent<EnemyAOEAttack>().EnemyCasterCanFire();
-                        GetComponent<PlayerController>().KnockBack(col.GetComponent<EnemyAOEAttack>().enemyCasterClass.gameObject.transform);
+                        col.GetComponent<EnemyAttackDisjoint>().EnemyCasterCanFire();
+                        GetComponent<PlayerController>().KnockBack(col.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.gameObject.transform);
                     }
 
                     //Projectiles can be blocked, but not parried. However sword slashes can be parried, which are classified as projectiles but fucntionally aren't.
@@ -63,10 +63,12 @@ public class PlayerCollisions : MonoBehaviour
                         GetComponent<PlayerController>().MomentumIncrease(true);
 
                         //Knock ENEMY backward (relative to the player)
-                        col.GetComponent<EnemyAOEAttack>().enemyCasterClass.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
+                        col.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
 
                         GetComponent<PlayerController>().audioSource.pitch = 1;
                         GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
+
+                        attackParried = false;
                     }
                 }
                 break;
@@ -164,9 +166,11 @@ public class PlayerCollisions : MonoBehaviour
                 {
                     TakeDamage(col, true);
                 }
+
+                attackParried = false;
             }
 
-            attackParried = false;
+            
             //}
 
         }
@@ -181,6 +185,7 @@ public class PlayerCollisions : MonoBehaviour
         {
             //Full damage
             GetComponent<PlayerValues>().currentHealth -= CalculateDamage(enemy, false);
+            GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
         }
         else
         {
@@ -191,12 +196,16 @@ public class PlayerCollisions : MonoBehaviour
 
             //Reduce durability on weapon
             GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= GetComponent<PlayerController>().weaponDurabilityLossBlock;
+
+            //TODO figure out blocking bug
+            //GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().blockSound);
+            GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
         }
 
         canTakeDamage = false;
         GetComponent<PlayerController>().DontTakeDamage();
 
-        // Player death
+        // Check for player death
         if (GetComponent<PlayerValues>().currentHealth <= 0)
         {
             PlayerDeath();
@@ -207,13 +216,17 @@ public class PlayerCollisions : MonoBehaviour
         StartCoroutine(coroutine);
 
         //Knock player backward (relative to the enemy, not the player)
-        if (enemy.gameObject != null)
+        if (enemy.GetComponent<Enemy>() != null)
+        {
             GetComponent<PlayerController>().KnockBack(enemy.gameObject.transform);
-        else if (enemy.GetComponent<EnemyAOEAttack>() != null)
-            GetComponent<PlayerController>().KnockBack(enemy.GetComponent<EnemyAOEAttack>().enemyCasterClass.gameObject.transform);
+        }
+        else if (enemy.GetComponent<EnemyAttackDisjoint>() != null)
+        {
+            GetComponent<PlayerController>().KnockBack(enemy.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.gameObject.transform);
+        }
 
+        // Play player getting hurt sound
         GetComponent<PlayerController>().audioSource.pitch = 1;
-        GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
     }
 
     private void PlayerDeath()
@@ -257,8 +270,8 @@ public class PlayerCollisions : MonoBehaviour
                 case "Enemy Projectile":
                     if (harmfulEntity.GetComponent<EnemyProjectile>() != null)
                         totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
-                    else if (harmfulEntity.GetComponent<EnemyAOEAttack>() != null)
-                        totalDamage = (int)harmfulEntity.GetComponent<EnemyAOEAttack>().projectileDamage;
+                    else if (harmfulEntity.GetComponent<EnemyAttackDisjoint>() != null)
+                        totalDamage = (int)harmfulEntity.GetComponent<EnemyAttackDisjoint>().projectileDamage;
                     break;
 
                 case "Trap":

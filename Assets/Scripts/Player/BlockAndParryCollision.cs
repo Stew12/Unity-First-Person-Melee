@@ -18,9 +18,9 @@ public class BlockAndParryCollision : MonoBehaviour
         else if (col.tag == "Enemy Projectile")
         {
             // For enemy slash effects/potential parriable projeciles
-            if (col.GetComponent<EnemyAOEAttack>() != null && col.GetComponent<EnemyProjectile>() == null)
+            if (col.GetComponent<EnemyAttackDisjoint>() != null && col.GetComponent<EnemyProjectile>() == null)
             {
-                if (col.GetComponent<EnemyAOEAttack>().parryable)
+                if (col.GetComponent<EnemyAttackDisjoint>().parryable)
                 {
                     ParryCheck();
                 }

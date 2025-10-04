@@ -151,7 +151,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
             enemyClass.canFireProjectile = false;
 
             GameObject spawnedAOE = Instantiate(AOE, enemyGameObject.transform.position, enemyGameObject.transform.rotation);
-            spawnedAOE.GetComponent<EnemyAOEAttack>().enemyCasterClass = enemyClass;
+            spawnedAOE.GetComponent<EnemyAttackDisjoint>().enemyCasterClass = enemyClass;
         }
     }
 
@@ -169,9 +169,9 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
                 GameObject spawnedSlash = Instantiate(weaponSlash, slashPos, enemyGameObject.transform.rotation);
                 spawnedSlash.transform.parent = enemyGameObject.transform;
 
-                spawnedSlash.GetComponent<EnemyAOEAttack>().enemyCasterClass = enemyClass;
-                spawnedSlash.GetComponent<EnemyAOEAttack>().rangeTime = enemyClass.attackDuration;
-                spawnedSlash.GetComponent<EnemyAOEAttack>().projectileDamage = enemyClass.attackDamage;
+                spawnedSlash.GetComponent<EnemyAttackDisjoint>().enemyCasterClass = enemyClass;
+                spawnedSlash.GetComponent<EnemyAttackDisjoint>().rangeTime = enemyClass.attackDuration;
+                spawnedSlash.GetComponent<EnemyAttackDisjoint>().projectileDamage = enemyClass.attackDamage;
             }
         }
     }

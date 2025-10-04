@@ -90,9 +90,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip swordSwing;
     [SerializeField] private AudioClip wallHitSound;
     [SerializeField] private AudioClip enemyHitSound;
+    [SerializeField] private AudioClip unsheatheSound;
+    [SerializeField] private AudioClip sheatheSound;
     public AudioClip coinPickupSound;
     public AudioClip parrySound;
     public AudioClip hurtSound;
+    public AudioClip blockSound;
 
     [Header("Blocking/Parrying")]
     public GameObject blockAndParryHitbox;
@@ -103,7 +106,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
     [SerializeField] private float powerDamageFactor = 4;
     [SerializeField] private float powerBarSpeedupFactor = 1.2f;
-    [HideInInspector] public bool attackPowerBuilding = false;
+    public bool attackPowerBuilding = true;
 
     [Header("Knock Back")]
     private bool knockedBack;
@@ -589,6 +592,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 blocking = false;
+                GetComponent<PlayerCollisions>().attackParried = false;
             }
         }
     }
@@ -646,6 +650,8 @@ public class PlayerController : MonoBehaviour
 
     private void SheatheWeaponToggle()
     {
+        audioSource.pitch = 1;
+
         // Can't sheathe or unsheathe whilst boosting
         if (!boosting && !waiting && !attacking)
         {
@@ -667,6 +673,8 @@ public class PlayerController : MonoBehaviour
                 attackPowerBuilding = false;
                 powerTime = 0;
                 powerBarUI.fillAmount = 0;
+
+                audioSource.PlayOneShot(sheatheSound);
             }
             else
             {
@@ -678,12 +686,14 @@ public class PlayerController : MonoBehaviour
 
                 // Return movement speed to default
                 moveSpeed /= moveSpeedSheathedFactor;
-                
+
                 // Return jump height to default
                 jumpHeight /= jumpHeightSheathedFactor;
 
                 //Return power time increasing
                 attackPowerBuilding = true;
+
+                audioSource.PlayOneShot(unsheatheSound);
             }
         }
     }
@@ -892,24 +902,22 @@ public class PlayerController : MonoBehaviour
 
     public void MomentumIncrease(bool parryIncrease)
     {
-        //timeBeforeMomentumDecrease = maxTimeBeforeMomentumDecrease;
-
-        //momentumDecreasing = false;
-        
-        if (currMomentumValue < maxMomentum)
+        if (!boosting)
         {
-            //NEW CHANGE: momentum only increases when not boosting, and the effects of momentum only kick in when boosting.
-            if (!boosting)
+            if (!parryIncrease)
             {
-                if (!parryIncrease)
-                {
-                    // If the power bar is higher, gain slightly more momentum
-                    currMomentumValue += momentumIncrease + (powerBarUI.fillAmount / 10);
-                }
-                else
-                {
-                    currMomentumValue += parryMomentumIncrease;
-                }
+                // If the power bar is higher, gain slightly more momentum
+                currMomentumValue += momentumIncrease + (powerBarUI.fillAmount / 10);
+
+            }
+            else
+            {
+                currMomentumValue += parryMomentumIncrease;
+            }
+
+            if (currMomentumValue > maxMomentum)
+            {
+                currMomentumValue = maxMomentum;
             }
         }
     }

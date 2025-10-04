@@ -364,7 +364,7 @@ MonoBehaviour:
   attackWindUpTime: 1.2
   maxAttackCoolDownTime: 4
   attackCoolDownTime: 0
-  maxAttackDuration: 0.6
+  maxAttackDuration: 0.2
   attackDuration: 0
   maxWaitTime: 0.7
   hpBarShowTime: 0.8
@@ -380,10 +380,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.263412
-  m_Height: 0.47068244
+  m_Radius: 0.1260743
+  m_Height: 0.526824
   m_Direction: 1
-  m_Center: {x: -0.013205254, y: 0.22224042, z: 0}
+  m_Center: {x: -0.011213493, y: 0.2222404, z: 0}
 --- !u!114 &7075933641429309003
 MonoBehaviour:
   m_ObjectHideFlags: 0

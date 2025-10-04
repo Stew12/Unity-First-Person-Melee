@@ -388,7 +388,7 @@ Transform:
   - {fileID: 3126781738961630637}
   - {fileID: 3126781739497447391}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1282487068343986869
 MonoBehaviour:
@@ -479,7 +479,7 @@ MonoBehaviour:
   powerTimeFactor: 3.3
   powerDamageFactor: 16
   powerBarSpeedupFactor: 1.7
-  attackPowerBuilding: 0
+  attackPowerBuilding: 1
   knockBackSpeed: 3
   boosting: 0
   currMomentumValue: 0
@@ -687,7 +687,7 @@ MonoBehaviour:
   fireBallBreathDPCost: 5
   thunderBreathDPCost: 10
   fireBallBreathSpawnHeight: 0.75
-  fireBallBreathSpawnHorizOffset: 0.6
+  fireBallBreathSpawnHorizOffset: 0
   thunderBreathTargetCastTime: 0.1
   thunderBreathCastTime: 1.1
   thunderTargetDistance: 1.5
