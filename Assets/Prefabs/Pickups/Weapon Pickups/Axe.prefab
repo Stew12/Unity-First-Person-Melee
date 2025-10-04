@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 8943801645194059576}
   - component: {fileID: 2106621533}
   - component: {fileID: 2106621529}
-  - component: {fileID: -5542671157671527179}
+  - component: {fileID: 2800210163539137242}
   m_Layer: 6
-  m_Name: Glaive
+  m_Name: Axe
   m_TagString: Player Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7786502534206770190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.08015179, y: 0.08015179, z: 0.08015179}
+  m_LocalPosition: {x: 64.631004, y: 203.66632, z: 0}
+  m_LocalScale: {x: 0.069948, y: 0.069948, z: 0.069948}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: 21300000, guid: 279bda6fd0a4be247bcd77b8b049aa00, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db035eb8810a03e43a1506f80c7428c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,8 +113,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.2540245, y: 15.401407, z: 2.7168531}
-  m_Center: {x: 0.35247847, y: 0.21278676, z: 0.21795002}
+  m_Size: {x: 6.8916316, y: 14.787606, z: 5.599557}
+  m_Center: {x: -0.2602454, y: 0.1886901, z: -0.27300242}
 --- !u!114 &2106621529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,10 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06e17a8ff349de4d9597fc51652ae9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Glaive
+  itemName: Axe
   interactedItemType: 0
-  UIIcon: {fileID: 526734179472673324, guid: 8397699fffad8a14d9d38faf76620557, type: 3}
---- !u!114 &-5542671157671527179
+  UIIcon: {fileID: 526734179472673324, guid: 35dc60eab4823e446bc234f81f356e54, type: 3}
+--- !u!114 &2800210163539137242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,5 +142,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6dccea6c2e5cea43a8e954109160654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponHeldObject: {fileID: 2117967004886463130, guid: 0db7fed624dbfa1429c8572f4f4a4de1,
+  weaponHeldObject: {fileID: 1967638653261711436, guid: 0b3416c674813b94080e06e6561b2264,
     type: 3}

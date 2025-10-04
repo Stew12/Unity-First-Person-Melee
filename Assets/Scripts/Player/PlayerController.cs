@@ -924,7 +924,7 @@ public class PlayerController : MonoBehaviour
 
     void ItemSwitch(int hotKeyNumber)
     {
-        playerInventory.HotKeyedItem(hotKeyNumber, weaponSheathed);
+        //playerInventory.HotKeyedItem(hotKeyNumber, weaponSheathed);
     }
 
     public void StatusMessageShow(string sMessage)

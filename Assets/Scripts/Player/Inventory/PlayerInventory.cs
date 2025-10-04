@@ -25,6 +25,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private GameObject invTabs;
     [SerializeField] private GameObject[] inventoryTabsArray;
     [HideInInspector] public GameObject inventoryInterface;
+    [SerializeField] private GameObject defaultSwordObject;
 
     [Header("Inventory Windows")]
     [SerializeField] private GameObject weaponInvWindow;
@@ -82,12 +83,16 @@ public class PlayerInventory : MonoBehaviour
         spellsList = new GameObject[spellInventoryLength];
         consumablesList = new GameObject[itemInventoryLength];
 
-        weaponsList[0] = player.startingWeaponPickup;
+        //weaponsList[0] = player.startingWeaponPickup;
 
         //TODO: add spells here
 
-        LoadHotkeys();
+        //LoadHotkeys();
         LoadInventory();
+
+        EquipWeapon(defaultSwordObject.GetComponent<WeaponPickup>().weaponHeldObject);
+        AddToInventory(defaultSwordObject);
+        Destroy(weaponStock.transform.GetChild(0).gameObject);        
     }
 
     private void LoadInventory()
@@ -737,39 +742,39 @@ public class PlayerInventory : MonoBehaviour
         player.dragonSpellSelected = newSpell;
     }
 
-    private void LoadHotkeys()
-    {
+    //private void LoadHotkeys()
+    //{
         //Can't Switch weapons while attacking!
 
-        if (player.equippedWeapon.GetComponent<HotKey>().hotKey > 0 && player.equippedWeapon.GetComponent<HotKey>().hotKey < 10)
-        {
-            hotKeyList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon;
-        }
+      //  if (player.equippedWeapon.GetComponent<HotKey>().hotKey > 0 && player.equippedWeapon.GetComponent<HotKey>().hotKey < 10)
+        //{
+          //  hotKeyList[player.equippedWeapon.GetComponent<HotKey>().hotKey - 1] = player.equippedWeapon;
+        //}
 
-        foreach (Transform weapon in weaponStock.transform)
-        {
-            if (weapon.gameObject.GetComponent<HotKey>().hotKey > 0 && weapon.GetComponent<HotKey>().hotKey < 10)
-            {
-                hotKeyList[weapon.gameObject.GetComponent<HotKey>().hotKey - 1] = weapon.gameObject;
+        //foreach (Transform weapon in weaponStock.transform)
+        //{
+          //  if (weapon.gameObject.GetComponent<HotKey>().hotKey > 0 && weapon.GetComponent<HotKey>().hotKey < 10)
+            //{
+              //  hotKeyList[weapon.gameObject.GetComponent<HotKey>().hotKey - 1] = weapon.gameObject;
                 //weapon.GetComponent<HotKey>().originalItemIndex = i;
                 //Debug.Log("DU: " + i);
-            }
+            //}
 
             //i++;
-        }
+        //}
 
 
-    }
+    //}
 
     //Disable hotkeys for now
-    public void HotKeyedItem(int index, bool weaponSheathed)
-    {
-        if (!player.attacking)
-        {
+    //public void HotKeyedItem(int index, bool weaponSheathed)
+    //{
+      //  if (!player.attacking)
+       // {
             //TODO: make this for all items not just weapons, based on the GameObject type/tag
             //Hot keys might be a stretch feature as using the inventory is surprsingly smooth
-            if (hotKeyList[index - 1] != null)
-            {
+         //   if (hotKeyList[index - 1] != null)
+          //  {
 
                 //WEAPON
                 //TODO: If is a weapon
@@ -779,8 +784,8 @@ public class PlayerInventory : MonoBehaviour
 
                 //ITEM
 
-            }
-        }
-    }
+           // }
+        //}
+   // }
 
 }

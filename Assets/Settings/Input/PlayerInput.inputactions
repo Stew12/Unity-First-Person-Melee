@@ -441,7 +441,7 @@
                 {
                     "name": "",
                     "id": "c364cebf-98f1-4e7f-a363-5a9dfc36dbd0",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -463,7 +463,7 @@
                 {
                     "name": "",
                     "id": "4bc42216-e67d-4fea-be1a-0cdae6c0dfeb",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -908,28 +908,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "InventoryConfirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7652a577-dc86-4d87-bc3a-f354f026d738",
-                    "path": "<Gamepad>/leftStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LanternToggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4a542098-dbc5-4666-a20e-c75dc35068ac",
-                    "path": "<Keyboard>/leftAlt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LanternToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
