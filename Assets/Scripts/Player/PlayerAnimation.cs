@@ -26,20 +26,26 @@ public class PlayerAnimation : MonoBehaviour
         switch (weapon)
         {
 
-            case WeaponClass.GLAIVE:
+            case WeaponClass.AXE:
+                player.SWINGACROSS = SW_SWINGACROSS;
+                player.SWINGBACK = SW_SWINGBACK;
+            break;
+
+            case WeaponClass.DAGGER:
                 player.SWINGACROSS = GL_THRUST;
                 player.SWINGBACK = GL_THRUST;
             break;
 
-            case WeaponClass.MACE:
-                player.SWINGACROSS = MA_SWINGACROSS;
-                player.SWINGBACK = MA_SWINGBACK;
+            case WeaponClass.GLAIVE:
+                player.SWINGACROSS = GL_THRUST;
+                player.SWINGBACK = GL_THRUST;
             break;
 
             case WeaponClass.SHORTSWORD:
                 player.SWINGACROSS = SW_SWINGACROSS;
                 player.SWINGBACK = SW_SWINGBACK;
             break;
+            
 
 
 

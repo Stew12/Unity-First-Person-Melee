@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1598592498655111213}
   - component: {fileID: 1598592498655111212}
   - component: {fileID: 1598592498655111210}
-  - component: {fileID: 7233243555063940795}
   m_Layer: 0
   m_Name: Glaive
   m_TagString: Untagged
@@ -148,20 +147,6 @@ MonoBehaviour:
   maxWeaponDurability: 18
   currentWeaponDurability: 0
   unsheatheSound: {fileID: 8300000, guid: 8a2a626c81d7fa14b87b920803ae01f1, type: 3}
---- !u!114 &7233243555063940795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117967004886463130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf21ac256d331b44d9fa6d6f84e2b3c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hotKey: 3
-  originalItemIndex: 0
 --- !u!1 &8030982548462784661
 GameObject:
   m_ObjectHideFlags: 0
