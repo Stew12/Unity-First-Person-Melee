@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2106621533}
   - component: {fileID: 2106621529}
   m_Layer: 6
-  m_Name: Magic Vial
+  m_Name: Durability Repair Kit
   m_TagString: Player Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7786502534206770190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 64.631004, y: 203.66632, z: 0}
-  m_LocalScale: {x: 0.06775375, y: 0.06775375, z: 0.06775375}
+  m_LocalScale: {x: 0.09981878, y: 0.09981878, z: 0.09981878}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a474da1fe7683a345a23de2ccad86dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consumableType: 1
-  restoreAmount: 50
+  consumableType: 2
+  restoreAmount: 20
   itemQuantity: 0
 --- !u!212 &7786502534206770191
 SpriteRenderer:
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: 21300000, guid: 0ff6aae7d311826478b897ef6e3da3b2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7a5a2ab9b0a0894db2d3f68f939a934, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,8 +128,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.935363, y: 6.201898, z: 2.9155707}
-  m_Center: {x: 0.11736193, y: 0.51053125, z: 0.13619615}
+  m_Size: {x: 6.0020094, y: 6.877817, z: 2.9155707}
+  m_Center: {x: -0.27939054, y: 0.84849066, z: 0.13619614}
 --- !u!114 &2106621529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06e17a8ff349de4d9597fc51652ae9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Magic Vial
+  itemName: Durability Repair Kit
   interactedItemType: 3
-  UIIcon: {fileID: 8173821029719033465, guid: e6e9ee17074d18747a390adafe0ff156, type: 3}
+  UIIcon: {fileID: 8173821029719033465, guid: 1656ae1c1cb16944aabfe508d99a1a7b, type: 3}

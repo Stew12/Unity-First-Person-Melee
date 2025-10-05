@@ -56,7 +56,21 @@ public class ConsumableItem : MonoBehaviour
             break;
 
             case ConsumableType.DURABILITY:
-                //TODO: Restore player weapon durability
+                // Restore durability of current weapon
+
+                PlayerWeaponValues currWeaponValues = playerValues.gameObject.GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>();
+
+                int newDura = currWeaponValues.currentWeaponDurability + restoreAmount;
+                
+                if (newDura > currWeaponValues.maxWeaponDurability)
+                {
+                    currWeaponValues.currentWeaponDurability = currWeaponValues.maxWeaponDurability;
+                }
+                else
+                {
+                    currWeaponValues.currentWeaponDurability = newDura;
+                } 
+                
             break;
         }
 

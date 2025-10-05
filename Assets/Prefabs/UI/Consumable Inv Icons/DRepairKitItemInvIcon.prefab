@@ -182,17 +182,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8173821028127099144}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.35150516, w: 0.93618596}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.066693, y: 2.066693, z: 2.066693}
+  m_LocalScale: {x: 1.7883526, y: 1.7883526, z: 1.7883526}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8173821029719033466}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -41.159}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: -0.6}
+  m_AnchoredPosition: {x: -0.9, y: -3.3}
   m_SizeDelta: {x: 38.7319, y: 39.7323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8173821028127099147
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ff6aae7d311826478b897ef6e3da3b2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7a5a2ab9b0a0894db2d3f68f939a934, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 8173821029719033412}
   - component: {fileID: 8173821029719033467}
   m_Layer: 5
-  m_Name: MagicVialItemInvIcon
+  m_Name: DRepairKitItemInvIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,10 +381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c105abfdc49574cbc4e48f5a456c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ITEM: {fileID: 7786502534206770190, guid: 6ecc5835e4fb63441b1267fff798177b, type: 3}
+  ITEM: {fileID: 7786502534206770190, guid: 77b6e1c89b179bc44a9611836fa70d51, type: 3}
   itemTypeUI: 3
   dragonSpells: 0
-  consumable: {fileID: 7786502534206770190, guid: 6ecc5835e4fb63441b1267fff798177b,
+  consumable: {fileID: 7786502534206770190, guid: 77b6e1c89b179bc44a9611836fa70d51,
     type: 3}
   selected: 0
   iconImg: {fileID: 0}

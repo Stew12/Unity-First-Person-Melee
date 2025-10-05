@@ -17,6 +17,8 @@ keep, but stop it from closing again after swinging open fast.
 
 Lighting issues, 'selective double torch' glitch
 
+If clicking on a consumable once, then clicking on another icon or somewhere else entirely, consumable will be used.
+
 Blocking can be spammed leading to easy parrying. Likely set a cooldown after releasing a block before can block again.
 
 Blocking bug: sometimes seems that blocking doesnt seem to happen or one attack will be blocked without block happening, then next non-blocked attack will be treated as blocked.
