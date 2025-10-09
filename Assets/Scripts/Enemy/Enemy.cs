@@ -303,8 +303,9 @@ public class Enemy : MonoBehaviour
         {
             attkWarning.GetComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
         }
-        
+
         attkWarning.transform.localScale = transform.localScale * attackWarningSpriteScale;
+        attkWarning.AddComponent<Billboarding>();
     }
 
     private void createAttackWarningRadius()

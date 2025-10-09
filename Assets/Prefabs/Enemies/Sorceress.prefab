@@ -608,7 +608,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 5.6126995
+  m_Radius: 2.8
   m_Height: 24.234251
   m_Direction: 1
   m_Center: {x: 0.13528748, y: 0.21085511, z: 0.72754055}
@@ -702,7 +702,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 25
-  m_Radius: 4.9
+  m_Radius: 2.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08

@@ -451,6 +451,7 @@ MonoBehaviour:
   gravity: -19.8
   jumpHeight: 0.6
   jumpHeightSheathedFactor: 0.9
+  interactRaycastDistance: 2.5
   cam: {fileID: 3126781738961630638}
   sensitivity: 10
   animator: {fileID: 0}
@@ -504,7 +505,7 @@ MonoBehaviour:
   waiting: 0
   maxDontTakeDamageTime: 0.7
   maxKnockBackTime: 0.45
-  maxParryWindowTime: 0.15
+  maxParryWindowTime: 0.5
   maxPowerTime: 1
   powerTime: 0
   parryWindowTime: 0.25

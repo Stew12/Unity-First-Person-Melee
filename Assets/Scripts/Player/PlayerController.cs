@@ -7,6 +7,7 @@ using System;
 using UnityEngine.Rendering;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using UnityEditor.Rendering;
 
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public float gravity = -9.8f;
     [SerializeField] private float jumpHeight = 1.2f;
     [SerializeField] private float jumpHeightSheathedFactor = 2f;
+    [SerializeField] private float interactRaycastDistance = 2.5f;
 
     Vector3 _PlayerVelocity;
 
@@ -152,10 +154,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float statusMessageVisibleTime = 1;   
 
     [Header("Currency")]
-    [SerializeField] private float coinToBronzeFactor = 10; 
+    [SerializeField] private float coinToBronzeFactor = 10;
 
     [Header("Debug")]
-
+    private bool restarting1 = false;
+    private bool restarting2 = false;
     public bool stopWhenAttacking = false;
 
     void Awake()
@@ -234,6 +237,11 @@ public class PlayerController : MonoBehaviour
         input._7.performed += ctx => ItemSwitch(7);
         input._8.performed += ctx => ItemSwitch(8);
         input._9.performed += ctx => ItemSwitch(9);
+
+        input.RestartButton1.started += ctx => Restart1(true);
+        input.RestartButton1.canceled += ctx => Restart1(false);
+        input.RestartButton1.started += ctx => Restart2(true);
+        input.RestartButton1.canceled += ctx => Restart2(false);
     }
 
     void Update()
@@ -633,7 +641,7 @@ public class PlayerController : MonoBehaviour
     private void Boost()
     {
         // Can only boost when weapon is out
-        if (!waiting && !weaponSheathed)
+        if (!waiting && !weaponSheathed && !boosting)
         {
             if (currMomentumValue > 0)
             {
@@ -740,7 +748,7 @@ public class PlayerController : MonoBehaviour
 
     void InteractRaycast()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, interactRaycastDistance, attackLayer))
         {
             /* If NPC interacted */
             if (hit.transform.TryGetComponent<NPC>(out NPC N))
@@ -939,6 +947,35 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(visTime);
 
         statusMessage.gameObject.SetActive(false);
+    }
+
+    private void Restart1(bool on)
+    {
+        if (on)
+            restarting1 = true;
+        else
+            restarting1 = false;
+    }
+
+    private void Restart2(bool on)
+    {
+        if (on)
+            restarting2 = true;
+        else
+            restarting2 = false;
+    }
+
+    private void checkRestartDemo()
+    {
+        if (restarting1 && restarting2)
+        {
+            string tutorialLevelName = "Dungeon Tutorial";
+
+            // Go to tutorial level
+            SceneManager.LoadScene(tutorialLevelName);
+            Destroy(gameObject);
+            Destroy(GameObject.Find("Canvas"));
+        }
     }
 
     // TODO: use this method upon entering each new scene (Temporarily called in Awake())

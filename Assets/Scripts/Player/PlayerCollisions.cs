@@ -161,6 +161,8 @@ public class PlayerCollisions : MonoBehaviour
 
                     GetComponent<PlayerController>().audioSource.pitch = 1;
                     GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
+
+                    GetComponent<PlayerController>().DontTakeDamage();
                 }
                 else
                 {
@@ -198,8 +200,8 @@ public class PlayerCollisions : MonoBehaviour
             GetComponent<PlayerController>().equippedWeapon.GetComponent<PlayerWeaponValues>().currentWeaponDurability -= GetComponent<PlayerController>().weaponDurabilityLossBlock;
 
             //TODO figure out blocking bug
-            //GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().blockSound);
-            GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
+            GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().blockSound);
+            //GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().hurtSound);
         }
 
         canTakeDamage = false;

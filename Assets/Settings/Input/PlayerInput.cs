@@ -314,6 +314,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RestartButton1"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9e288ab-f47d-4b19-b332-29c41d8fb0e1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RestartButton2"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f7fb8e2-8bc9-43e5-ab07-910ba00e1883"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -998,6 +1016,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ddbaf87-2ae0-4dd6-9ea4-e5676fba301d"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RestartButton1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02d145f1-0fb5-4750-b893-f5103bba6b5b"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RestartButton2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1044,6 +1084,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_InventoryConfirm = m_Main.FindAction("InventoryConfirm", throwIfNotFound: true);
         m_Main_InventoryChangeTabLeft = m_Main.FindAction("InventoryChangeTabLeft", throwIfNotFound: true);
         m_Main_InventoryChangeTabRight = m_Main.FindAction("InventoryChangeTabRight", throwIfNotFound: true);
+        m_Main_RestartButton1 = m_Main.FindAction("RestartButton1", throwIfNotFound: true);
+        m_Main_RestartButton2 = m_Main.FindAction("RestartButton2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1135,6 +1177,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_InventoryConfirm;
     private readonly InputAction m_Main_InventoryChangeTabLeft;
     private readonly InputAction m_Main_InventoryChangeTabRight;
+    private readonly InputAction m_Main_RestartButton1;
+    private readonly InputAction m_Main_RestartButton2;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -1171,6 +1215,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @InventoryConfirm => m_Wrapper.m_Main_InventoryConfirm;
         public InputAction @InventoryChangeTabLeft => m_Wrapper.m_Main_InventoryChangeTabLeft;
         public InputAction @InventoryChangeTabRight => m_Wrapper.m_Main_InventoryChangeTabRight;
+        public InputAction @RestartButton1 => m_Wrapper.m_Main_RestartButton1;
+        public InputAction @RestartButton2 => m_Wrapper.m_Main_RestartButton2;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1276,6 +1322,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @InventoryChangeTabRight.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabRight;
                 @InventoryChangeTabRight.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabRight;
                 @InventoryChangeTabRight.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInventoryChangeTabRight;
+                @RestartButton1.started -= m_Wrapper.m_MainActionsCallbackInterface.OnRestartButton1;
+                @RestartButton1.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnRestartButton1;
+                @RestartButton1.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnRestartButton1;
+                @RestartButton2.started -= m_Wrapper.m_MainActionsCallbackInterface.OnRestartButton2;
+                @RestartButton2.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnRestartButton2;
+                @RestartButton2.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnRestartButton2;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -1376,6 +1428,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @InventoryChangeTabRight.started += instance.OnInventoryChangeTabRight;
                 @InventoryChangeTabRight.performed += instance.OnInventoryChangeTabRight;
                 @InventoryChangeTabRight.canceled += instance.OnInventoryChangeTabRight;
+                @RestartButton1.started += instance.OnRestartButton1;
+                @RestartButton1.performed += instance.OnRestartButton1;
+                @RestartButton1.canceled += instance.OnRestartButton1;
+                @RestartButton2.started += instance.OnRestartButton2;
+                @RestartButton2.performed += instance.OnRestartButton2;
+                @RestartButton2.canceled += instance.OnRestartButton2;
             }
         }
     }
@@ -1423,5 +1481,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInventoryConfirm(InputAction.CallbackContext context);
         void OnInventoryChangeTabLeft(InputAction.CallbackContext context);
         void OnInventoryChangeTabRight(InputAction.CallbackContext context);
+        void OnRestartButton1(InputAction.CallbackContext context);
+        void OnRestartButton2(InputAction.CallbackContext context);
     }
 }
