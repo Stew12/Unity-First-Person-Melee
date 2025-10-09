@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    [HideInInspector] public int dialogueBoxIndex = 0;
+
     public List<string> dialogue = new List<string>();
 
     public void PlayDialogue(TextCrawl dialogueText)
     {
-        dialogueText.GetComponent<TextCrawl>().WriteNewTextBox(dialogue[0]);
+        dialogueText.GetComponent<TextCrawl>().WriteNewTextBox(dialogue[dialogueBoxIndex]);
     }
 
     private void Update()

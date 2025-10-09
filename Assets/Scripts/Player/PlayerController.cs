@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dialog")]
     public TextCrawl dialogueTextBox;
+    private NPC speakingNPC;
 
     [Header("Timing")]
     [HideInInspector] public bool waiting = false;
@@ -756,7 +757,10 @@ public class PlayerController : MonoBehaviour
                 waiting = true;
                 Cursor.lockState = CursorLockMode.None;
                 dialogueTextBox.transform.parent.gameObject.SetActive(true);
-                N.GetComponent<NPC>().PlayDialogue(dialogueTextBox);
+
+                speakingNPC = N.GetComponent<NPC>();
+                speakingNPC.PlayDialogue(dialogueTextBox);
+                
             }
 
             /* If door interacted */
@@ -821,11 +825,18 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //TODO go to next dialog box if available
-
-                //Close text box
-                dialogueTextBox.transform.parent.gameObject.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                waiting = false;
+                if (speakingNPC.dialogueBoxIndex < speakingNPC.dialogue.Count - 1)
+                {
+                    speakingNPC.dialogueBoxIndex++;
+                    speakingNPC.PlayDialogue(dialogueTextBox);
+                }
+                else
+                {
+                    //Close text box
+                    dialogueTextBox.transform.parent.gameObject.SetActive(false);
+                    Cursor.lockState = CursorLockMode.Locked;
+                    waiting = false;
+                }
             }
         }
     }
