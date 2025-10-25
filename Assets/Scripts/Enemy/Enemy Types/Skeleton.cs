@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Skeleton : Enemy
 {
-    public override EnemyAttack EnemyAttackBehaviour()
+    public override void EnemyAttackBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
     {
-        return EnemyAttack.BASICPHYSICAL;
+        enemyBehaviourAndAttackList.BasicPhysicalAttack();
     }
 }

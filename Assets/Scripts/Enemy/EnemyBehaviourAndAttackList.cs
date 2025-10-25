@@ -70,7 +70,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public void AttackBehaviourList(EnemyAttack enemyAttack, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
+    public void AttackBehaviourList(Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
     {
         this.enemyClass = enemyClass;
         this.enemyGameObject = enemyGameObject;
@@ -78,8 +78,6 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         this.AOE = AOE;
         this.weaponSlash = weaponSlash;
         this.slashOffset = slashOffset;
-
-        EnemyAttackListSelect(enemyAttack);
     }
 
     //Pursues the player at a designated speed
@@ -90,7 +88,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     }
 
     //the enemy moves quickly towards the player
-    private void BasicPhysicalAttack()
+    public void BasicPhysicalAttack()
     {
         if (!enemyClass.attackTrajectorySet)
         {
@@ -106,7 +104,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         enemyClass.enemyController.Move(trajectory * Time.deltaTime); 
     }
 
-    private void BasicRangedAttack()
+    public void BasicRangedAttack()
     {
         if (enemyClass.canFireProjectile)
         {
@@ -118,7 +116,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         }
     }
 
-    private void BasicAOEAttack()
+    public void BasicAOEAttack()
     {
         if (enemyClass.canFireProjectile)
         {
@@ -172,22 +170,4 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         return enemyAttacks[attackChoice];
     }
 
-    private void EnemyAttackListSelect(EnemyAttack enemyAttack)
-    {
-        switch (enemyAttack)
-        {
-            case EnemyAttack.BASICPHYSICAL:
-                BasicPhysicalAttack();
-                break;
-
-            case EnemyAttack.BASICRANGED:
-                BasicRangedAttack();
-                break;
-
-            case EnemyAttack.BASICAOE:
-                BasicAOEAttack();
-                break;
-
-        }
-    }
 }

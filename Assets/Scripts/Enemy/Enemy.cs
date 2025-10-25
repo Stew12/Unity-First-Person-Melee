@@ -159,12 +159,11 @@ public abstract class Enemy : MonoBehaviour
 
                         EnemyAttack eAttack = EnemyAttack.BASICPHYSICAL;
 
-                        eAttack = EnemyAttackBehaviour();
-
                         if (!enemyAttackProcess)
                         {
                             if (attackCoolDownTime <= 0)
                             {
+                                //TODO AOE SETUP HERE
                                 attackSetup(eAttack);
                             }
                         }
@@ -176,7 +175,8 @@ public abstract class Enemy : MonoBehaviour
                             if (attackDuration >= 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(eAttack, this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
+                                EnemyAttackBehaviour(enemyBehaviourAndAttackList);
                                 if (flipSpriteOnAttack)
                                 {
                                     //Flip sprite to give better illusion of attacking
@@ -418,5 +418,5 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public abstract EnemyAttack EnemyAttackBehaviour();
+    public abstract void EnemyAttackBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList);
 }

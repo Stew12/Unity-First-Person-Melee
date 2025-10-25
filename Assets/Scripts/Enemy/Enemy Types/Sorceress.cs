@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Sorceress : Enemy
 {
-    public override EnemyAttack EnemyAttackBehaviour()
+    public override void EnemyAttackBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
     {
-        return EnemyAttack.BASICRANGED;
+        enemyBehaviourAndAttackList.BasicRangedAttack();
     }
 }
