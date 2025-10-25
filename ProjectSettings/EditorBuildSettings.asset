@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Main.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/Hall Test.unity
-    guid: fe0d2b88e549ef34ebee49217fab153d
-  - enabled: 1
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/Dungeon Test 1.unity
     guid: c3d492396c6e4bf45a970ba15dcc424d
+  - enabled: 1
+    path: Assets/Scenes/Demonstration/Dungeon Tutorial.unity
+    guid: 62ccd0a72dbd6e0499c835781913727f
+  - enabled: 1
+    path: Assets/Scenes/Demonstration/Dungeon Test 1.unity
+    guid: 3d8a0490ff3c3f54bb18b1f100ab3094
   m_configObjects: {}

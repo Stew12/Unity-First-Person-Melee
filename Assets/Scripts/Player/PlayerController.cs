@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+       //DontDestroyOnLoad(gameObject);
 
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();

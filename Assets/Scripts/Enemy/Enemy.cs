@@ -14,7 +14,8 @@ public enum EnemyType
     MIMIC,
     SHADOW,
     TENTACLES,
-    ZOMBIE
+    ZOMBIE,
+    STATUE
 }
 
 public enum EnemyState

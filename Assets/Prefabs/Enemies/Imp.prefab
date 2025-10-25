@@ -344,7 +344,7 @@ MonoBehaviour:
   gravity: -9.8
   flipSpriteOnAttack: 0
   slashOffset: 0.2
-  attackWarningSpriteScale: 1.1
+  attackWarningSpriteScale: 0.05
   attackWarningHeightUp: 0.05
   attackWarningRadYOffset: 0.6
   attackMoveTowardsSpeed: 10

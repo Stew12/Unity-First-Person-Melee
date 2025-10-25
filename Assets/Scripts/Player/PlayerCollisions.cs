@@ -241,21 +241,28 @@ public class PlayerCollisions : MonoBehaviour
 
     IEnumerator LoadScene(SceneChange sceneChange)
     {
-        GameObject loadingScreen = Instantiate(sceneChange.loadingScreen, Vector3.zero, Quaternion.identity);
-        loadingScreen.transform.parent = GameObject.Find("Canvas").transform;
+        if (sceneChange.loadingScreen != null)
+        {
+            GameObject loadingScreen = Instantiate(sceneChange.loadingScreen, Vector3.zero, Quaternion.identity);
+            loadingScreen.transform.parent = GameObject.Find("Canvas").transform;
+        }
+
         GetComponent<PlayerController>().waiting = true;
 
-        SceneManager.LoadScene(sceneChange.nextScene.name);
+        //SceneManager.LoadScene(sceneChange.nextScene.name);
+        SceneManager.LoadScene("Dungeon Test 1");
 
         yield return new WaitForSeconds(sceneChange.loadTime);
 
         //Destroy(duplicatePlayer);
-        Destroy(loadingScreen);
+        //Destroy(loadingScreen);
 
         transform.position = sceneChange.playerSpawnPos;
         //transform.rotation = spawnRot; 
 
         GetComponent<PlayerController>().waiting = false;
+
+        //Debug
     }
 
     private int CalculateDamage(Collider harmfulEntity, bool blocked)

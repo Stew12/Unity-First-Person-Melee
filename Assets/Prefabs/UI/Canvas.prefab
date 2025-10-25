@@ -932,8 +932,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Dialogue here]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 95dc87d780d49d74fb51143b1f7d8ebf, type: 2}
+  m_sharedMaterial: {fileID: 5989495114161512820, guid: 95dc87d780d49d74fb51143b1f7d8ebf,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -993,7 +994,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -556.2571, y: -28.711739, z: -48.87319, w: -28.330196}
+  m_margin: {x: -556.2571, y: -32.095806, z: -48.87319, w: -33.330296}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1026,7 +1027,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 67f2bf8c816b1154ebba708e1e22d17b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.465
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3744,7 +3745,7 @@ RectTransform:
   - {fileID: 7593769521368436960}
   - {fileID: 1146264753}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
