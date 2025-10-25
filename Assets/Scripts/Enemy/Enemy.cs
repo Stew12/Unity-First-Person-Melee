@@ -32,7 +32,7 @@ public abstract class Enemy : MonoBehaviour
 
      [Header("Components")]
     //public SphereCollider detectionRadius;
-    [HideInInspector] public CharacterController enemyController;
+    public CharacterController enemyController;
     [SerializeField] private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
     public GameObject enemyProjectile;
@@ -115,7 +115,7 @@ public abstract class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         enemyState = EnemyState.ROAMING;
-        
+
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -123,12 +123,15 @@ public abstract class Enemy : MonoBehaviour
         enemyHPBar = enemyHPBarBG.transform.GetChild(0).GetComponent<SpriteRenderer>();
         damageNumber = enemyHPBarBG.transform.GetChild(1).GetComponent<TextMeshPro>();
         enemyHPBarBG.SetActive(false);
-        
+
         audioSource = GetComponent<AudioSource>();
 
-        enemyController = GetComponent<CharacterController>();
-
         enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
+    }
+    
+    void Start()
+    {
+        enemyController = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -242,11 +245,12 @@ public abstract class Enemy : MonoBehaviour
 
         // Gravity
         _EnemyVelocity.y += gravity * Time.deltaTime;
-            
+
         if (isGrounded && _EnemyVelocity.y < 0)
         {
-           _EnemyVelocity.y = -2f;
+            _EnemyVelocity.y = -2f;
         }
+        
         enemyController.Move(_EnemyVelocity * Time.deltaTime);
 
     }

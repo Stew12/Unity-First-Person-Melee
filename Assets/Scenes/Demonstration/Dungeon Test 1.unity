@@ -788,6 +788,16 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2432492757766264808, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429308994, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: enemyController
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7075933641429308997, guid: ef83fe617fab5d049b80b731393060c9,
         type: 3}
       propertyPath: m_RootOrder
@@ -847,6 +857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Imp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075933641429309022, guid: ef83fe617fab5d049b80b731393060c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
