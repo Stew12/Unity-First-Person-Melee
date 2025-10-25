@@ -500,11 +500,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8665687354510466113}
-  - component: {fileID: 6270278121750712902}
-  - component: {fileID: 1499837858204121754}
+  - component: {fileID: 4787593442363005288}
   - component: {fileID: 1549862445368315834}
   - component: {fileID: 3266915837815546175}
   - component: {fileID: -8024197298899896822}
+  - component: {fileID: 1499837858204121754}
   - component: {fileID: 229890338}
   - component: {fileID: -2767034510457283634}
   m_Layer: 6
@@ -533,7 +533,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &6270278121750712902
+--- !u!114 &4787593442363005288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6286608605994125364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07cd3daaa63586a4e9eeb29c8eff8ca7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ad67551d31652b4ba52647dda668972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
@@ -586,7 +586,7 @@ MonoBehaviour:
   enemyAttack: {fileID: 0}
   enemyHurt: {fileID: 8300000, guid: 27fddf1ca53fc0c43811efbeef025e9d, type: 3}
   enemyDie: {fileID: 8300000, guid: 294157843de34454b82707a4061e78b2, type: 3}
-  knockBackSpeed: 3
+  knockBackSpeed: 0
   maxParryKnockBackTime: 0.45
   knockBackTime: 0
   attackWindUpTime: 0.85
@@ -598,20 +598,6 @@ MonoBehaviour:
   hpBarShowTime: 0.8
   waitTime: 0
   enemyState: 0
---- !u!136 &1499837858204121754
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6286608605994125364}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 2.8
-  m_Height: 24.234251
-  m_Direction: 1
-  m_Center: {x: 0.13528748, y: 0.21085511, z: 0.72754055}
 --- !u!212 &1549862445368315834
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -690,6 +676,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ee0b6723b74474e93cbef0f263482d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &1499837858204121754
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6286608605994125364}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 2.8
+  m_Height: 24.234251
+  m_Direction: 1
+  m_Center: {x: 0.13528748, y: 0.21085511, z: 0.72754055}
 --- !u!143 &229890338
 CharacterController:
   m_ObjectHideFlags: 0

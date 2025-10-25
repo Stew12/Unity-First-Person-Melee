@@ -278,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7075933641429308997}
-  - component: {fileID: 7075933641429308994}
+  - component: {fileID: 1285105855419404164}
   - component: {fileID: 7075933641429309002}
   - component: {fileID: 7075933641429309003}
   - component: {fileID: 5994788409186898453}
@@ -311,7 +311,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7075933641429308994
+--- !u!114 &1285105855419404164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7075933641429309022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07cd3daaa63586a4e9eeb29c8eff8ca7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9509c79559cc18c42a6c31dae07ce071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   distanceFromPlayer: 0
   waiting: 0
   gravity: -9.8
-  flipSpriteOnAttack: 1
+  flipSpriteOnAttack: 0
   slashOffset: 0.6
   attackWarningSpriteScale: 1.1
   attackWarningHeightUp: 0.05
@@ -369,7 +369,7 @@ MonoBehaviour:
   maxParryKnockBackTime: 0.45
   knockBackTime: 0
   attackWindUpTime: 1.5
-  maxAttackCoolDownTime: 5
+  maxAttackCoolDownTime: 2
   attackCoolDownTime: 0
   maxAttackDuration: 0.3
   attackDuration: 0

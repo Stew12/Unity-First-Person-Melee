@@ -70,32 +70,6 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public EnemyAttack selectEnemyAttack(EnemyType enemyType)
-    {
-        this.enemyType = enemyType;
-
-        switch (enemyType)
-        {
-            //SKELETON ATTACKS: RUSH AT PLAYER 
-            case EnemyType.SKELETON:
-                //TODO: set trajectory towards player then move ONLY on that trqjectory for rest of attack
-                return EnemyAttack.BASICPHYSICAL;
-
-            //SKELETON ATTACKS: SHOOT FIREBALL AT PLAYER 
-            case EnemyType.SORCERESS:
-                return EnemyAttack.BASICRANGED;
-
-            case EnemyType.IMP:
-                return EnemyAttackRandomChoice(new EnemyAttack[] { EnemyAttack.BASICPHYSICAL, EnemyAttack.BASICAOE });
-
-
-            default:
-                return EnemyAttack.BASICPHYSICAL;
-        }
-
-
-    }
-
     public void AttackBehaviourList(EnemyAttack enemyAttack, Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
     {
         this.enemyClass = enemyClass;
@@ -186,7 +160,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         //}
     }
 
-    private EnemyAttack EnemyAttackRandomChoice(EnemyAttack[] enemyAttacks)
+    public EnemyAttack EnemyAttackRandomChoice(EnemyAttack[] enemyAttacks)
     {
         if (attackChoice == -1)
         {

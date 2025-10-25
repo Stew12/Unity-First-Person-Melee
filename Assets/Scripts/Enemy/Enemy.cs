@@ -25,7 +25,7 @@ public enum EnemyState
     ATTACKING
 }
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [Header("Enemy Type")]
     public EnemyType enemyType;
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
     private GameObject attkWarning;
     private GameObject attkWarningRad;
     [SerializeField] private GameObject enemyDeathEffect;
-    [SerializeField] private GameObject enemyHPBarBG;
+    public GameObject enemyHPBarBG;
     public CapsuleCollider mainHitbox;
     public CapsuleCollider[] weakPointHitboxes;
     private SpriteRenderer enemyHPBar;
@@ -156,7 +156,7 @@ public class Enemy : MonoBehaviour
 
                         EnemyAttack eAttack = EnemyAttack.BASICPHYSICAL;
 
-                        eAttack = enemyBehaviourAndAttackList.selectEnemyAttack(enemyType);
+                        eAttack = EnemyAttackBehaviour();
 
                         if (!enemyAttackProcess)
                         {
@@ -410,7 +410,9 @@ public class Enemy : MonoBehaviour
         EDE.GetComponent<EnemyDeathEffect>().deathSound = enemyDie;
         EDE.GetComponent<EnemyDeathEffect>().deathEffectTime = enemyDie.length;
         EDE.GetComponent<EnemyDeathEffect>().coinAmount = bronze;
-        
+
         Destroy(gameObject);
     }
+
+    public abstract EnemyAttack EnemyAttackBehaviour();
 }
