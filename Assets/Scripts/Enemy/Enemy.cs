@@ -6,19 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public enum EnemyType
-{
-    SKELETON,
-    SORCERESS,
-    WRAITH,
-    IMP,
-    MIMIC,
-    SHADOW,
-    TENTACLES,
-    ZOMBIE,
-    STATUE
-}
-
 public enum EnemyState
 {
     ROAMING,
@@ -28,9 +15,6 @@ public enum EnemyState
 
 public abstract class Enemy : MonoBehaviour
 {
-    [Header("Enemy Type")]
-    public EnemyType enemyType;
-
      [Header("Components")]
     //public SphereCollider detectionRadius;
     [HideInInspector] public CharacterController enemyController;
@@ -146,8 +130,8 @@ public abstract class Enemy : MonoBehaviour
 
                     case EnemyState.CHASING:
 
-                       enemyBehaviourAndAttackList.ChaseBehaviourList(enemyType, this, gameObject);
-                        
+                        enemyBehaviourAndAttackList.ChaseBehaviourList(this, gameObject);
+                        EnemyChaseBehaviour(enemyBehaviourAndAttackList);
                     break;
 
                     case EnemyState.ATTACKING:
@@ -417,6 +401,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     public abstract void EnemyAttackBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList);
+    public abstract void EnemyChaseBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList);
     public abstract GameObject SelectAttackMarker(GameObject[] attackMarkers);
     public abstract void SelectAttackType(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList);
 }

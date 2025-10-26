@@ -11,6 +11,9 @@ public class Sorceress : Enemy
         enemyBehaviourAndAttackList.BasicRangedAttack();
     }
 
+    public override void EnemyChaseBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
+    {}
+
     public override void SelectAttackType(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
     {
         enemyAttackType = EnemyAttack.BASICRANGED;

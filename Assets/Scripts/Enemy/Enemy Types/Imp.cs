@@ -16,13 +16,17 @@ public class Imp : Enemy
     {
         if (enemyAttackType == EnemyAttack.BASICAOE)
         {
-            enemyBehaviourAndAttackList.BasicAOEAttack(); 
+            enemyBehaviourAndAttackList.BasicAOEAttack();
         }
         else
         {
-            enemyBehaviourAndAttackList.BasicPhysicalAttack(); 
+            enemyBehaviourAndAttackList.BasicPhysicalAttack();
         }
-       
+    }
+    
+    public override void EnemyChaseBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
+    {
+        enemyBehaviourAndAttackList.FollowPlayerBasic();
     }
 
     public override GameObject SelectAttackMarker(GameObject[] atkMarkers)

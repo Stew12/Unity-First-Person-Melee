@@ -14,8 +14,7 @@ public enum EnemyAttack
 public class EnemyBehaviourAndAttackList : MonoBehaviour
 {
     Vector3 trajectory = Vector3.zero;
-
-    EnemyType enemyType;
+    
     Enemy enemyClass;
     GameObject enemyGameObject;
     GameObject projectile;
@@ -27,41 +26,18 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     private float slashDistance = -0.8f;
 
-    public void RoamBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
+    public void RoamBehaviourList(Enemy enemyClass, GameObject enemyGameObject)
     {
 
     }
 
-    public void ChaseBehaviourList(EnemyType enemyType, Enemy enemyClass, GameObject enemyGameObject)
+    public void ChaseBehaviourList(Enemy enemyClass, GameObject enemyGameObject)
     {
-        this.enemyType = enemyType;
         this.enemyClass = enemyClass;
         this.enemyGameObject = enemyGameObject;
 
         //enemyClass.audioSource.pitch = 1;
         //enemyClass.audioSource.PlayOneShot(enemyClass.enemyAlert);
-
-        switch (enemyType)
-        {
-            //SKELETON CHASE BEHAVIOR: PURSUE PLAYER 
-            case EnemyType.SKELETON:
-               FollowPlayerBasic();
-            break;
-
-            case EnemyType.SORCERESS:
-                //Do Nothing (doesn't chase player)
-            break;
-
-            //IMP CHASE BEHAVIOR: PURSUE PLAYER 
-            case EnemyType.IMP:
-               FollowPlayerBasic();
-            break;
-
-            default:
-
-            break;
-
-        }
 
         if (enemyClass.distanceFromPlayer <= enemyClass.aggroAttackDistance && enemyClass.attackCoolDownTime <= 0)
         {
@@ -81,7 +57,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     }
 
     //Pursues the player at a designated speed
-    private void FollowPlayerBasic()
+    public void FollowPlayerBasic()
     {
          //When chasing, move towards player on X and Z axis
         enemyClass.GetComponent<Enemy>().enemyController.Move(new Vector3(-enemyGameObject.transform.forward.x * enemyClass.chaseSpeed * Time.deltaTime, 0, -enemyGameObject.transform.forward.z * enemyClass.chaseSpeed * Time.deltaTime)); 

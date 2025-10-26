@@ -11,6 +11,11 @@ public class Skeleton : Enemy
         enemyBehaviourAndAttackList.BasicPhysicalAttack();
     }
 
+    public override void EnemyChaseBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
+    {
+        enemyBehaviourAndAttackList.FollowPlayerBasic();
+    }
+
     public override void SelectAttackType(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList)
     {
         enemyAttackType = EnemyAttack.BASICPHYSICAL;
