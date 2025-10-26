@@ -325,8 +325,9 @@ MonoBehaviour:
     type: 3}
   enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
     type: 3}
-  enemyAttackWarningRadius: {fileID: 3937243831462665012, guid: 03a40108982bcdc46b0abf50726c8539,
-    type: 3}
+  attackMarkers:
+  - {fileID: 0}
+  - {fileID: 3937243831462665012, guid: 03a40108982bcdc46b0abf50726c8539, type: 3}
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
   enemyHPBarBG: {fileID: 2432492757766264808}

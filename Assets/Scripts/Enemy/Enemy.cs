@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -32,7 +33,7 @@ public abstract class Enemy : MonoBehaviour
 
      [Header("Components")]
     //public SphereCollider detectionRadius;
-    public CharacterController enemyController;
+    [HideInInspector] public CharacterController enemyController;
     [SerializeField] private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
     public GameObject enemyProjectile;
@@ -40,7 +41,7 @@ public abstract class Enemy : MonoBehaviour
     public GameObject enemyWeaponAttack;
     public GameObject enemyAOE;
     [SerializeField] private GameObject enemyAttackWarningSource;
-    [SerializeField] private GameObject enemyAttackWarningRadius;
+    [SerializeField] private GameObject[] attackMarkers;
     private GameObject attkWarning;
     private GameObject attkWarningRad;
     [SerializeField] private GameObject enemyDeathEffect;
@@ -123,15 +124,9 @@ public abstract class Enemy : MonoBehaviour
         enemyHPBar = enemyHPBarBG.transform.GetChild(0).GetComponent<SpriteRenderer>();
         damageNumber = enemyHPBarBG.transform.GetChild(1).GetComponent<TextMeshPro>();
         enemyHPBarBG.SetActive(false);
-
-        audioSource = GetComponent<AudioSource>();
-
-        enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
-    }
-    
-    void Start()
-    {
         enemyController = GetComponent<CharacterController>();
+        enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -164,7 +159,8 @@ public abstract class Enemy : MonoBehaviour
                             if (attackCoolDownTime <= 0)
                             {
                                 //TODO AOE SETUP HERE
-                                attackSetup(eAttack);
+                                SelectAttackType(enemyBehaviourAndAttackList);
+                                attackSetup();
                             }
                         }
 
@@ -278,14 +274,18 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    
-    private void attackSetup(EnemyAttack EA)
+    private void attackSetup()
     {
         createAttackWarning();
 
-        if (EA == EnemyAttack.BASICAOE)
+        if (attackMarkers.Count() > 0)
         {
-            createAttackWarningRadius();
+            GameObject selectedAttackMarker = SelectAttackMarker(attackMarkers);
+
+            if (selectedAttackMarker != null)
+            {
+                createAttackMarker(selectedAttackMarker);
+            }
         }
 
         canFireProjectile = true;
@@ -293,7 +293,6 @@ public abstract class Enemy : MonoBehaviour
         enemyAttackProcess = true;
 
         StartCoroutine(ExecuteEnemyAttack(attackWindUpTime));
-
     }
 
     private void createAttackWarning()
@@ -313,9 +312,10 @@ public abstract class Enemy : MonoBehaviour
         attkWarning.AddComponent<Billboarding>();
     }
 
-    private void createAttackWarningRadius()
+    private void createAttackMarker(GameObject attackMarker)
     {
-        attkWarningRad = Instantiate(enemyAttackWarningRadius, new Vector3(transform.position.x, transform.position.y - attackWarningRadYOffset, transform.position.z), Quaternion.Euler(90, 0, 0));
+        //GameObject attackMarker 
+        Instantiate(attackMarker, new Vector3(transform.position.x, transform.position.y - attackWarningRadYOffset, transform.position.z), Quaternion.Euler(90, 0, 0));
     }
 
     private IEnumerator ExecuteEnemyAttack(float waitTime)
@@ -323,8 +323,6 @@ public abstract class Enemy : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         Destroy(attkWarning);
-
-        if (attkWarningRad != null) Destroy(attkWarningRad);
 
         enemyAttacking = true;
         spriteRenderer.color = Color.white;
@@ -419,4 +417,6 @@ public abstract class Enemy : MonoBehaviour
     }
 
     public abstract void EnemyAttackBehaviour(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList);
+    public abstract GameObject SelectAttackMarker(GameObject[] attackMarkers);
+    public abstract void SelectAttackType(EnemyBehaviourAndAttackList enemyBehaviourAndAttackList);
 }

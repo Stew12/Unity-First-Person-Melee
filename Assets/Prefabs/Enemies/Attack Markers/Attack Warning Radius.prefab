@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1156299773659394870}
   - component: {fileID: 2840764578754425911}
+  - component: {fileID: 1665052897355882017}
   m_Layer: 0
   m_Name: Attack Warning Radius
   m_TagString: Untagged
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1665052897355882017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3937243831462665012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03dbe29e589f930478a36a1f39adcbf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
