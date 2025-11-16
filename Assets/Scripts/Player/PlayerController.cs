@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     public Image dragonPointBarUI;
     public Image powerBarUI;
     public Image durabilityBarUI;
+    [SerializeField] private Image crosshair;
+    public Sprite crosshairDefault;
+    public Sprite crosshairCanAttack;
     public TextMeshProUGUI durabilityLabel;
     public TextMeshProUGUI bronzeAmountLabel;
     public TextMeshProUGUI statusMessage;
@@ -78,8 +81,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool attacking = false;
     private bool readyToAttack = true;
     private int attackCount;   
-    [HideInInspector] public bool weaponSheathed = false; 
+    [HideInInspector] public bool weaponSheathed = false;
     public float weakPointDamageFactor = 1.35f;
+    private bool inAttackRange = false;
 
     [Header("Lighting")]
     [SerializeField] private GameObject lantern;
@@ -268,7 +272,10 @@ public class PlayerController : MonoBehaviour
             GetComponent<PlayerCollisions>().canTakeDamage = true;
         }
 
-        // Knock player backwards
+        // Constantly check to see if player is in range of something, e.g an enemy or an interactable.
+        Invoke(nameof(InRangeRaycast), 0);
+
+        // Handles movement for knock back when knocking player back
         if (knockBackTime > 0)
         {
             knockBackTime -= Time.deltaTime;
@@ -537,11 +544,11 @@ public class PlayerController : MonoBehaviour
         powerTime = 0;
     }
 
-    void AttackRaycast()
+    private void AttackRaycast()
     {
         //GameObject weapon = equippedWeapon.transform.parent.gameObject;
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
-        { 
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
+        {
             HitTarget(hit.point);
 
             /* Weakness hit*/
@@ -550,8 +557,8 @@ public class PlayerController : MonoBehaviour
                 PlayerHitEnemy(hit, enemyWeakPointGameObject.parentEnemy, true);
             }
             /* Enemy hit by melee */
-            else if(hit.transform.TryGetComponent<Enemy>(out Enemy enemy))
-            { 
+            else if (hit.transform.TryGetComponent<Enemy>(out Enemy enemy))
+            {
                 PlayerHitEnemy(hit, enemy, false);
             }
             else
@@ -559,7 +566,20 @@ public class PlayerController : MonoBehaviour
                 audioSource.pitch = 1;
                 audioSource.PlayOneShot(wallHitSound);
             }
-        } 
+        }
+    }
+    
+    private void InRangeRaycast()
+    {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
+        {
+            if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Weak Point")
+                crosshair.sprite = crosshairCanAttack;
+        }
+        else
+        {
+            crosshair.sprite = crosshairDefault;
+        }
     }
 
     void HitTarget(Vector3 pos)
