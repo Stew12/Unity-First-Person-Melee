@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Backstep",
+                    "type": "Button",
+                    "id": "bd269db9-f4d3-4ce0-ba78-a8565d8ab074",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "59aa17fa-da05-41d5-8af2-ca2905f1fa8f",
@@ -767,7 +776,7 @@
                 {
                     "name": "",
                     "id": "f6f33c09-3709-4548-977d-65047441ae71",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1014,6 +1023,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "RestartButton2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be278f4b-2f92-43dc-8228-475e37d4f28f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Backstep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2d4ff8b-993d-48a7-9519-aedb01781379",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Backstep",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -103,6 +103,10 @@ public class PlayerController : MonoBehaviour
     public GameObject blockAndParryHitbox;
     public bool blocking = false;
 
+    [Header("Backstepping")]
+    private bool backstepping = false;
+    [SerializeField] private float backstepSpeed = 5f;
+
     [Header("Power Bar")]
     //public float power = 0;
     [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
@@ -131,24 +135,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int weaponDurabilityLossHit = 1;
     public int weaponDurabilityLossBlock = 3;
 
+    [Header("Dialog")]
+    public TextCrawl dialogueTextBox;
+    private NPC speakingNPC;
+
     [Header("Dragon Spells")]
     public DragonSpells dragonSpellSelected;
     public GameObject fireBall;
     public GameObject thunderTarget;
     public GameObject thunder;
 
-    [Header("Dialog")]
-    public TextCrawl dialogueTextBox;
-    private NPC speakingNPC;
-
     [Header("Timing")]
+
+    // Waiting - player can't input anything. Paused - player cannot do anything 
     [HideInInspector] public bool waiting = false;
     private bool paused = false;
+    
     public float maxDontTakeDamageTime = 0.8f;
     private float dontTakeDamageTime = 0;
     public float maxKnockBackTime = 0.45f;
     private float knockBackTime = 0;
     public float maxParryWindowTime = 0.3f;
+    [SerializeField] private float backstepTime = 0.3f;
     [SerializeField] private float maxPowerTime = 0;
     [SerializeField] private float powerTime = 0;
     [HideInInspector] public float parryWindowTime = 0;
@@ -210,6 +218,7 @@ public class PlayerController : MonoBehaviour
         input.Cast.started += ctx => StartCast();
         input.Cast.canceled += ctx => StopCast();
         input.Boost.performed += ctx => Boost();
+        input.Backstep.started += ctx => Backstep();
         input.Interact.performed += ctx => Interact();
         input.LanternToggle.performed += ctx => LanternToggle();
         input.Sheathe.performed += ctx => SheatheWeaponToggle();
@@ -280,6 +289,10 @@ public class PlayerController : MonoBehaviour
             parryWindowTime -= Time.deltaTime;
         }
 
+        if (backstepping)
+        {
+            controller.Move(new Vector3(-transform.forward.x * backstepSpeed * Time.deltaTime, 0, -transform.forward.z * backstepSpeed * Time.deltaTime));
+        }
     }
 
     void FixedUpdate() 
@@ -586,7 +599,7 @@ public class PlayerController : MonoBehaviour
             }
     }
 
-    void Block()
+    private void Block()
     {
         if (!waiting && !weaponSheathed)
         {
@@ -604,6 +617,23 @@ public class PlayerController : MonoBehaviour
                 GetComponent<PlayerCollisions>().attackParried = false;
             }
         }
+    }
+
+    private void Backstep()
+    {
+        waiting = true;
+
+        StartCoroutine(BackstepAction(backstepTime));
+    }
+
+    private IEnumerator BackstepAction(float waitTime)
+    {
+        backstepping = true;
+
+        yield return new WaitForSeconds(waitTime);
+
+        backstepping = false;
+        waiting = false;
     }
 
     public void StopBlocking()

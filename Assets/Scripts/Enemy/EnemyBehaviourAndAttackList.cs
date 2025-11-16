@@ -14,8 +14,9 @@ public enum EnemyAttack
 public class EnemyBehaviourAndAttackList : MonoBehaviour
 {
     Vector3 trajectory = Vector3.zero;
-    
+
     Enemy enemyClass;
+    Billboarding billboarding;
     GameObject enemyGameObject;
     GameObject projectile;
     GameObject AOE;
@@ -46,7 +47,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     }
 
-    public void AttackBehaviourList(Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset)
+    public void AttackBehaviourList(Enemy enemyClass, GameObject enemyGameObject, GameObject projectile, GameObject AOE, GameObject weaponSlash, float slashOffset, Billboarding billboarding)
     {
         this.enemyClass = enemyClass;
         this.enemyGameObject = enemyGameObject;
@@ -54,6 +55,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
         this.AOE = AOE;
         this.weaponSlash = weaponSlash;
         this.slashOffset = slashOffset;
+        //this.billboarding = billboarding;
     }
 
     //Pursues the player at a designated speed
@@ -66,6 +68,8 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
     //the enemy moves quickly towards the player
     public void BasicPhysicalAttack()
     {
+        //billboarding.enabled = false;
+
         if (!enemyClass.attackTrajectorySet)
         {
             //Point towards player pos upon spawning
@@ -82,6 +86,8 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     public void BasicRangedAttack()
     {
+        billboarding.enabled = false;
+
         if (enemyClass.canFireProjectile)
         {
             enemyClass.canFireProjectile = false;

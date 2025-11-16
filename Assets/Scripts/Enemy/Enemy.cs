@@ -20,6 +20,7 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector] public CharacterController enemyController;
     [SerializeField] private SpriteRenderer spriteRenderer;
     private EnemyBehaviourAndAttackList enemyBehaviourAndAttackList;
+    private Billboarding billboarding;
     public GameObject enemyProjectile;
     public GameObject projectileSpawn;
     public GameObject enemyWeaponAttack;
@@ -85,6 +86,7 @@ public abstract class Enemy : MonoBehaviour
     [Header("Timing")]
     private IEnumerator coroutine;
     public float attackWindUpTime = 0.85f;
+    public float attackWindUpFocusTime = 1.2f;
     public float maxAttackCoolDownTime = 2f;
     public float attackCoolDownTime = 0;
     public float maxAttackDuration = 0.6f;
@@ -111,6 +113,7 @@ public abstract class Enemy : MonoBehaviour
         enemyController = GetComponent<CharacterController>();
         enemyBehaviourAndAttackList = new EnemyBehaviourAndAttackList();
         audioSource = GetComponent<AudioSource>();
+        billboarding = GetComponent<Billboarding>();
     }
 
     void Update()
@@ -136,8 +139,6 @@ public abstract class Enemy : MonoBehaviour
 
                     case EnemyState.ATTACKING:
 
-                        EnemyAttack eAttack = EnemyAttack.BASICPHYSICAL;
-
                         if (!enemyAttackProcess)
                         {
                             if (attackCoolDownTime <= 0)
@@ -152,10 +153,11 @@ public abstract class Enemy : MonoBehaviour
 
                         if (enemyAttacking)
                         {
+
                             if (attackDuration >= 0)
                             {
                                 //ATTACK OCCURS HERE!
-                                enemyBehaviourAndAttackList.AttackBehaviourList(this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset);
+                                enemyBehaviourAndAttackList.AttackBehaviourList(this, gameObject, enemyProjectile, enemyAOE, enemyWeaponAttack, slashOffset, billboarding);
                                 EnemyAttackBehaviour(enemyBehaviourAndAttackList);
                                 if (flipSpriteOnAttack)
                                 {
@@ -163,6 +165,7 @@ public abstract class Enemy : MonoBehaviour
                                     GetComponent<SpriteRenderer>().flipX = true;
                                 }
                             }
+                            //Finish attack
                             else if (attackDuration <= 0)
                             {
                                 //Reset to before attack
@@ -182,6 +185,7 @@ public abstract class Enemy : MonoBehaviour
 
                                 enemyBehaviourAndAttackList.attackChoice = -1;
 
+                                billboarding.enabled = true;
                             }
                         }
 
@@ -276,6 +280,7 @@ public abstract class Enemy : MonoBehaviour
 
         enemyAttackProcess = true;
 
+        StartCoroutine(disableBillboarding(attackWindUpFocusTime));
         StartCoroutine(ExecuteEnemyAttack(attackWindUpTime));
     }
 
@@ -300,6 +305,13 @@ public abstract class Enemy : MonoBehaviour
     {
         //GameObject attackMarker 
         Instantiate(attackMarker, new Vector3(transform.position.x, transform.position.y - attackWarningRadYOffset, transform.position.z), Quaternion.Euler(90, 0, 0));
+    }
+
+    private IEnumerator disableBillboarding(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        billboarding.enabled = false;
     }
 
     private IEnumerator ExecuteEnemyAttack(float waitTime)

@@ -73,6 +73,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Backstep"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd269db9-f4d3-4ce0-ba78-a8565d8ab074"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""59aa17fa-da05-41d5-8af2-ca2905f1fa8f"",
@@ -789,7 +798,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f6f33c09-3709-4548-977d-65047441ae71"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1038,6 +1047,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""RestartButton2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be278f4b-2f92-43dc-8228-475e37d4f28f"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Backstep"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2d4ff8b-993d-48a7-9519-aedb01781379"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Backstep"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1057,6 +1088,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
         m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
         m_Main_Block = m_Main.FindAction("Block", throwIfNotFound: true);
+        m_Main_Backstep = m_Main.FindAction("Backstep", throwIfNotFound: true);
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
@@ -1150,6 +1182,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Look;
     private readonly InputAction m_Main_Attack;
     private readonly InputAction m_Main_Block;
+    private readonly InputAction m_Main_Backstep;
     private readonly InputAction m_Main_Interact;
     private readonly InputAction m_Main_Cast;
     private readonly InputAction m_Main_Boost;
@@ -1188,6 +1221,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Main_Look;
         public InputAction @Attack => m_Wrapper.m_Main_Attack;
         public InputAction @Block => m_Wrapper.m_Main_Block;
+        public InputAction @Backstep => m_Wrapper.m_Main_Backstep;
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
@@ -1241,6 +1275,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
+                @Backstep.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBackstep;
+                @Backstep.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBackstep;
+                @Backstep.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBackstep;
                 @Interact.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
@@ -1347,6 +1384,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @Backstep.started += instance.OnBackstep;
+                @Backstep.performed += instance.OnBackstep;
+                @Backstep.canceled += instance.OnBackstep;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1454,6 +1494,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnBackstep(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
