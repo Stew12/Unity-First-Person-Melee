@@ -141,7 +141,7 @@ MonoBehaviour:
   weaponAttackDamage: 3
   weaponWeight: 1.8
   weaponAttackSpeed: 0.2
-  weaponAttackDistance: 2
+  weaponAttackDistance: 2.5
   weaponAttackDelay: 1.9
   weaponAttackDelayDefault: 0
   maxWeaponDurability: 18

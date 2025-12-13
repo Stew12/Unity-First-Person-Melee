@@ -13,6 +13,13 @@ using UnityEditor.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Debug")]
+    private bool restarting1 = false;
+    private bool restarting2 = false;
+    public bool stopWhenAttacking = false;
+    [SerializeField] private bool noLookInputModeControls = false;
+    [SerializeField] private bool crossHairAttackChange = false;
+
     [Header("Input")]
     PlayerInput playerInput;
     PlayerInput.MainActions input;
@@ -48,10 +55,12 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 2.5f;
     public float moveSpeedDefault;
     [SerializeField] private float moveSpeedSheathedFactor = 2;
+    [SerializeField] private float turnSpeed = 20f;
     public float gravity = -9.8f;
     [SerializeField] private float jumpHeight = 1.2f;
     [SerializeField] private float jumpHeightSheathedFactor = 2f;
     [SerializeField] private float interactRaycastDistance = 2.5f;
+    [SerializeField] private bool noLookInputMode = false;
 
     Vector3 _PlayerVelocity;
 
@@ -103,11 +112,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip hurtSound;
     public AudioClip blockSound;
 
-    [Header("Blocking/Parrying")]
+    [Header("Blocking/Parrying/Backstepping")]
     public GameObject blockAndParryHitbox;
     public bool blocking = false;
-
-    [Header("Backstepping")]
     private bool backstepping = false;
     [SerializeField] private float backstepSpeed = 5f;
 
@@ -168,11 +175,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Currency")]
     [SerializeField] private float coinToBronzeFactor = 10;
-
-    [Header("Debug")]
-    private bool restarting1 = false;
-    private bool restarting2 = false;
-    public bool stopWhenAttacking = false;
 
     void Awake()
     {
@@ -308,8 +310,11 @@ public class PlayerController : MonoBehaviour
     }
 
     void LateUpdate() 
-    { 
-        LookInput(input.Look.ReadValue<Vector2>()); 
+    {
+        if (!noLookInputMode)
+        {
+            LookInput(input.Look.ReadValue<Vector2>()); 
+        }
 
         healthBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentHealth / (float)GetComponent<PlayerValues>().maxHealth;
 
@@ -388,21 +393,31 @@ public class PlayerController : MonoBehaviour
 
     void MoveInput(Vector2 input)
     {
+        //NoLookInputMode
+        if(noLookInputModeControls)
+        {
+            if (input == Vector2.zero)
+                noLookInputMode = false;
+            else
+                noLookInputMode = true;
+        }
+
         // Only move if these conditions are met
         if ((!attacking || !stopWhenAttacking) && !knockedBack && !waiting)
         {
+
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
             moveDirection.z = input.y;
 
             if (!attacking)
             {
-                controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+                PlayerMove(input, moveDirection, moveSpeed * Time.deltaTime);
             }
             else
             {
-                //When attacking, slow the player down based on the weight of their weapon. This will also be affected by momentum guage.
-                controller.Move(transform.TransformDirection(moveDirection) * (moveSpeed / equippedWeapon.GetComponent<PlayerWeaponValues>().weaponWeight) * Time.deltaTime);
+                 //When attacking, slow the player down based on the weight of their weapon. This will also be affected by momentum guage.
+                PlayerMove(input, moveDirection, (moveSpeed / equippedWeapon.GetComponent<PlayerWeaponValues>().weaponWeight) * Time.deltaTime);
             }
 
             _PlayerVelocity.y += gravity * Time.deltaTime;
@@ -428,7 +443,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void LookInput(Vector3 input)
+    private void PlayerMove(Vector2 input, Vector3 moveDir, float totalMovementSpeed)
+    {
+        Debug.Log("VEC 2: " + input);
+
+        // Turn left
+        if (input.x == -1)
+        {
+            turnInput(input);
+        }
+            //cam.transform.localRotation = new Quaternion(transform.rotation.x, transform.rotation.y* moveSpeed * Time.deltaTime, transform.rotation.z, 1);
+        //Turn right
+        else if (input.x == 1)
+        {
+            turnInput(input);
+        }
+        
+        else
+        {
+            controller.Move(transform.TransformDirection(moveDir) * totalMovementSpeed);
+        }
+        
+
+    }
+
+    private void LookInput(Vector3 input)
     {
         if (!waiting)
         {
@@ -447,6 +486,22 @@ public class PlayerController : MonoBehaviour
 
         }
         
+    }
+
+    private void turnInput(Vector2 input)
+    {
+        float mouseX = input.x;
+        float mouseY = input.y;
+
+        xRotation -= (mouseY * Time.deltaTime * sensitivity);
+        xRotation = Mathf.Clamp(xRotation, -80, 80);
+
+        if (!cameraLocked)
+        {
+            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        }
+
+        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * turnSpeed));
     }
 
     void OnEnable() 
@@ -573,7 +628,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
         {
-            if (hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Weak Point")
+            if ((hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Weak Point") && crossHairAttackChange)
                 crosshair.sprite = crosshairCanAttack;
         }
         else

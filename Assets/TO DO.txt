@@ -1,5 +1,21 @@
 TO DO:
 
+NEW IMPLEMENTATION LIST
+
+LockLookInputMode (TM) working
+
+Interactable raycast- show interact text
+
+Horizontal, vertical and stab attack inputs
+
+Charge attack instead of power bar
+
+release at right time on charge bar implementation
+
+
+
+
+
 BUGS
 
 make player fireball disappear when hitting a wall
