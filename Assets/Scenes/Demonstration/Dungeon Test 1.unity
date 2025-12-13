@@ -11027,6 +11027,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 6023708472858722426}
+    - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
       propertyPath: pausedText
       value: 
       objectReference: {fileID: 5317730950283102866}
@@ -11040,6 +11045,16 @@ PrefabInstance:
       propertyPath: healthBarUI
       value: 
       objectReference: {fileID: 2354851792560513671}
+    - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: sensitivity
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: horizDeadzone
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1282487068343986856, guid: edee1349e414e7c48abf2d456ad0860b,
         type: 3}
       propertyPath: momentumBarUI
@@ -11873,6 +11888,18 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 889ceeaa1d5861a44b7ec2c352c7f990, type: 3}
+--- !u!114 &6023708472858722426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7593769520975121130, guid: 889ceeaa1d5861a44b7ec2c352c7f990,
+    type: 3}
+  m_PrefabInstance: {fileID: 6023708472858722425}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6484357783667798304
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -86,7 +86,7 @@ public class EnemyBehaviourAndAttackList : MonoBehaviour
 
     public void BasicRangedAttack()
     {
-        billboarding.enabled = false;
+        //billboarding.enabled = false;
 
         if (enemyClass.canFireProjectile)
         {

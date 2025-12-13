@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeightSheathedFactor = 2f;
     [SerializeField] private float interactRaycastDistance = 2.5f;
     [SerializeField] private bool noLookInputMode = false;
+    private bool strafeLeft = false;
+    private bool strafing = false;
+    [SerializeField] private float horizDeadzone = 0.35f;
 
     Vector3 _PlayerVelocity;
 
@@ -396,11 +399,19 @@ public class PlayerController : MonoBehaviour
         //NoLookInputMode
         if(noLookInputModeControls)
         {
-            if (input == Vector2.zero)
+            if (input == Vector2.zero || strafing)
                 noLookInputMode = false;
             else
                 noLookInputMode = true;
         }
+
+        // if (strafing)
+        // {
+        //     if (strafeLeft)
+        //         input.x = -1;
+        //     else
+        //         input.x = 1;
+        // }
 
         // Only move if these conditions are met
         if ((!attacking || !stopWhenAttacking) && !knockedBack && !waiting)
@@ -443,26 +454,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // private void StrafeMovement(bool strafeLeft, bool strafing)
+    // {
+    //     this.strafeLeft = strafeLeft;
+    //     this.strafing = strafing;
+    // }
+
     private void PlayerMove(Vector2 input, Vector3 moveDir, float totalMovementSpeed)
     {
-        Debug.Log("VEC 2: " + input);
+        //Debug.Log("VEC 2: " + input);
 
         // Turn left
-        if (input.x == -1)
-        {
-            turnInput(input);
-        }
-            //cam.transform.localRotation = new Quaternion(transform.rotation.x, transform.rotation.y* moveSpeed * Time.deltaTime, transform.rotation.z, 1);
-        //Turn right
-        else if (input.x == 1)
-        {
-            turnInput(input);
-        }
+        // if (input.x < -horizDeadzone && input.x >= -1 && !strafing)
+        // {
+        //     turnInput(input);
+        // }
+        // //Turn right
+        // else if (input.x > horizDeadzone && input.x <= 1 && !strafing)
+        // {
+        //     turnInput(input);
+        // }
         
-        else
-        {
+        // else
+        // {
             controller.Move(transform.TransformDirection(moveDir) * totalMovementSpeed);
-        }
+        //}
         
 
     }
@@ -488,21 +504,21 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void turnInput(Vector2 input)
-    {
-        float mouseX = input.x;
-        float mouseY = input.y;
+    // private void turnInput(Vector2 input)
+    // {
+    //     float mouseX = input.x;
+    //     float mouseY = input.y;
 
-        xRotation -= (mouseY * Time.deltaTime * sensitivity);
-        xRotation = Mathf.Clamp(xRotation, -80, 80);
+    //     xRotation -= (mouseY * Time.deltaTime * sensitivity);
+    //     xRotation = Mathf.Clamp(xRotation, -80, 80);
 
-        if (!cameraLocked)
-        {
-            cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        }
+    //     if (!cameraLocked)
+    //     {
+    //         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+    //     }
 
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * turnSpeed));
-    }
+    //     transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * turnSpeed));
+    // }
 
     void OnEnable() 
     { input.Enable(); }

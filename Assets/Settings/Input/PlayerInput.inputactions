@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "StrafeLeft",
+                    "type": "Button",
+                    "id": "0d5dc144-77cd-4ae6-9680-e1434db41c3c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StrafeRight",
+                    "type": "Button",
+                    "id": "922f0be2-31e5-4a55-867c-7467068a8965",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "93c06cbe-8f24-4b7d-acdb-eb72b4ed006e",
@@ -456,30 +474,8 @@
                 },
                 {
                     "name": "",
-                    "id": "cc20ae64-d349-43c4-a99d-b7044a921091",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Block",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c364cebf-98f1-4e7f-a363-5a9dfc36dbd0",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Block",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8b0f1b98-1ffc-44f9-b6c2-05f55b851337",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -501,7 +497,7 @@
                 {
                     "name": "",
                     "id": "93c5f42a-dead-47ee-857d-0235b942f608",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -743,7 +739,7 @@
                 {
                     "name": "",
                     "id": "f2a3fca4-2aa8-4282-9013-dc71c54fb8f2",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1045,6 +1041,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Backstep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd0334c0-a90b-4c15-95d4-da6e4dbddfa1",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StrafeLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0801fcae-2063-43f2-8d84-4d44260af01f",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StrafeRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

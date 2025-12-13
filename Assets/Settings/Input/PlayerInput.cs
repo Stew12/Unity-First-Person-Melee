@@ -37,6 +37,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""StrafeLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""0d5dc144-77cd-4ae6-9680-e1434db41c3c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StrafeRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""922f0be2-31e5-4a55-867c-7467068a8965"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""93c06cbe-8f24-4b7d-acdb-eb72b4ed006e"",
@@ -478,30 +496,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cc20ae64-d349-43c4-a99d-b7044a921091"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c364cebf-98f1-4e7f-a363-5a9dfc36dbd0"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""8b0f1b98-1ffc-44f9-b6c2-05f55b851337"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -523,7 +519,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""93c5f42a-dead-47ee-857d-0235b942f608"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -765,7 +761,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f2a3fca4-2aa8-4282-9013-dc71c54fb8f2"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1069,6 +1065,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Backstep"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd0334c0-a90b-4c15-95d4-da6e4dbddfa1"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StrafeLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0801fcae-2063-43f2-8d84-4d44260af01f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StrafeRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1084,6 +1102,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Movement = m_Main.FindAction("Movement", throwIfNotFound: true);
+        m_Main_StrafeLeft = m_Main.FindAction("StrafeLeft", throwIfNotFound: true);
+        m_Main_StrafeRight = m_Main.FindAction("StrafeRight", throwIfNotFound: true);
         m_Main_Jump = m_Main.FindAction("Jump", throwIfNotFound: true);
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
         m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
@@ -1178,6 +1198,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Main;
     private IMainActions m_MainActionsCallbackInterface;
     private readonly InputAction m_Main_Movement;
+    private readonly InputAction m_Main_StrafeLeft;
+    private readonly InputAction m_Main_StrafeRight;
     private readonly InputAction m_Main_Jump;
     private readonly InputAction m_Main_Look;
     private readonly InputAction m_Main_Attack;
@@ -1217,6 +1239,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         private @PlayerInput m_Wrapper;
         public MainActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Main_Movement;
+        public InputAction @StrafeLeft => m_Wrapper.m_Main_StrafeLeft;
+        public InputAction @StrafeRight => m_Wrapper.m_Main_StrafeRight;
         public InputAction @Jump => m_Wrapper.m_Main_Jump;
         public InputAction @Look => m_Wrapper.m_Main_Look;
         public InputAction @Attack => m_Wrapper.m_Main_Attack;
@@ -1263,6 +1287,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_MainActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnMovement;
+                @StrafeLeft.started -= m_Wrapper.m_MainActionsCallbackInterface.OnStrafeLeft;
+                @StrafeLeft.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnStrafeLeft;
+                @StrafeLeft.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnStrafeLeft;
+                @StrafeRight.started -= m_Wrapper.m_MainActionsCallbackInterface.OnStrafeRight;
+                @StrafeRight.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnStrafeRight;
+                @StrafeRight.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnStrafeRight;
                 @Jump.started -= m_Wrapper.m_MainActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnJump;
@@ -1372,6 +1402,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @StrafeLeft.started += instance.OnStrafeLeft;
+                @StrafeLeft.performed += instance.OnStrafeLeft;
+                @StrafeLeft.canceled += instance.OnStrafeLeft;
+                @StrafeRight.started += instance.OnStrafeRight;
+                @StrafeRight.performed += instance.OnStrafeRight;
+                @StrafeRight.canceled += instance.OnStrafeRight;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -1490,6 +1526,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IMainActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnStrafeLeft(InputAction.CallbackContext context);
+        void OnStrafeRight(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
