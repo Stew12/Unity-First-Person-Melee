@@ -8,12 +8,15 @@ Interactable raycast- show interact text
 
 Horizontal, vertical and stab attack inputs
 
+Enemy attack markers on more attacks, such as rushing at player.
+
 Charge attack instead of power bar
 
 release at right time on charge bar implementation
 
+Alternatively, keep power bar but just make it faster
 
-
+could add an eye icon on cursor when standing still to show player can look around.
 
 
 BUGS
