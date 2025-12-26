@@ -152,14 +152,11 @@ public class PlayerController : MonoBehaviour
     private NPC speakingNPC;
 
     [Header("Dragon Spells")]
-    public DragonSpells dragonSpellSelected;
-    public GameObject fireBall;
-    public GameObject thunderTarget;
-    public GameObject thunder;
+    public PlayerSpell currentSpell;
 
     [Header("Timing")]
 
-    // Waiting - player can't input anything. Paused - player cannot do anything 
+    // Waiting - player can't input. Paused - player does not do anything 
     [HideInInspector] public bool waiting = false;
     private bool paused = false;
     
@@ -213,6 +210,8 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
 
         maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
+
+        currentSpell = GetComponentInChildren<PlayerSpell>();
 
         NewLevelLoad();
     }
@@ -701,7 +700,8 @@ public class PlayerController : MonoBehaviour
     {
         if (GetComponent<PlayerValues>().currentDragonPoints > 0)
         {
-            GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
+            //GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
+            currentSpell.PrepareDragonSpell(this, GetComponent<PlayerValues>());
         }
         else
         {

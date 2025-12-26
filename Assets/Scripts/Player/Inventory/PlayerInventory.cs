@@ -419,7 +419,14 @@ public class PlayerInventory : MonoBehaviour
                     break;
 
                 case ItemTypeUI.SPELL:
-                    EquipSpell(selectedItemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                    //EquipSpell(selectedItemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                    PlayerSpell playerSpellObj = player.GetComponentInChildren<PlayerSpell>();
+
+                    playerSpellObj.spellObject = selectedItemGObj.GetComponent<PlayerSpell>().spellObject; 
+                    playerSpellObj.castTime = selectedItemGObj.GetComponent<PlayerSpell>().castTime;
+                    playerSpellObj.castDPCost = selectedItemGObj.GetComponent<PlayerSpell>().castDPCost;
+
+                    player.currentSpell = playerSpellObj;
                     break;
 
                 case ItemTypeUI.CONSUMABLE:
@@ -735,11 +742,11 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void EquipSpell(DragonSpells newSpell)
+    private void EquipSpell()
     {
         HUDSpell.sprite = selectedItemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
 
-        player.dragonSpellSelected = newSpell;
+        //player.dragonSpellSelected = newSpell;
     }
 
     //private void LoadHotkeys()

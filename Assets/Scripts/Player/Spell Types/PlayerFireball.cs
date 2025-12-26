@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerFireball : MonoBehaviour
+public class PlayerFireball : PlayerSpellSpawned
 {
-    [HideInInspector] public GameObject player;
-
     [SerializeField] private float spellSpawnHeight = 0.75f;
     [SerializeField] private float spellSpawnHorizOffset = 0.6f;
 
-    public void castSpell()
+    public override void projectileSpawn(PlayerController player)
     {
         Vector3 playerPos = player.gameObject.transform.position;
         

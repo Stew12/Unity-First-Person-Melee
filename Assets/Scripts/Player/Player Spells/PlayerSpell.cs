@@ -10,9 +10,9 @@ public class PlayerSpell : MonoBehaviour
     private IEnumerator coroutine;
     private PlayerController player;
 
-    [SerializeField] private GameObject spellObject;
-    [SerializeField] private float castTime;
-    [SerializeField] private int castDPCost;
+    public GameObject spellObject;
+    public float castTime;
+    public int castDPCost;
 
 
     public void PrepareDragonSpell(PlayerController player, PlayerValues playerValues)
@@ -31,6 +31,7 @@ public class PlayerSpell : MonoBehaviour
         yield return new WaitForSeconds(castTime);
 
         Instantiate(spellObject);
+        spellObject.GetComponent<PlayerSpellSpawned>().projSpawn(player);
 
         player.waiting = false;
     }

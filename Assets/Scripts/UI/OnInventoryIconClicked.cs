@@ -20,7 +20,7 @@ public class OnInventoryIconClicked : MonoBehaviour
     public GameObject ITEM;
     public ItemTypeUI itemTypeUI;
 
-    public DragonSpells dragonSpells = DragonSpells.NONE;
+    //public DragonSpells dragonSpells = DragonSpells.NONE;
 
     public GameObject consumable;
 
