@@ -11,14 +11,8 @@ public class PlayerFireball : PlayerSpellSpawned
 
     public override void projectileSpawn(PlayerController player)
     {
-        //transform.parent = player.gameObject.transform;
-        
         Vector3 playerPos = player.gameObject.transform.position;
 
         Instantiate(gameObject, new Vector3(playerPos.x, playerPos.y + spellSpawnHeight, playerPos.z + spellSpawnHorizOffset), Quaternion.identity);
-        
-        //transform.position = new Vector3(playerPos.x, playerPos.y + spellSpawnHeight, playerPos.z + spellSpawnHorizOffset);
-
-        //transform.parent = null;
     }
 }

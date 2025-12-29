@@ -30,6 +30,7 @@ public class PlayerSpell : MonoBehaviour
     {
         yield return new WaitForSeconds(castTime);
 
+        Debug.Log("SPELL: " + spellObject.name);
         spellObject.GetComponent<PlayerSpellSpawned>().projSpawn(player);
         
         player.waiting = false;

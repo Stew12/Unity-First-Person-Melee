@@ -80,8 +80,6 @@ public class QuickSelect : MonoBehaviour
         {
             //TODO: Notify player they cannot cast the spell e.g. a sound effect
         }
-
-        
     }
 
     public void StopFillUseCircle()

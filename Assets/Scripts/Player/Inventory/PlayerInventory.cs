@@ -419,7 +419,8 @@ public class PlayerInventory : MonoBehaviour
                     break;
 
                 case ItemTypeUI.SPELL:
-                    //EquipSpell(selectedItemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
+                    HUDSpell.sprite = selectedItemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
+
                     PlayerSpell playerSpellObj = player.GetComponent<PlayerSpell>();
 
                     playerSpellObj.spellObject = selectedItemGObj.GetComponent<PlayerSpell>().spellObject; 
@@ -740,13 +741,6 @@ public class PlayerInventory : MonoBehaviour
             invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             invAudioSource.PlayOneShot(newWeapon.GetComponent<PlayerWeaponValues>().unsheatheSound);
         }
-    }
-
-    private void EquipSpell()
-    {
-        HUDSpell.sprite = selectedItemGObj.transform.GetChild(0).GetComponent<Image>().sprite;
-
-        //player.dragonSpellSelected = newSpell;
     }
 
     //private void LoadHotkeys()
