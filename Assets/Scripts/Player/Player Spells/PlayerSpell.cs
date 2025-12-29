@@ -30,9 +30,8 @@ public class PlayerSpell : MonoBehaviour
     {
         yield return new WaitForSeconds(castTime);
 
-        Instantiate(spellObject);
         spellObject.GetComponent<PlayerSpellSpawned>().projSpawn(player);
-
+        
         player.waiting = false;
     }
 

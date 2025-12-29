@@ -14,6 +14,7 @@ public class QuickSelect : MonoBehaviour
     [SerializeField] private QuickSelectType quickSelectType;
     private PlayerController player;
 
+    [SerializeField] private bool isSpellQS = false;
     public bool itemInQS = false;
     private bool useCircIncreasing = false;
 
@@ -45,9 +46,8 @@ public class QuickSelect : MonoBehaviour
                     }
                     else
                     {
-                        // Use selected spell
                         player.GetComponent<PlayerController>().CastDragonSpell();
-                        useCircIncreasing = false;
+                        useCircIncreasing = false;  
                     }
 
                     useCircle.fillAmount = 0;
@@ -71,7 +71,17 @@ public class QuickSelect : MonoBehaviour
     {
         this.player = player;
 
-        useCircIncreasing = true;
+        // If a spell quick select, and not enough dragon points, circle will not be able to be filled at all.
+        if (player.GetComponent<PlayerValues>().currentDragonPoints >= player.GetComponent<PlayerSpell>().castDPCost || !isSpellQS)
+        {
+            useCircIncreasing = true;
+        }
+        else
+        {
+            //TODO: Notify player they cannot cast the spell e.g. a sound effect
+        }
+
+        
     }
 
     public void StopFillUseCircle()

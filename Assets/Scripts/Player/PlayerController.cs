@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
         maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
 
-        currentSpell = GetComponentInChildren<PlayerSpell>();
+        currentSpell = GetComponent<PlayerSpell>();
 
         NewLevelLoad();
     }
@@ -698,15 +698,7 @@ public class PlayerController : MonoBehaviour
 
     public void CastDragonSpell()
     {
-        if (GetComponent<PlayerValues>().currentDragonPoints > 0)
-        {
-            //GetComponent<PlayerDragonSpellList>().PrepareDragonSpell(dragonSpellSelected, this, GetComponent<PlayerValues>());
-            currentSpell.PrepareDragonSpell(this, GetComponent<PlayerValues>());
-        }
-        else
-        {
-            //TODO: Notify player they cannot cast the spell e.g. a sound effect
-        }
+        currentSpell.PrepareDragonSpell(this, GetComponent<PlayerValues>());
     }
 
     private void Boost()

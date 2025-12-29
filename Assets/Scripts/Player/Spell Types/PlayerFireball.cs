@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 
 public class PlayerFireball : PlayerSpellSpawned
 {
@@ -10,8 +11,14 @@ public class PlayerFireball : PlayerSpellSpawned
 
     public override void projectileSpawn(PlayerController player)
     {
-        Vector3 playerPos = player.gameObject.transform.position;
+        //transform.parent = player.gameObject.transform;
         
-        transform.position = new Vector3(playerPos.x, playerPos.y + spellSpawnHeight, playerPos.z + spellSpawnHorizOffset);
+        Vector3 playerPos = player.gameObject.transform.position;
+
+        Instantiate(gameObject, new Vector3(playerPos.x, playerPos.y + spellSpawnHeight, playerPos.z + spellSpawnHorizOffset), Quaternion.identity);
+        
+        //transform.position = new Vector3(playerPos.x, playerPos.y + spellSpawnHeight, playerPos.z + spellSpawnHorizOffset);
+
+        //transform.parent = null;
     }
 }

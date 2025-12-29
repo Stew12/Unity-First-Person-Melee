@@ -420,7 +420,7 @@ public class PlayerInventory : MonoBehaviour
 
                 case ItemTypeUI.SPELL:
                     //EquipSpell(selectedItemGObj.GetComponent<OnInventoryIconClicked>().dragonSpells);
-                    PlayerSpell playerSpellObj = player.GetComponentInChildren<PlayerSpell>();
+                    PlayerSpell playerSpellObj = player.GetComponent<PlayerSpell>();
 
                     playerSpellObj.spellObject = selectedItemGObj.GetComponent<PlayerSpell>().spellObject; 
                     playerSpellObj.castTime = selectedItemGObj.GetComponent<PlayerSpell>().castTime;

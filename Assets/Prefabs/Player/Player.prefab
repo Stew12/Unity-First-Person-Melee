@@ -245,8 +245,8 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
-  m_Range: 10
+  m_Intensity: 3
+  m_Range: 12
   m_SpotAngle: 90.8
   m_InnerSpotAngle: 3.6
   m_CookieSize: 10
@@ -362,10 +362,10 @@ GameObject:
   - component: {fileID: 1282487068343986857}
   - component: {fileID: 1282487068343986870}
   - component: {fileID: 3126781737598039276}
-  - component: {fileID: 1282487068343986868}
   - component: {fileID: 1282487068343986867}
   - component: {fileID: 4226839757342427865}
   - component: {fileID: 3752493680112683764}
+  - component: {fileID: 1282487068343986868}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -381,7 +381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3126781738493668546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.96, y: 0, z: -1.1}
+  m_LocalPosition: {x: 0, y: 0, z: -10.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -389,7 +389,7 @@ Transform:
   - {fileID: 6762836469842344484}
   - {fileID: 3126781739497447391}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1282487068343986869
 MonoBehaviour:
@@ -460,8 +460,9 @@ MonoBehaviour:
   jumpHeightSheathedFactor: 0.9
   interactRaycastDistance: 2.5
   noLookInputMode: 0
+  horizDeadzone: 0.4
   cam: {fileID: 3126781738961630638}
-  sensitivity: 10
+  sensitivity: 12
   animator: {fileID: 0}
   IDLE: Null
   WALK: Null
@@ -505,12 +506,7 @@ MonoBehaviour:
   weaponDurabilityLossHit: 1
   weaponDurabilityLossBlock: 3
   dialogueTextBox: {fileID: 0}
-  dragonSpellSelected: 1
-  fireBall: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69,
-    type: 3}
-  thunderTarget: {fileID: 2570258849112477967, guid: e65c6af46b1f92649938f0532e8ebede,
-    type: 3}
-  thunder: {fileID: 1872096942104245859, guid: dd42b7e9146a05c40929b081fe9ced5e, type: 3}
+  currentSpell: {fileID: 0}
   waiting: 0
   maxDontTakeDamageTime: 0.7
   maxKnockBackTime: 0.45
@@ -685,27 +681,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 32
   m_CollisionDetection: 0
---- !u!114 &1282487068343986868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3126781738493668546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da243d7e1e82e6246b6b2e5ca6ad0f40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireBallBreathCastTime: 1
-  fireBallBreathDPCost: 5
-  thunderBreathDPCost: 10
-  fireBallBreathSpawnHeight: 0.75
-  fireBallBreathSpawnHorizOffset: 0
-  thunderBreathTargetCastTime: 0.1
-  thunderBreathCastTime: 1.1
-  thunderTargetDistance: 1.5
-  thunderTargetyOffset: 0.1
 --- !u!114 &1282487068343986867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,6 +885,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1282487068343986868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126781738493668546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da243d7e1e82e6246b6b2e5ca6ad0f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellObject: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69,
+    type: 3}
+  castTime: 0.75
+  castDPCost: 5
 --- !u!1 &3126781738654007208
 GameObject:
   m_ObjectHideFlags: 0
