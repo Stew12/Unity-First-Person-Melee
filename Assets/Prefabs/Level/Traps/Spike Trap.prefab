@@ -123,7 +123,6 @@ GameObject:
   - component: {fileID: 1647729593}
   - component: {fileID: 1647729590}
   - component: {fileID: 1647729592}
-  - component: {fileID: 8799228410380388742}
   m_Layer: 6
   m_Name: Spike Trap
   m_TagString: Untagged
@@ -199,18 +198,6 @@ MonoBehaviour:
   spikeActivationTime: 1
   timeBeforeSpikeRetraction: 3.5
   spikeCoolDownTime: 4
---- !u!114 &8799228410380388742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392052084299504962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a00cd529dbab5f43aa54290762e36b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &392052084299504964
 GameObject:
   m_ObjectHideFlags: 0

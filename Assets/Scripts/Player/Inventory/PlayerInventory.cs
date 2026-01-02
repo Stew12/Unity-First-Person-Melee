@@ -530,7 +530,7 @@ public class PlayerInventory : MonoBehaviour
 
             case ItemTypeUI.CONSUMABLE:
 
-                savedItem.AddComponent<ConsumableItem>();
+                itemFound.GetComponent<ConsumableItem>().AddConsumableItemComponent(savedItem);
                 savedItem.GetComponent<ConsumableItem>().itemQuantity = itemFound.GetComponent<ConsumableItem>().itemQuantity;
 
                 bool itemExists = false;

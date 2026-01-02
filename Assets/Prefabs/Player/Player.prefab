@@ -428,7 +428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopWhenAttacking: 0
-  noLookInputModeControls: 1
   crossHairAttackChange: 1
   equippedWeapon: {fileID: 6474830597742406048}
   startingWeaponPickup: {fileID: 7786502534206770190, guid: cfd12a881d5f2614d8b8d5edf5e21601,
@@ -533,7 +532,6 @@ MonoBehaviour:
   attackBlocked: 0
   attackParried: 0
   blockDefenseFactor: 0.35
-  enemyColDelay: 0.0001
   hurtFlash: {fileID: 0}
   hurtFlashTime: 0.1
 --- !u!143 &3126781738493668544

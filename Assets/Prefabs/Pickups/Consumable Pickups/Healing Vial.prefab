@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7786502534206770417}
-  - component: {fileID: 7786502534206770416}
   - component: {fileID: 7786502534206770191}
   - component: {fileID: 8943801645194059576}
   - component: {fileID: 2106621533}
   - component: {fileID: 2106621529}
+  - component: {fileID: 2675622433078783515}
   m_Layer: 6
   m_Name: Healing Vial
   m_TagString: Player Item
@@ -34,23 +34,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7786502534206770416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7786502534206770190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a474da1fe7683a345a23de2ccad86dc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  consumableType: 0
-  restoreAmount: 50
-  itemQuantity: 0
 --- !u!212 &7786502534206770191
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,3 +130,17 @@ MonoBehaviour:
   itemName: Healing Vial
   interactedItemType: 3
   UIIcon: {fileID: 526734179472673324, guid: 3597548cfc45991498cb7c3823b61739, type: 3}
+--- !u!114 &2675622433078783515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7786502534206770190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cb7269b8e84a443aa3e20cd51d5f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restoreAmount: 20
+  itemQuantity: 0
