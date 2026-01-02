@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2482715138591980490}
   - component: {fileID: 2482715138594005935}
   - component: {fileID: 2482715138594005934}
+  - component: {fileID: 5217634919921451314}
   m_Layer: 0
   m_Name: Swinging Blade Trap
   m_TagString: Untagged
@@ -118,10 +119,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c64e42d75058646ad3fc9b3da71fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sBladeReady: 0
   autoSwinging: 1
   sBladeActivationTime: 1
   sBladeCoolDownTime: 2.5
   rightSwing: 1
+--- !u!114 &5217634919921451314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482715138593973514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a00cd529dbab5f43aa54290762e36b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2482715138317831659
 PrefabInstance:
   m_ObjectHideFlags: 0

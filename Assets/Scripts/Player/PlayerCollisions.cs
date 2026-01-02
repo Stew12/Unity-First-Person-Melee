@@ -14,105 +14,14 @@ public class PlayerCollisions : MonoBehaviour
     public bool attackBlocked;
     public bool attackParried;
     public float blockDefenseFactor = 0.65f;
-    public float enemyColDelay = 0.00001f;
     public Image hurtFlash;
     public float hurtFlashTime = 0.1f;
     private IEnumerator coroutine;
 
     private void OnTriggerEnter(Collider col)
     {
-        switch (col.tag)
-        {
-            case "Enemy":
-
-                //TODO: Only hurt player when attacking. However, right now is buggy
-                //if (col.GetComponent<Enemy>().enemyAttacking)
-                //{
-                coroutine = EnemyCollision(col, enemyColDelay);
-                StartCoroutine(coroutine);
-                //}
-
-                break;
-
-            case "Enemy Projectile":
-                if (canTakeDamage)
-                {
-                    if (col.GetComponent<EnemyProjectile>() != null)
-                        col.GetComponent<EnemyProjectile>().EnemyCasterCanFire();
-
-                    else if (col.GetComponent<EnemyAttackDisjoint>() != null)
-                    {
-                        col.GetComponent<EnemyAttackDisjoint>().EnemyCasterCanFire();
-                        GetComponent<PlayerController>().KnockBack(col.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.gameObject.transform);
-                    }
-
-                    //Projectiles can be blocked, but not parried. However sword slashes can be parried, which are classified as projectiles but fucntionally aren't.
-                    if (!attackParried)
-                    {
-                        TakeDamage(col, true);
-                        canTakeDamage = false;
-
-                        GetComponent<PlayerController>().DontTakeDamage();
-
-                        if (col.GetComponent<EnemyProjectile>() != null)
-                            Destroy(col.gameObject);
-                    }
-                    else
-                    {
-                        //Larger momentum increase when parrying.
-                        GetComponent<PlayerController>().MomentumIncrease(true);
-
-                        //Knock ENEMY backward (relative to the player)
-                        col.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
-
-                        GetComponent<PlayerController>().audioSource.pitch = 1;
-                        GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
-
-                        attackParried = false;
-                    }
-                }
-                break;
-
-            case "Trap":
-                //Debug.Log(canTakeDamage);
-                if (canTakeDamage)
-                {
-                    if (col.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || col.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
-                    {
-                        //Console.WriteLine("AAAAAA");
-                        TakeDamage(col, false);
-                        canTakeDamage = false;
-                    }
-                }
-                break;
-
-            case "Pressure Plate":
-                col.GetComponent<DungeonButton>().ButtonActivation(GetComponent<PlayerController>());
-                break;
-
-
-            case "Detection Radius Enter":
-                Debug.Log("Entered detection radius!");
-                col.GetComponent<DetectionRadius>().PlayerEntered();
-                break;
-
-            // Load into next scene
-            case "Scene Transition":
-    
-                StartCoroutine(LoadScene(col.GetComponent<SceneChange>()));
-
-                break;
-
-            // case "Enemy Wall":
-            //     //Ignore the collision of any 'enemy wall' objects
-            //     Physics.IgnoreCollision(GetComponent<PlayerController>().controller, col.GetComponent<Collider>());
-            // break;
-
-
-            default:
-
-                break;
-        }
+        if (col.GetComponent<Collision>() != null)
+            col.GetComponent<Collision>().collidedWith(col, this);
     }
 
     private void OnTriggerExit(Collider col)
@@ -130,7 +39,7 @@ public class PlayerCollisions : MonoBehaviour
         }
     }
 
-    private IEnumerator EnemyCollision(Collider col, float waitTime)
+    public IEnumerator EnemyCollision(Collider col, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
@@ -142,8 +51,6 @@ public class PlayerCollisions : MonoBehaviour
             //BUG TBF: enemy hitting parry and player hitbox causes the hitbox collision to return a parry, but 
             //since it happens same time as enemy hitting player hitbox, seems to not be ready by playercontroller, causing a 'false parry'
 
-            //if (col.GetComponent<Enemy>().enemyAttacking)
-            //{
             if (!attackParried)
             {
                 TakeDamage(col, true);
@@ -171,13 +78,62 @@ public class PlayerCollisions : MonoBehaviour
 
                 attackParried = false;
             }
-
-            
-            //}
-
         }
 
         col.GetComponent<Enemy>().Wait();
+    }
+
+    public void EnemyProjectileCollision(Collider col)
+    {
+        if (canTakeDamage)
+        {
+            if (col.GetComponent<EnemyProjectile>() != null)
+                col.GetComponent<EnemyProjectile>().EnemyCasterCanFire();
+
+            else if (col.GetComponent<EnemyAttackDisjoint>() != null)
+            {
+                col.GetComponent<EnemyAttackDisjoint>().EnemyCasterCanFire();
+                GetComponent<PlayerController>().KnockBack(col.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.gameObject.transform);
+            }
+
+            //Projectiles can be blocked, but not parried. However sword slashes can be parried, which are classified as projectiles but fucntionally aren't.
+            if (!attackParried)
+            {
+                TakeDamage(col, true);
+                canTakeDamage = false;
+
+                GetComponent<PlayerController>().DontTakeDamage();
+
+                if (col.GetComponent<EnemyProjectile>() != null)
+                    Destroy(col.gameObject);
+            }
+            else
+            {
+                //Larger momentum increase when parrying.
+                GetComponent<PlayerController>().MomentumIncrease(true);
+
+                //Knock ENEMY backward (relative to the player)
+                col.GetComponent<EnemyAttackDisjoint>().enemyCasterClass.GetComponent<Enemy>().EnemyKnockBack(gameObject, true);
+
+                GetComponent<PlayerController>().audioSource.pitch = 1;
+                GetComponent<PlayerController>().audioSource.PlayOneShot(GetComponent<PlayerController>().parrySound);
+
+                attackParried = false;
+            }
+        }
+    }
+
+    public void TrapCollision(Collider col)
+    {
+        if (canTakeDamage)
+        {
+            if (col.transform.parent.gameObject.GetComponent<SpikeTrap>() == null || col.transform.parent.gameObject.GetComponent<SpikeTrap>().spikesUp)
+            {
+                //Console.WriteLine("AAAAAA");
+                TakeDamage(col, false);
+                canTakeDamage = false;
+            }
+        }
     }
 
     private void TakeDamage(Collider enemy, bool canBlock)
@@ -239,7 +195,7 @@ public class PlayerCollisions : MonoBehaviour
         Destroy(GameObject.Find("Canvas"));
     }
 
-    IEnumerator LoadScene(SceneChange sceneChange)
+    public IEnumerator LoadScene(SceneChange sceneChange)
     {
         if (sceneChange.loadingScreen != null)
         {
@@ -265,32 +221,13 @@ public class PlayerCollisions : MonoBehaviour
         //Debug
     }
 
-    private int CalculateDamage(Collider harmfulEntity, bool blocked)
+    private int CalculateDamage(Collider col, bool blocked)
     {
         int totalDamage = 0;
-        if (harmfulEntity != null)
+
+        if (col != null)
         {
-            switch (harmfulEntity.tag)
-            {
-                case "Enemy":
-                    totalDamage = (int)harmfulEntity.GetComponent<Enemy>().attackDamage;
-                    break;
-
-                case "Enemy Projectile":
-                    if (harmfulEntity.GetComponent<EnemyProjectile>() != null)
-                        totalDamage = (int)harmfulEntity.GetComponent<EnemyProjectile>().projectileDamage;
-                    else if (harmfulEntity.GetComponent<EnemyAttackDisjoint>() != null)
-                        totalDamage = (int)harmfulEntity.GetComponent<EnemyAttackDisjoint>().projectileDamage;
-                    break;
-
-                case "Trap":
-                    totalDamage = harmfulEntity.GetComponent<Trap>().damage;
-                    break;
-
-                default:
-                    Debug.Log("Correct gameObject tag not found! Check spelling or that it has been assigned to the object");
-                    break;
-            }
+            totalDamage = col.GetComponent<Collision>().damageValue(col);
 
             if (blocked)
             {
@@ -313,6 +250,4 @@ public class PlayerCollisions : MonoBehaviour
 
         hurtFlash.enabled = false;
     }
-
-    
 }

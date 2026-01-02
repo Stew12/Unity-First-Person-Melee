@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5965677471906973664}
   - component: {fileID: 7179365799025709320}
   - component: {fileID: 29669276367854902}
+  - component: {fileID: 4098998915399127097}
   m_Layer: 0
   m_Name: Enemy Sword Slash Alt
   m_TagString: Enemy Projectile
@@ -212,3 +213,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4098998915399127097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7132917096318284699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f59297f23bbad44ab4cc830cb9639ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

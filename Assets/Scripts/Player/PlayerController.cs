@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     private bool restarting1 = false;
     private bool restarting2 = false;
     public bool stopWhenAttacking = false;
-    [SerializeField] private bool noLookInputModeControls = false;
     [SerializeField] private bool crossHairAttackChange = false;
 
     [Header("Input")]
@@ -394,7 +393,7 @@ public class PlayerController : MonoBehaviour
     void MoveInput(Vector2 input)
     {
         //NoLookInputMode
-        if(noLookInputModeControls)
+        if(DebugSettings.noLookInputModeControls)
         {
             if (input == Vector2.zero)
                 noLookInputMode = false;

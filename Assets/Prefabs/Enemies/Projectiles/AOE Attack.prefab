@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1872096942104245853}
   - component: {fileID: 1872096942104245852}
   - component: {fileID: -7013960654119094323}
+  - component: {fileID: -8652689858348384997}
   m_Layer: 0
   m_Name: AOE Attack
   m_TagString: Enemy Projectile
@@ -113,3 +114,16 @@ MonoBehaviour:
   enemyCasterClass: {fileID: 0}
   projectileDamage: 20
   rangeTime: 1
+  parryable: 0
+--- !u!114 &-8652689858348384997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872096942104245859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f59297f23bbad44ab4cc830cb9639ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

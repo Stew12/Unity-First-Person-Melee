@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 2193332089957568721}
   - component: {fileID: 2193332089957568726}
   - component: {fileID: 2193332089957568727}
+  - component: {fileID: 1625978669911944689}
   m_Layer: 0
   m_Name: DetectionRadiusEnter
   m_TagString: Detection Radius Enter
@@ -116,6 +117,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ea1025167e41824086570408bc4198d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1625978669911944689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193332089957568720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4f29c973dca624d9eb4c1aec327919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2193332090426056283
@@ -272,9 +285,9 @@ GameObject:
   - component: {fileID: 7075933641429308994}
   - component: {fileID: 7075933641429308993}
   - component: {fileID: 7075933641429309003}
-  - component: {fileID: 435493381292660637}
   - component: {fileID: 1024988994}
   - component: {fileID: 5331645900596553135}
+  - component: {fileID: 8227825649606225734}
   m_Layer: 6
   m_Name: Imp
   m_TagString: Enemy
@@ -314,7 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b46bdcbb8904b4d81817d73436ad31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 3
   enemyController: {fileID: 0}
   spriteRenderer: {fileID: 1646031126582157704}
   enemyProjectile: {fileID: 0}
@@ -363,6 +375,7 @@ MonoBehaviour:
   maxParryKnockBackTime: 0.45
   knockBackTime: 0
   attackWindUpTime: 1.2
+  attackWindUpFocusTime: 1.2
   maxAttackCoolDownTime: 4
   attackCoolDownTime: 0
   maxAttackDuration: 0.29
@@ -399,18 +412,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyProjectile: 0
   turnSpeed: 10
---- !u!114 &435493381292660637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7075933641429309022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ee0b6723b74474e93cbef0f263482d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!143 &1024988994
 CharacterController:
   m_ObjectHideFlags: 0
@@ -525,6 +526,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8227825649606225734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075933641429309022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c2e1939d2ccc245940b558dd65e14c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyColDelay: 0.00001
 --- !u!1001 &8060203182557293757
 PrefabInstance:
   m_ObjectHideFlags: 0

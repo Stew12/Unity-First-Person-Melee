@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 4917653815812299702}
   - component: {fileID: 1969206809001176456}
   - component: {fileID: 8063717511404759482}
+  - component: {fileID: 2519320683582126906}
   m_Layer: 0
   m_Name: DetectionRadiusEnter
   m_TagString: Detection Radius Enter
@@ -431,6 +432,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ea1025167e41824086570408bc4198d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2519320683582126906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524950084604808868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4f29c973dca624d9eb4c1aec327919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6284366846588079834
@@ -503,10 +516,10 @@ GameObject:
   - component: {fileID: 4787593442363005288}
   - component: {fileID: 1549862445368315834}
   - component: {fileID: 3266915837815546175}
-  - component: {fileID: -8024197298899896822}
   - component: {fileID: 1499837858204121754}
   - component: {fileID: 229890338}
   - component: {fileID: -2767034510457283634}
+  - component: {fileID: 6994539295757872668}
   m_Layer: 6
   m_Name: Sorceress
   m_TagString: Enemy
@@ -545,7 +558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad67551d31652b4ba52647dda668972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 1
   enemyController: {fileID: 0}
   spriteRenderer: {fileID: 0}
   enemyProjectile: {fileID: 4709784309882851825, guid: 556ab20b6a9323d4f8104c84f363959a,
@@ -555,7 +567,7 @@ MonoBehaviour:
   enemyAOE: {fileID: 0}
   enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
     type: 3}
-  enemyAttackWarningRadius: {fileID: 0}
+  attackMarkers: []
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
   enemyHPBarBG: {fileID: 2338915614995728592}
@@ -590,6 +602,7 @@ MonoBehaviour:
   maxParryKnockBackTime: 0.45
   knockBackTime: 0
   attackWindUpTime: 0.85
+  attackWindUpFocusTime: 1.2
   maxAttackCoolDownTime: 3
   attackCoolDownTime: 0
   maxAttackDuration: 0.2
@@ -664,18 +677,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyProjectile: 0
   turnSpeed: 10
---- !u!114 &-8024197298899896822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6286608605994125364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ee0b6723b74474e93cbef0f263482d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &1499837858204121754
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -804,6 +805,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6994539295757872668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6286608605994125364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c2e1939d2ccc245940b558dd65e14c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyColDelay: 0.00001
 --- !u!1 &6976248432891271422
 GameObject:
   m_ObjectHideFlags: 0
