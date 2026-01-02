@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour
         dragonPointBarUI.fillAmount = 1;
         powerBarUI.fillAmount = 0;
 
-        statusMessage.gameObject.SetActive(false);
+        statusMessage.text = "";
 
         moveSpeedDefault = moveSpeed;
         // animator.speed += 2;
@@ -589,6 +589,7 @@ public class PlayerController : MonoBehaviour
     
     private void InRangeRaycast()
     {
+        // For attacking
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDistance, attackLayer))
         {
             if ((hit.collider.gameObject.tag == "Enemy" || hit.collider.gameObject.tag == "Weak Point") && crossHairAttackChange)
@@ -597,6 +598,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             crosshair.sprite = crosshairDefault;
+        }
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit2, interactRaycastDistance, attackLayer))
+        {
+            if (hit2.collider.gameObject.GetComponent<Interactable>() != null)
+            {
+                statusMessage.text = hit2.collider.gameObject.GetComponent<Interactable>().InteractText();
+            }
         }
     }
 
@@ -1009,7 +1018,6 @@ public class PlayerController : MonoBehaviour
 
     public void StatusMessageShow(string sMessage)
     {
-        statusMessage.gameObject.SetActive(true);
         statusMessage.text = sMessage;
         StartCoroutine(StatusMessageDisappear(statusMessageVisibleTime));
     }
@@ -1018,7 +1026,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(visTime);
 
-        statusMessage.gameObject.SetActive(false);
+        statusMessage.text = "";
     }
 
     private void Restart1(bool on)
