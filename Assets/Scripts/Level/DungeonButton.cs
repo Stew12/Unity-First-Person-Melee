@@ -5,6 +5,9 @@ using UnityEngine;
 public class DungeonButton : MonoBehaviour
 {
     [SerializeField] private GameObject connectedDevice;
+
+    [SerializeField] private string openDoorStatusMessage = "You heard something moving.";
+    
     public void ButtonActivation(PlayerController player)
     {
         if (connectedDevice.GetComponent<Door>() != null)
@@ -37,7 +40,7 @@ public class DungeonButton : MonoBehaviour
 
             if (player != null)
             {
-                player.StatusMessageShow(player.openDoorStatusMessage);
+                player.StatusMessageShow(openDoorStatusMessage);
             }
         }
         //TODO spike trap

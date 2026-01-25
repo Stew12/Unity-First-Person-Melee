@@ -46,9 +46,6 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI bronzeAmountLabel;
     public TextMeshProUGUI statusMessage;
     [SerializeField] private TextMeshProUGUI pausedText;
-    public string lockedDoorStatusMessage = "Locked...";
-    //public string lockedOpenDoorStatusMessage = "Can't be moved.";
-    public string openDoorStatusMessage = "You heard something moving.";
 
     [Header("Controller")]
     public float moveSpeed = 2.5f;
@@ -148,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dialog")]
     public TextCrawl dialogueTextBox;
-    private NPC speakingNPC;
+    public NPC speakingNPC;
 
     [Header("Dragon Spells")]
     public PlayerSpell currentSpell;
@@ -606,6 +603,14 @@ public class PlayerController : MonoBehaviour
             {
                 statusMessage.text = hit2.collider.gameObject.GetComponent<Interactable>().InteractText();
             }
+            else
+            {
+                statusMessage.text = "";
+            }
+        }
+        else
+        {
+            statusMessage.text = "";
         }
     }
 
@@ -821,63 +826,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, interactRaycastDistance, attackLayer))
         {
-            /* If NPC interacted */
-            if (hit.transform.TryGetComponent<NPC>(out NPC N))
+            if (hit.transform.TryGetComponent<Interactable>(out Interactable I))
             {
-                waiting = true;
-                Cursor.lockState = CursorLockMode.None;
-                dialogueTextBox.transform.parent.gameObject.SetActive(true);
-
-                speakingNPC = N.GetComponent<NPC>();
-                speakingNPC.PlayDialogue(dialogueTextBox);
-                
-            }
-
-            /* If door interacted */
-            if (hit.transform.tag == "Door")
-            {
-                if (hit.transform.parent.GetComponent<Door>() != null)
-                {
-                    //Check if door unlocked
-                    if (!hit.transform.parent.GetComponent<Door>().locked)
-                    {
-                        hit.transform.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
-                    }
-                    else
-                    {
-                        if (hit.transform.parent.GetComponent<Door>().closed)
-                        {
-                            StatusMessageShow(lockedDoorStatusMessage);
-                        }
-                    }
-                }
-                else
-                {
-                    //Check if door unlocked
-                    if (!hit.transform.parent.parent.GetComponent<Door>().locked)
-                    {
-                        hit.transform.parent.parent.GetComponent<Door>().DoorOpenOrClose(hit.transform.gameObject.GetComponent<BoxCollider>());
-                    }
-                    else
-                    {
-                        if (hit.transform.parent.parent.GetComponent<Door>().closed)
-                        {
-                            StatusMessageShow(lockedDoorStatusMessage);
-                        }
-                    }
-                }
-            }
-            else if (hit.transform.tag == "Player Item")
-            {
-                playerInventory.AddToInventory(hit.transform.gameObject);
-            }
-            else if (hit.transform.tag == "Chest")
-            {
-                hit.transform.GetComponent<TreasureChest>().ChestOpen();
-            }
-            else if (hit.transform.tag == "Button")
-            {
-                hit.transform.parent.GetComponent<DungeonButton>().ButtonActivation(this);
+                I.Interacted(this);
             }
         } 
     }

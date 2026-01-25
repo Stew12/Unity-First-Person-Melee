@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: Open
+  lockedDoorStatusMessage: Locked...
+  openDoorStatusMessage: You heard something moving.
 --- !u!1 &869919609862909348
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: Open
+  lockedDoorStatusMessage: Locked...
+  openDoorStatusMessage: You heard something moving.
 --- !u!1 &2249177317951706845
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: Open
+  lockedDoorStatusMessage: Locked...
+  openDoorStatusMessage: You heard something moving.
 --- !u!1 &2249177318169995540
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: Open
+  lockedDoorStatusMessage: Locked...
+  openDoorStatusMessage: You heard something moving.
 --- !u!1 &7485225969343481732
 GameObject:
   m_ObjectHideFlags: 0

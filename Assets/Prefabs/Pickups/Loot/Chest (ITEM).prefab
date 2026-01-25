@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2891124563398891248}
   - component: {fileID: 2891124563398891249}
   - component: {fileID: 2891124563398891254}
+  - component: {fileID: 4650319229809565951}
   m_Layer: 6
   m_Name: Chest (ITEM)
   m_TagString: Chest
@@ -229,3 +230,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4650319229809565951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891124563398891263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a542a3794b6d7b459d6cc513fdccfc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionText: Open

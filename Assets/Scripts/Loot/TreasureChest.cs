@@ -30,6 +30,7 @@ public class TreasureChest : MonoBehaviour
         trSpawned.transform.parent = transform;
 
         GetComponent<SpriteRenderer>().sprite = openChest;
+        GetComponent<ChestInteraction>().interactionText = "";
 
         GetComponent<AudioSource>().Play();
     }

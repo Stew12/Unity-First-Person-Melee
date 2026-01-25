@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    [SerializeField] private string interactionText = "";
+    public string interactionText = "";
 
-    public void Interacted()
+    public void Interacted(PlayerController player)
     {
-        InteractionBehaviour();
+        InteractionBehaviour(player);
     }
 
     public string InteractText()
@@ -16,5 +16,5 @@ public abstract class Interactable : MonoBehaviour
         return interactionText;
     }
 
-    public abstract void InteractionBehaviour();
+    public abstract void InteractionBehaviour(PlayerController player);
 }
