@@ -5,27 +5,13 @@ using UnityEngine;
 public static class DebugSettings
 {
     // Enables the 'tank controls' implementation- turn on or off based on player preference. May become a game setting
-    public static bool noLookInputModeControls = true;
+    public static bool noLookInputModeControls = false;
+
+    // Player can only look left and right while moving and the turn speed is slower.
+    public static bool slowHorizLookInputModeControls = true;
 
     // Enables whether touching the enemy (not their attack/projeciles) hurts the player. Want to test both ways to see what players like more.
     public static bool enemyGameObjectCollision = false; 
-
-     // Controller type
-    public static string controlType = "";
-
-    // public static ActiveDevice getCurrentDevice()
-    // {
-    //     // Check control type
-    //     foreach (InputDevice device in InputSystem.devices)
-    //     {
-    //         Debug.Log("Device Name: " + device.name);
-    //     }
-    // } 
-
-    // static void Update()
-    // {
-    //     OnEnable();
-    // }
 
     
 

@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeightSheathedFactor = 2f;
     [SerializeField] private float interactRaycastDistance = 2.5f;
     [SerializeField] private bool noLookInputMode = false;
-    [SerializeField] private float horizDeadzone = 0.35f;
 
     Vector3 _PlayerVelocity;
 
@@ -67,8 +66,11 @@ public class PlayerController : MonoBehaviour
     [Header("Camera")]
     public Camera cam;
     bool cameraLocked = false;
-    public float sensitivity ;
+    public float sensitivity;
+    public float slowedSensitivity;
     float xRotation = 0f;
+    [SerializeField] private bool slowHorizInputMode = false;
+    [SerializeField] private float horizDeadzone = 0.35f;
 
     /* Animation variables */
     [Header("Animation")]
@@ -401,6 +403,15 @@ public class PlayerController : MonoBehaviour
                 noLookInputMode = true;
         }
 
+        //SlowHorizontalMode
+        if(DebugSettings.slowHorizLookInputModeControls)
+        {
+            if (input == Vector2.zero)
+                slowHorizInputMode = false;
+            else
+                slowHorizInputMode = true;
+        }
+
         // Only move if these conditions are met
         if ((!attacking || !stopWhenAttacking) && !knockedBack && !waiting)
         {
@@ -449,12 +460,25 @@ public class PlayerController : MonoBehaviour
 
     private void LookInput(Vector3 input)
     {
+        float currSensitivity; 
+
         if (!waiting)
         {
             float mouseX = input.x;
-            float mouseY = input.y;
+            float mouseY;
 
-            xRotation -= (mouseY * Time.deltaTime * sensitivity);
+            if (slowHorizInputMode)
+            {
+                mouseY = 0;
+                currSensitivity = slowedSensitivity;
+            }
+            else
+            {
+                mouseY = input.y; 
+                currSensitivity = sensitivity;
+            }
+
+            xRotation -= (mouseY * Time.deltaTime * currSensitivity);
             xRotation = Mathf.Clamp(xRotation, -80, 80);
 
             if (!cameraLocked)
@@ -462,7 +486,7 @@ public class PlayerController : MonoBehaviour
                 cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             }
 
-            transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+            transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * currSensitivity));
 
         }
         
