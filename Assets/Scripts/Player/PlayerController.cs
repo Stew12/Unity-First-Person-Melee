@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [Header("Input")]
     PlayerInput playerInput;
     PlayerInput.MainActions input;
+    [SerializeField] private InputActionAsset inputActions;
 
     public GameObject equippedWeapon;
     public GameObject startingWeaponPickup;
@@ -214,31 +215,31 @@ public class PlayerController : MonoBehaviour
 
     void AssignInputs()
     {
-        input.Jump.performed += ctx => Jump();
-        input.Attack.started += ctx => Attack();
-        input.Block.started += ctx => Block();
-        input.Cast.started += ctx => StartCast();
-        input.Cast.canceled += ctx => StopCast();
-        input.Boost.performed += ctx => Boost();
-        input.Backstep.started += ctx => Backstep();
-        input.Interact.performed += ctx => Interact();
-        input.LanternToggle.performed += ctx => LanternToggle();
-        input.Sheathe.performed += ctx => SheatheWeaponToggle();
-        input.ItemQuickSelect.started += ctx => ItemQuickSelect();
-        input.ItemQuickSelect.canceled += ctx => ItemStopSelecting();
-        input.OpenItemInfo.performed += ctx => ShowItemInfo();
-        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog();
+        input.Jump.performed += ctx => Jump(ctx);
+        input.Attack.started += ctx => Attack(ctx);
+        input.Block.started += ctx => Block(ctx);
+        input.Cast.started += ctx => StartCast(ctx);
+        input.Cast.canceled += ctx => StopCast(ctx);
+        input.Boost.performed += ctx => Boost(ctx);
+        input.Backstep.started += ctx => Backstep(ctx);
+        input.Interact.performed += ctx => Interact(ctx);
+        input.LanternToggle.performed += ctx => LanternToggle(ctx);
+        input.Sheathe.performed += ctx => SheatheWeaponToggle(ctx);
+        input.ItemQuickSelect.started += ctx => ItemQuickSelect(ctx);
+        input.ItemQuickSelect.canceled += ctx => ItemStopSelecting(ctx);
+        input.OpenItemInfo.performed += ctx => ShowItemInfo(ctx);
+        input.SelectOptionNextDialog.performed += ctx => SelectOptionOrNextDialog(ctx);
 
-        input.Pause.performed += ctx => PauseToggle(false);
-        input.Inventory.performed += ctx => InventoryToggle();
-        input.EquipItem.performed += ctx => EquipItem();
-        input.InventorySelectUp.performed += ctx => InventorySelect(InventoryDir.UP);
-        input.InventorySelectDown.performed += ctx => InventorySelect(InventoryDir.DOWN);
-        input.InventorySelectLeft.performed += ctx => InventorySelect(InventoryDir.LEFT);
-        input.InventorySelectRight.performed += ctx => InventorySelect(InventoryDir.RIGHT);
+        input.Pause.performed += ctx => PauseToggle(false, ctx);
+        input.Inventory.performed += ctx => InventoryToggle(ctx);
+        input.EquipItem.performed += ctx => EquipItem(ctx);
+        input.InventorySelectUp.performed += ctx => InventorySelect(InventoryDir.UP, ctx);
+        input.InventorySelectDown.performed += ctx => InventorySelect(InventoryDir.DOWN, ctx);
+        input.InventorySelectLeft.performed += ctx => InventorySelect(InventoryDir.LEFT, ctx);
+        input.InventorySelectRight.performed += ctx => InventorySelect(InventoryDir.RIGHT, ctx);
 
-        input.InventoryChangeTabLeft.performed += ctx => InventoryTabChange(InventoryDir.LEFT);
-        input.InventoryChangeTabRight.performed += ctx => InventoryTabChange(InventoryDir.RIGHT);
+        input.InventoryChangeTabLeft.performed += ctx => InventoryTabChange(InventoryDir.LEFT, ctx);
+        input.InventoryChangeTabRight.performed += ctx => InventoryTabChange(InventoryDir.RIGHT, ctx);
 
         input._1.performed += ctx => ItemSwitch(1);
         input._2.performed += ctx => ItemSwitch(2);
@@ -298,6 +299,8 @@ public class PlayerController : MonoBehaviour
         {
             controller.Move(new Vector3(-transform.forward.x * backstepSpeed * Time.deltaTime, 0, -transform.forward.z * backstepSpeed * Time.deltaTime));
         }
+
+
     }
 
     void FixedUpdate() 
@@ -470,8 +473,30 @@ public class PlayerController : MonoBehaviour
     void OnDisable()
     { input.Disable(); }
 
-    private void Jump()
+    private void GetInputDeviceType(InputAction.CallbackContext context)
     {
+        InputDevice deviceUsed = context.control.device;
+
+        Debug.Log($"Device type: {deviceUsed.GetType().Name}");
+        
+        string deviceType = deviceUsed.GetType().Name;
+
+        if (deviceType.Contains("Keyboard") || deviceType.Contains("Mouse"))
+        {
+            ControllerSettings.currentDevice = ActiveDevice.KEYBOARD;
+            //Debug.Log("KEYBOARD");
+        }
+        else if (deviceType.Contains("Gamepad"))
+        {
+            ControllerSettings.currentDevice = ActiveDevice.GAMEPAD;
+            //Debug.Log("CONTROLLER");
+        }
+    }
+
+    private void Jump(InputAction.CallbackContext context)
+    {
+        GetInputDeviceType(context);
+
         // Adds force to the player rigidbody to jump
         if (isGrounded && !waiting)
         {
@@ -514,8 +539,10 @@ public class PlayerController : MonoBehaviour
     // ATTACKING BEHAVIOUR //
     // ------------------- //
 
-    public void Attack()
+    public void Attack(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+
         if(!readyToAttack || attacking || waiting || weaponSheathed) return;
         
         readyToAttack = false;
@@ -601,16 +628,33 @@ public class PlayerController : MonoBehaviour
         {
             if (hit2.collider.gameObject.GetComponent<Interactable>() != null)
             {
+                // Show interact text
                 statusMessage.text = hit2.collider.gameObject.GetComponent<Interactable>().InteractText();
+
+                // Show interact glyph
+                if (statusMessage.transform.GetChild(0).GetComponent<ControllerGlyph>() != null)
+                {
+                    statusMessage.transform.GetChild(0).GetComponent<ControllerGlyph>().showGlyph(true);
+                }
             }
             else
             {
                 statusMessage.text = "";
+
+                if (statusMessage.transform.GetChild(0).GetComponent<ControllerGlyph>() != null)
+                {
+                    statusMessage.transform.GetChild(0).GetComponent<ControllerGlyph>().showGlyph(false);
+                }
             }
         }
         else
         {
             statusMessage.text = "";
+
+            if (statusMessage.transform.GetChild(0).GetComponent<ControllerGlyph>() != null)
+            {
+                statusMessage.transform.GetChild(0).GetComponent<ControllerGlyph>().showGlyph(false);
+            }
         }
     }
 
@@ -651,8 +695,10 @@ public class PlayerController : MonoBehaviour
             }
     }
 
-    private void Block()
+    private void Block(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+
         if (!waiting && !weaponSheathed)
         {
             if (!blocking)
@@ -671,8 +717,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Backstep()
+    private void Backstep(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         waiting = true;
 
         StartCoroutine(BackstepAction(backstepTime));
@@ -694,8 +742,10 @@ public class PlayerController : MonoBehaviour
         blocking = false;
     }
 
-    private void StartCast()
+    private void StartCast(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         //TODO spell casted depends on which spell is currently selected
         if (!waiting)
         {
@@ -704,8 +754,10 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void StopCast()
+    private void StopCast(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         playerInventory.GetComponent<PlayerInventory>().HUDSpell.GetComponent<QuickSelect>().StopFillUseCircle();
     }
 
@@ -714,8 +766,10 @@ public class PlayerController : MonoBehaviour
         currentSpell.PrepareDragonSpell(this, GetComponent<PlayerValues>());
     }
 
-    private void Boost()
+    private void Boost(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         // Can only boost when weapon is out
         if (!waiting && !weaponSheathed && !boosting)
         {
@@ -732,8 +786,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SheatheWeaponToggle()
+    private void SheatheWeaponToggle(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         audioSource.pitch = 1;
 
         // Can't sheathe or unsheathe whilst boosting
@@ -782,8 +838,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void LanternToggle()
+    private void LanternToggle(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (lantern.activeSelf)
         {
             lantern.SetActive(false);
@@ -794,17 +852,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ItemQuickSelect()
+    private void ItemQuickSelect(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (!waiting)
         {
             playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<QuickSelect>().StartFillUseCircle(this);
         }
     }
 
-    private void ItemStopSelecting()
+    private void ItemStopSelecting(InputAction.CallbackContext context)
     {
-            playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<QuickSelect>().StopFillUseCircle();
+        GetInputDeviceType(context);
+        
+        playerInventory.GetComponent<PlayerInventory>().HUDItem.GetComponent<QuickSelect>().StopFillUseCircle();
     }
 
     private void WeaponDestructionAttack()
@@ -812,8 +874,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void Interact()
+    private void Interact(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (!waiting)
             Invoke(nameof(InteractRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
         //else if (playerInventory.enabled)
@@ -833,8 +897,10 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
-    void SelectOptionOrNextDialog()
+    void SelectOptionOrNextDialog(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (dialogueTextBox.isActiveAndEnabled)
         {
             //If text is still crawling, display the entire message at once
@@ -862,8 +928,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PauseToggle(bool forcePauseOn)
+    void PauseToggle(bool forcePauseOn, InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (!paused || forcePauseOn)
         {
             //Pause
@@ -887,38 +955,48 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void InventoryToggle()
+    void InventoryToggle(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (!attacking)
             playerInventory.InventoryToggle();
     }
 
-    void InventorySelect(InventoryDir iDir)
+    void InventorySelect(InventoryDir iDir, InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (playerInventory.inventoryInterface.activeInHierarchy)
         {
             playerInventory.GetComponent<PlayerInventory>().SelectInventoryPos(iDir);
         }
     }
 
-    void InventoryTabChange(InventoryDir iDir)
+    void InventoryTabChange(InventoryDir iDir, InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (playerInventory.inventoryInterface.activeInHierarchy)
         {
             playerInventory.GetComponent<PlayerInventory>().SelectInventoryTab(iDir);
         }
     }
 
-    void EquipItem()
+    void EquipItem(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
         if (playerInventory != null && playerInventory.inventoryInterface.activeInHierarchy && playerInventory.GetComponent<PlayerInventory>().selectedItem != null && playerInventory.currInventoryIndex != 0)
         {
             playerInventory.GetComponent<PlayerInventory>().ItemIsSelected(playerInventory.GetComponent<PlayerInventory>().selectedItem, playerInventory.GetComponent<PlayerInventory>().selectedItemGObj, true);
         }
     }
 
-    void ShowItemInfo()
+    void ShowItemInfo(InputAction.CallbackContext context)
     {
+        GetInputDeviceType(context);
+        
 
     }
 

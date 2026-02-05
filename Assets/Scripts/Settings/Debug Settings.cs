@@ -9,4 +9,26 @@ public static class DebugSettings
 
     // Enables whether touching the enemy (not their attack/projeciles) hurts the player. Want to test both ways to see what players like more.
     public static bool enemyGameObjectCollision = false; 
+
+     // Controller type
+    public static string controlType = "";
+
+    // public static ActiveDevice getCurrentDevice()
+    // {
+    //     // Check control type
+    //     foreach (InputDevice device in InputSystem.devices)
+    //     {
+    //         Debug.Log("Device Name: " + device.name);
+    //     }
+    // } 
+
+    // static void Update()
+    // {
+    //     OnEnable();
+    // }
+
+    
+
 }
+
+

@@ -429,6 +429,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopWhenAttacking: 0
   crossHairAttackChange: 1
+  inputActions: {fileID: -944628639613478452, guid: cdbc994e616636947b7bc3a748f09396,
+    type: 3}
   equippedWeapon: {fileID: 6474830597742406048}
   startingWeaponPickup: {fileID: 7786502534206770190, guid: cfd12a881d5f2614d8b8d5edf5e21601,
     type: 3}
@@ -448,8 +450,6 @@ MonoBehaviour:
   bronzeAmountLabel: {fileID: 0}
   statusMessage: {fileID: 0}
   pausedText: {fileID: 0}
-  lockedDoorStatusMessage: Locked...
-  openDoorStatusMessage: You heard something moving.
   moveSpeed: 2.1
   moveSpeedDefault: 0
   moveSpeedSheathedFactor: 1.45
@@ -505,6 +505,7 @@ MonoBehaviour:
   weaponDurabilityLossHit: 1
   weaponDurabilityLossBlock: 3
   dialogueTextBox: {fileID: 0}
+  speakingNPC: {fileID: 0}
   currentSpell: {fileID: 0}
   waiting: 0
   maxDontTakeDamageTime: 0.7

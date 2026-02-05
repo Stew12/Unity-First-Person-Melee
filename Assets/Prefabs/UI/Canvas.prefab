@@ -109,7 +109,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1409073422}
   m_Father: {fileID: 7593769521028356580}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -615,6 +616,97 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1409073421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409073422}
+  - component: {fileID: 1409073424}
+  - component: {fileID: 1409073423}
+  - component: {fileID: 1409073425}
+  m_Layer: 5
+  m_Name: Interact Glyph
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1409073422
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409073421}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.34, y: 0.34, z: 0.34}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 951716409}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -359, y: 41}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1409073424
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409073421}
+  m_CullTransparentMesh: 1
+--- !u!114 &1409073423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409073421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1409073425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409073421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42993813235a5d443937c1525be8a6fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardGlyph: {fileID: 21300000, guid: e5fa2d6bc31f9014e9e8788155d6101f, type: 3}
+  gamepadGlyph: {fileID: 21300000, guid: 894337d720a25884db18206c19af9c1b, type: 3}
 --- !u!1 &1570164892
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickSelectType: 0
+  isSpellQS: 0
   itemInQS: 0
   useCircleIncreaseAmount: 2
   useCircle: {fileID: 1182945998}
@@ -2572,6 +2665,7 @@ GameObject:
   - component: {fileID: 7593769520028560812}
   - component: {fileID: 7593769520028560813}
   - component: {fileID: 7593769520028560814}
+  - component: {fileID: 1395913328}
   m_Layer: 5
   m_Name: SpellInvIconLightning
   m_TagString: Untagged
@@ -2652,7 +2746,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ITEM: {fileID: 2570258849112477967, guid: e65c6af46b1f92649938f0532e8ebede, type: 3}
   itemTypeUI: 2
-  dragonSpells: 2
   consumable: {fileID: 0}
   selected: 0
   iconImg: {fileID: 0}
@@ -2714,6 +2807,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1395913328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593769520028560816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da243d7e1e82e6246b6b2e5ca6ad0f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellObject: {fileID: 2570258849112477967, guid: e65c6af46b1f92649938f0532e8ebede,
+    type: 3}
+  castTime: 1
+  castDPCost: 6
 --- !u!1 &7593769520174639631
 GameObject:
   m_ObjectHideFlags: 0
@@ -3667,7 +3776,7 @@ RectTransform:
   - {fileID: 7593769521368436960}
   - {fileID: 1146264753}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4580,6 +4689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickSelectType: 1
+  isSpellQS: 1
   itemInQS: 1
   useCircleIncreaseAmount: 2
   useCircle: {fileID: 1001447878}
@@ -4597,6 +4707,7 @@ GameObject:
   - component: {fileID: 7593769521684208555}
   - component: {fileID: 7593769521684208556}
   - component: {fileID: 7593769521684208557}
+  - component: {fileID: 1188628956}
   m_Layer: 5
   m_Name: SpellInvIconFireball
   m_TagString: Untagged
@@ -4677,7 +4788,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ITEM: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69, type: 3}
   itemTypeUI: 2
-  dragonSpells: 1
   consumable: {fileID: 0}
   selected: 0
   iconImg: {fileID: 0}
@@ -4739,3 +4849,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1188628956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593769521684208559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da243d7e1e82e6246b6b2e5ca6ad0f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellObject: {fileID: 2654462850924077221, guid: 643dfb09e7bc596458f0fdb487189d69,
+    type: 3}
+  castTime: 0.75
+  castDPCost: 5
