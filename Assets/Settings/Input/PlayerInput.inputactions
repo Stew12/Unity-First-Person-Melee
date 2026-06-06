@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Backstep",
+                    "name": "Dodge",
                     "type": "Button",
                     "id": "bd269db9-f4d3-4ce0-ba78-a8565d8ab074",
                     "expectedControlType": "Button",
@@ -1029,7 +1029,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Backstep",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1040,7 +1040,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Backstep",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

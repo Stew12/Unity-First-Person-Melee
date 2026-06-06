@@ -91,7 +91,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Backstep"",
+                    ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""bd269db9-f4d3-4ce0-ba78-a8565d8ab074"",
                     ""expectedControlType"": ""Button"",
@@ -1051,7 +1051,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Backstep"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1062,7 +1062,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Backstep"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1108,7 +1108,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
         m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
         m_Main_Block = m_Main.FindAction("Block", throwIfNotFound: true);
-        m_Main_Backstep = m_Main.FindAction("Backstep", throwIfNotFound: true);
+        m_Main_Dodge = m_Main.FindAction("Dodge", throwIfNotFound: true);
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
         m_Main_Cast = m_Main.FindAction("Cast", throwIfNotFound: true);
         m_Main_Boost = m_Main.FindAction("Boost", throwIfNotFound: true);
@@ -1204,7 +1204,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Look;
     private readonly InputAction m_Main_Attack;
     private readonly InputAction m_Main_Block;
-    private readonly InputAction m_Main_Backstep;
+    private readonly InputAction m_Main_Dodge;
     private readonly InputAction m_Main_Interact;
     private readonly InputAction m_Main_Cast;
     private readonly InputAction m_Main_Boost;
@@ -1245,7 +1245,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Main_Look;
         public InputAction @Attack => m_Wrapper.m_Main_Attack;
         public InputAction @Block => m_Wrapper.m_Main_Block;
-        public InputAction @Backstep => m_Wrapper.m_Main_Backstep;
+        public InputAction @Dodge => m_Wrapper.m_Main_Dodge;
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
         public InputAction @Cast => m_Wrapper.m_Main_Cast;
         public InputAction @Boost => m_Wrapper.m_Main_Boost;
@@ -1305,9 +1305,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBlock;
-                @Backstep.started -= m_Wrapper.m_MainActionsCallbackInterface.OnBackstep;
-                @Backstep.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnBackstep;
-                @Backstep.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnBackstep;
+                @Dodge.started -= m_Wrapper.m_MainActionsCallbackInterface.OnDodge;
+                @Dodge.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnDodge;
+                @Dodge.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnDodge;
                 @Interact.started -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnInteract;
@@ -1420,9 +1420,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
-                @Backstep.started += instance.OnBackstep;
-                @Backstep.performed += instance.OnBackstep;
-                @Backstep.canceled += instance.OnBackstep;
+                @Dodge.started += instance.OnDodge;
+                @Dodge.performed += instance.OnDodge;
+                @Dodge.canceled += instance.OnDodge;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1532,7 +1532,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
-        void OnBackstep(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCast(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);

@@ -112,11 +112,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip hurtSound;
     public AudioClip blockSound;
 
-    [Header("Blocking/Parrying/Backstepping")]
+    [Header("Blocking/Parrying/Dodging")]
     public GameObject blockAndParryHitbox;
     public bool blocking = false;
-    private bool backstepping = false;
-    [SerializeField] private float backstepSpeed = 5f;
+    private bool dodging = false;
+    [SerializeField] private float dodgeSpeed = 5f;
 
     [Header("Power Bar")]
     //public float power = 0;
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
     public float maxKnockBackTime = 0.45f;
     private float knockBackTime = 0;
     public float maxParryWindowTime = 0.3f;
-    [SerializeField] private float backstepTime = 0.3f;
+    [SerializeField] private float dodgeTime = 0.3f;
     [SerializeField] private float maxPowerTime = 0;
     [SerializeField] private float powerTime = 0;
     [HideInInspector] public float parryWindowTime = 0;
@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour
         input.Cast.started += ctx => StartCast(ctx);
         input.Cast.canceled += ctx => StopCast(ctx);
         input.Boost.performed += ctx => Boost(ctx);
-        input.Backstep.started += ctx => Backstep(ctx);
+        input.Dodge.started += ctx => Dodge(ctx);
         input.Interact.performed += ctx => Interact(ctx);
         input.LanternToggle.performed += ctx => LanternToggle(ctx);
         input.Sheathe.performed += ctx => SheatheWeaponToggle(ctx);
@@ -297,9 +297,27 @@ public class PlayerController : MonoBehaviour
             parryWindowTime -= Time.deltaTime;
         }
 
-        if (backstepping)
+        if (dodging)
         {
-            controller.Move(new Vector3(-transform.forward.x * backstepSpeed * Time.deltaTime, 0, -transform.forward.z * backstepSpeed * Time.deltaTime));
+            Vector2 moveInputDir = input.Movement.ReadValue<Vector2>();
+
+            // If no movement direction is held, dodge backwards
+            if (moveInputDir.x == 0 && moveInputDir.y == 0)
+            {
+                controller.Move(new Vector3(-transform.forward.x * dodgeSpeed * Time.deltaTime, 0, -transform.forward.z * dodgeSpeed * Time.deltaTime));
+            }
+            else
+            {
+                // Dodge based on held movement direction
+                Vector3 dodgeDirection =
+                transform.right * moveInputDir.x +
+                transform.forward * moveInputDir.y;
+
+                dodgeDirection.Normalize();
+
+                controller.Move(dodgeDirection * dodgeSpeed * Time.deltaTime);
+            }
+
         }
 
 
@@ -741,22 +759,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Backstep(InputAction.CallbackContext context)
+    private void Dodge(InputAction.CallbackContext context)
     {
         GetInputDeviceType(context);
         
         waiting = true;
 
-        StartCoroutine(BackstepAction(backstepTime));
+        StartCoroutine(DodgeAction(dodgeTime));
     }
 
-    private IEnumerator BackstepAction(float waitTime)
+    private IEnumerator DodgeAction(float waitTime)
     {
-        backstepping = true;
+        dodging = true;
 
         yield return new WaitForSeconds(waitTime);
 
-        backstepping = false;
+        dodging = false;
         waiting = false;
     }
 
