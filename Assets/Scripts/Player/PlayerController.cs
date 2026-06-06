@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip enemyHitSound;
     [SerializeField] private AudioClip unsheatheSound;
     [SerializeField] private AudioClip sheatheSound;
+    [SerializeField] private AudioClip dodgeSound;
     public AudioClip coinPickupSound;
     public AudioClip parrySound;
     public AudioClip hurtSound;
@@ -116,7 +117,9 @@ public class PlayerController : MonoBehaviour
     public GameObject blockAndParryHitbox;
     public bool blocking = false;
     private bool dodging = false;
+    private bool canDodge = true;
     [SerializeField] private float dodgeSpeed = 5f;
+    private Vector2 moveInputDir;
 
     [Header("Power Bar")]
     //public float power = 0;
@@ -165,6 +168,7 @@ public class PlayerController : MonoBehaviour
     private float knockBackTime = 0;
     public float maxParryWindowTime = 0.3f;
     [SerializeField] private float dodgeTime = 0.3f;
+    [SerializeField] private float dodgeCooldown = 1f;
     [SerializeField] private float maxPowerTime = 0;
     [SerializeField] private float powerTime = 0;
     [HideInInspector] public float parryWindowTime = 0;
@@ -299,8 +303,6 @@ public class PlayerController : MonoBehaviour
 
         if (dodging)
         {
-            Vector2 moveInputDir = input.Movement.ReadValue<Vector2>();
-
             // If no movement direction is held, dodge backwards
             if (moveInputDir.x == 0 && moveInputDir.y == 0)
             {
@@ -761,21 +763,39 @@ public class PlayerController : MonoBehaviour
 
     private void Dodge(InputAction.CallbackContext context)
     {
-        GetInputDeviceType(context);
-        
-        waiting = true;
+        if (canDodge)
+        {
+            GetInputDeviceType(context);
+            
+            waiting = true;
 
-        StartCoroutine(DodgeAction(dodgeTime));
+            moveInputDir = input.Movement.ReadValue<Vector2>();
+
+            StartCoroutine(DodgeAction(dodgeTime));
+        }
     }
 
     private IEnumerator DodgeAction(float waitTime)
     {
         dodging = true;
+        canDodge = false;
+
+        audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(dodgeSound);
 
         yield return new WaitForSeconds(waitTime);
 
         dodging = false;
         waiting = false;
+
+        StartCoroutine(DodgeReset(dodgeCooldown));
+    }
+
+    private IEnumerator DodgeReset(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        canDodge = true;
     }
 
     public void StopBlocking()
