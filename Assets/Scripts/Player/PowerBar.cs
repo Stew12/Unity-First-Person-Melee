@@ -18,6 +18,7 @@ public class PowerBar : MonoBehaviour
 
     [HideInInspector] public float powBarSpeed;
     [HideInInspector] public bool bonusZoneHit = false;
+    [HideInInspector] public bool powBarPaused = false;
 
     float startX;
     float endX;
@@ -41,7 +42,7 @@ public class PowerBar : MonoBehaviour
 
     public void DestroyPowerBar()
     {
-        if (powerBarInst != null)
+        if (powerBarInst != null && !powBarPaused)
         {
             Destroy(powerBarInst);
         }
@@ -68,10 +69,16 @@ public class PowerBar : MonoBehaviour
     {
         if (powerBarInst != null)
         {
+            //float progress;
+
+            //float xPosition;
+
             float progress = powBarSpeed;
 
             float xPosition = Mathf.Lerp(startX, endX, progress);
+
             powerBarInst.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPosition, powerBarInst.GetComponent<RectTransform>().anchoredPosition.y);
+            
 
             if (IsFilledImageOverlapping(filledImage, targetImage))
             {

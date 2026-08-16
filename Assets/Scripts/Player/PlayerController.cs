@@ -234,6 +234,7 @@ public class PlayerController : MonoBehaviour
     {
         input.Jump.performed += ctx => Jump(ctx);
         input.Attack.started += ctx => Attack(ctx);
+        input.Attack.canceled += ctx => ReleaseAttackInput(ctx);
         input.Block.started += ctx => Block(ctx);
         input.Cast.started += ctx => StartCast(ctx);
         input.Cast.canceled += ctx => StopCast(ctx);
@@ -356,7 +357,8 @@ public class PlayerController : MonoBehaviour
 
         if (attackPowerBuilding && powerTime < maxPowerTime && !attacking)
         {
-            powerTime += Time.deltaTime;
+            if (!powerBar.powBarPaused)
+                powerTime += Time.deltaTime;
             
             powerBar.powBarSpeed = powerTime / maxPowerTime;
             //powerBarUI.fillAmount = powerTime / maxPowerTime;
@@ -604,12 +606,36 @@ public class PlayerController : MonoBehaviour
     {
         GetInputDeviceType(context);
 
+        // Freeze on frame 1 of attack animation while holding down mouse button
+        animator.speed = 0;
+    
+        if(attackCount == 0)
+        {
+            //ChangeAnimationState(SWINGACROSS);
+            animator.Play(SWINGACROSS, 0, 0f);
+        }
+        else
+        {
+           // ChangeAnimationState(SWINGBACK);
+           animator.Play(SWINGBACK, 0, 0f);
+        }
+
+        powerBar.powBarPaused = true;
+    }
+
+    public void ReleaseAttackInput(InputAction.CallbackContext context)
+    {
+        GetInputDeviceType(context);
+
         if(!readyToAttack || attacking || waiting || weaponSheathed) return;
         
         readyToAttack = false;
         attacking = true;
 
         blocking = false;
+
+        powerBar.powBarPaused = false;
+        animator.speed = 1;
 
         Invoke(nameof(ResetAttack), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay);
         Invoke(nameof(AttackRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
