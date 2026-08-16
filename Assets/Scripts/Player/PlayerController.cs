@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI")]
     public Image healthBarUI;
-    public Image momentumBarUI;
+    //public Image momentumBarUI;
+    public Image staminaBarUI;
+    [SerializeField] private Image dodgeIcon;
     public Image dragonPointBarUI;
     public Image powerBarUI;
     public Image durabilityBarUI;
@@ -136,6 +138,11 @@ public class PlayerController : MonoBehaviour
     private Transform attackingEntityPos;
     public float knockBackSpeed = 3f;
 
+    [Header("Stamina Bar")]
+    [SerializeField] private float staminaRecoverSpeed = 4;
+    [SerializeField] private int dodgeStaminaCost = 100;
+    [SerializeField] private float holdStaminaDrainSpeed = 4;
+
     /* Momentum bar variables */
     [Header("Momentum Bar")]
     [SerializeField] private bool boosting = false;
@@ -164,9 +171,6 @@ public class PlayerController : MonoBehaviour
     // Waiting - player can't input. Paused - player does not do anything 
     [HideInInspector] public bool waiting = false;
     private bool paused = false;
-    
-    private float startX;
-    private float endX;
     
     public float maxDontTakeDamageTime = 0.8f;
     private float dontTakeDamageTime = 0;
@@ -199,7 +203,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         healthBarUI.fillAmount = 1;
-        momentumBarUI.fillAmount = 0;
+        //momentumBarUI.fillAmount = 0;
         dragonPointBarUI.fillAmount = 1;
 
         //powerBar.SpawnPowerBar();
@@ -224,6 +228,7 @@ public class PlayerController : MonoBehaviour
 
         maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
         powerTime = maxPowerTime;
+        GetComponent<PlayerValues>().currentStamina = GetComponent<PlayerValues>().maxStamina;
 
         currentSpell = GetComponent<PlayerSpell>();
 
@@ -238,7 +243,7 @@ public class PlayerController : MonoBehaviour
         input.Block.started += ctx => Block(ctx);
         input.Cast.started += ctx => StartCast(ctx);
         input.Cast.canceled += ctx => StopCast(ctx);
-        input.Boost.performed += ctx => Boost(ctx);
+        //input.Boost.performed += ctx => Boost(ctx);
         input.Dodge.started += ctx => Dodge(ctx);
         input.Interact.performed += ctx => Interact(ctx);
         input.LanternToggle.performed += ctx => LanternToggle(ctx);
@@ -351,8 +356,28 @@ public class PlayerController : MonoBehaviour
 
         healthBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentHealth / (float)GetComponent<PlayerValues>().maxHealth;
 
-        momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
+        //momentumBarUI.fillAmount = currMomentumValue / maxMomentum;
+        staminaBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentStamina / (float)GetComponent<PlayerValues>().maxStamina;
+        
+        // Show dodge icon if player has enough stamina to dodge.
+        if (dodgeIcon != null)
+        {
+            if (GetComponent<PlayerValues>().currentStamina >= dodgeStaminaCost)
+            {
+                dodgeIcon.enabled = true;
+            }
+            else
+            {
+                dodgeIcon.enabled = false;
+            }
+        }
 
+        if (GetComponent<PlayerValues>().currentStamina <= 0)
+        {
+            animator.Play(IDLE, 0, 0f);
+            powerBar.powBarPaused = false;
+        }
+        
         dragonPointBarUI.fillAmount = (float)GetComponent<PlayerValues>().currentDragonPoints / (float)GetComponent<PlayerValues>().maxDragonPoints;
 
         if (attackPowerBuilding && powerTime < maxPowerTime && !attacking)
@@ -367,6 +392,15 @@ public class PlayerController : MonoBehaviour
         {
             powerBar.powBarSpeed = 0;
             powerBar.DestroyPowerBar();
+        }
+
+        if (GetComponent<PlayerValues>().currentStamina < GetComponent<PlayerValues>().maxStamina && !powerBar.powBarPaused)
+        {
+            GetComponent<PlayerValues>().currentStamina += staminaRecoverSpeed;
+        }
+        else if (powerBar.powBarPaused)
+        {
+            GetComponent<PlayerValues>().currentStamina -= holdStaminaDrainSpeed;
         }
         
         // If durability on weapon has run out, break the weapon to a weaker version
@@ -488,7 +522,6 @@ public class PlayerController : MonoBehaviour
                     footstepsAudioSource.Play();
                 }
             }
-           
         }
     }
 
@@ -625,38 +658,41 @@ public class PlayerController : MonoBehaviour
 
     public void ReleaseAttackInput(InputAction.CallbackContext context)
     {
-        GetInputDeviceType(context);
-
-        if(!readyToAttack || attacking || waiting || weaponSheathed) return;
-        
-        readyToAttack = false;
-        attacking = true;
-
-        blocking = false;
-
-        powerBar.powBarPaused = false;
-        animator.speed = 1;
-
-        Invoke(nameof(ResetAttack), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay);
-        Invoke(nameof(AttackRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
-
-        audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
-        audioSource.PlayOneShot(swordSwing);
-
-        if(attackCount == 0)
+        if (powerBar.powBarPaused)
         {
-            ChangeAnimationState(SWINGACROSS);
-            attackCount++;
-        }
-        else
-        {
-            ChangeAnimationState(SWINGBACK);
-            attackCount = 0;
-        }
+            GetInputDeviceType(context);
 
-        powerTime = 0;
-        powerBar.DestroyPowerBar();
-        powerBar.SpawnPowerBar();
+            if(!readyToAttack || attacking || waiting || weaponSheathed) return;
+            
+            readyToAttack = false;
+            attacking = true;
+
+            blocking = false;
+
+            powerBar.powBarPaused = false;
+            animator.speed = 1;
+
+            Invoke(nameof(ResetAttack), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay);
+            Invoke(nameof(AttackRaycast), equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackSpeed);
+
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(swordSwing);
+
+            if(attackCount == 0)
+            {
+                ChangeAnimationState(SWINGACROSS);
+                attackCount++;
+            }
+            else
+            {
+                ChangeAnimationState(SWINGBACK);
+                attackCount = 0;
+            }
+
+            powerTime = 0;
+            powerBar.DestroyPowerBar();
+            powerBar.SpawnPowerBar();
+        }
     }
 
     public void ResetAttack()
@@ -808,7 +844,7 @@ public class PlayerController : MonoBehaviour
 
     private void Dodge(InputAction.CallbackContext context)
     {
-        if (canDodge)
+        if (canDodge && (GetComponent<PlayerValues>().currentStamina >= dodgeStaminaCost))
         {
             GetInputDeviceType(context);
             
@@ -817,6 +853,8 @@ public class PlayerController : MonoBehaviour
             moveInputDir = input.Movement.ReadValue<Vector2>();
 
             StartCoroutine(DodgeAction(dodgeTime));
+
+            GetComponent<PlayerValues>().currentStamina -= dodgeStaminaCost;
         }
     }
 

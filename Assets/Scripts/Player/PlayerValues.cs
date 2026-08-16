@@ -9,6 +9,8 @@ public class PlayerValues : MonoBehaviour
     [HideInInspector] public int currentHealth;
     public int maxDragonPoints;
     [HideInInspector] public int currentDragonPoints;
+    public float maxStamina = 200;
+    [HideInInspector] public float currentStamina;
 
     public int strength = 10;
     public int dexterity = 10;
