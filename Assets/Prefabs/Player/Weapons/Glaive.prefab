@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 8030982548462784659}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 28.164, y: 20.448, z: 1.509}
 --- !u!111 &2489149910611522636
 Animation:
@@ -146,6 +146,8 @@ MonoBehaviour:
   weaponAttackDelayDefault: 0
   maxWeaponDurability: 18
   currentWeaponDurability: 0
+  bonusHitZoneStart: 0.05
+  bonusHitZoneDur: 0.1
   unsheatheSound: {fileID: 8300000, guid: 8a2a626c81d7fa14b87b920803ae01f1, type: 3}
 --- !u!1 &8030982548462784661
 GameObject:

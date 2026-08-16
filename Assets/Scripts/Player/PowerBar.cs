@@ -9,6 +9,8 @@ public class PowerBar : MonoBehaviour
     public GameObject powerBar;
     public GameObject powBarBonus;
     private GameObject powerBarInst = null;
+    private GameObject bonusBar = null;
+
     private Image filledImage; // The Image with Image.Type.Filled
     private RectTransform targetImage; // The other UI element to check against
 
@@ -20,14 +22,9 @@ public class PowerBar : MonoBehaviour
     float startX;
     float endX;
 
-    void Awake()
-    {
-        SetBonusBar(0.1f, 0.15f);
-    }
-
     void Start()
     {
-        endX = (startX + GetComponent<RectTransform>().rect.width) / 2 - 8f;
+        endX = (startX + GetComponent<RectTransform>().rect.width) / 2 - 8f; 
     }
 
     public void SpawnPowerBar()
@@ -47,13 +44,17 @@ public class PowerBar : MonoBehaviour
         if (powerBarInst != null)
         {
             Destroy(powerBarInst);
-            //powerBar = null;
         }
     }
 
     public void SetBonusBar(float startPos, float endPos)
     {
-        GameObject bonusBar = Instantiate(powBarBonus);
+        if (bonusBar != null)
+        {
+            Destroy(bonusBar);
+        }
+
+        bonusBar = Instantiate(powBarBonus);
         bonusBar.transform.SetParent(gameObject.transform);
         
         bonusBar.transform.localPosition = new Vector3(startPos, 0, 0);

@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInputDir;
 
     [Header("Power Bar")]
-    [SerializeField] private PowerBar powerBar;
+    public PowerBar powerBar;
     [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
     [SerializeField] private float powerDamageFactor = 4;
     [SerializeField] private float powerBarSpeedupFactor = 1.2f;
@@ -201,7 +201,6 @@ public class PlayerController : MonoBehaviour
         healthBarUI.fillAmount = 1;
         momentumBarUI.fillAmount = 0;
         dragonPointBarUI.fillAmount = 1;
-        powerTime = maxPowerTime;
 
         //powerBar.SpawnPowerBar();
         //powerBarUI.fillAmount = 0;
@@ -218,11 +217,13 @@ public class PlayerController : MonoBehaviour
         pausedText.gameObject.SetActive(false);
         noWeaponHand.SetActive(false);
 
+        //powerBar.SetBonusBar(equippedWeapon.GetComponent<PlayerWeaponValues>().bonusHitZoneStart, equippedWeapon.GetComponent<PlayerWeaponValues>().bonusHitZoneEnd);
+
         // Set animations for equipped weapon
         GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
 
         maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
-        //powerBar.powBarSpeed = maxPowerTime;
+        powerTime = maxPowerTime;
 
         currentSpell = GetComponent<PlayerSpell>();
 
@@ -897,6 +898,8 @@ public class PlayerController : MonoBehaviour
                 //powerBarUI.fillAmount = 0;
 
                 audioSource.PlayOneShot(sheatheSound);
+
+                powerTime = maxPowerTime;
             }
             else
             {

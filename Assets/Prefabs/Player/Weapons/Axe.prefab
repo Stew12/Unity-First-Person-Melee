@@ -147,6 +147,8 @@ MonoBehaviour:
   weaponAttackDelayDefault: 0
   maxWeaponDurability: 30
   currentWeaponDurability: 0
+  bonusHitZoneStart: 0.1
+  bonusHitZoneEnd: 0.3
   unsheatheSound: {fileID: 8300000, guid: 8a2a626c81d7fa14b87b920803ae01f1, type: 3}
 --- !u!114 &7857915760360832778
 MonoBehaviour:

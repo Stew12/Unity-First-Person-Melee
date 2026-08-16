@@ -736,6 +736,7 @@ public class PlayerInventory : MonoBehaviour
             player.animator = player.equippedWeapon.GetComponent<Animator>();
             player.GetComponent<PlayerAnimation>().WeaponAnimationChange(player.equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, player);
             player.ResetAttack();
+            player.powerBar.SetBonusBar(player.equippedWeapon.GetComponent<PlayerWeaponValues>().bonusHitZoneStart, player.equippedWeapon.GetComponent<PlayerWeaponValues>().bonusHitZoneDur);
 
             //Play sound of unsheathing
             invAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);

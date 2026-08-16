@@ -407,6 +407,7 @@ MonoBehaviour:
   powBarBonus: {fileID: 3816140845801367146, guid: 71110c012b5cfe44eb5dec4b7090924d,
     type: 3}
   powBarSpeed: 1
+  bonusZoneHit: 0
 --- !u!4 &106813347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7786502534206770417, guid: 4281bebbd9ee7514db4c31db0e756d65,
@@ -10646,6 +10647,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949510963353121552, guid: edee1349e414e7c48abf2d456ad0860b,
+        type: 3}
+      propertyPath: bonusHitZoneEnd
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

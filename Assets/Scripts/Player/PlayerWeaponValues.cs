@@ -42,7 +42,7 @@ public class PlayerWeaponValues : MonoBehaviour
     public int currentWeaponDurability = 0;
 
     public float bonusHitZoneStart = 0.1f;
-    public float bonusHitZoneEnd = 0.3f;
+    public float bonusHitZoneDur = 0.3f;
 
     public AudioClip unsheatheSound;
 
