@@ -272,7 +272,7 @@ public abstract class Enemy : MonoBehaviour
 
             if (selectedAttackMarker != null)
             {
-                createAttackMarker(selectedAttackMarker);
+                createAttackMarker(selectedAttackMarker, 1.7f, 16.5f, 90, 90, 0);
             }
         }
 
@@ -300,11 +300,18 @@ public abstract class Enemy : MonoBehaviour
         attkWarning.transform.localScale = transform.localScale * attackWarningSpriteScale;
         attkWarning.AddComponent<Billboarding>();
     }
-
-    private void createAttackMarker(GameObject attackMarker)
+    
+      private void createAttackMarker(GameObject attackMarker, float offsetX, float offsetZ, float rotX, float rotY, float rotZ)
     {
-        //GameObject attackMarker 
-        Instantiate(attackMarker, new Vector3(transform.position.x, transform.position.y - attackWarningRadYOffset, transform.position.z), Quaternion.Euler(90, 0, 0));
+        //GameObject currAttackMarker = Instantiate(attackMarker, new Vector3(transform.position.x - offsetX, transform.position.y - attackWarningRadYOffset, transform.position.z - offsetZ), transform.rotation * Quaternion.Euler(rotX, rotY, rotZ));
+        
+        GameObject spawned = Instantiate(attackMarker, transform);
+
+        spawned.transform.localPosition = new Vector3(-offsetX, -attackWarningRadYOffset, -offsetZ);
+
+        spawned.transform.localRotation = Quaternion.Euler(rotX, rotY, rotZ);
+        
+        //currAttackMarker.transform.parent = gameObject.transform;
     }
 
     private IEnumerator disableBillboarding(float waitTime)
@@ -325,9 +332,11 @@ public abstract class Enemy : MonoBehaviour
         attackDuration = maxAttackDuration;
     }
 
-    public void TakeDamage(int amount, bool weakPointHit, float weakPointDamageFactor)
+    public void TakeDamage(int amount, bool weakPointHit, float weakPointDamageFactor, bool bonusZoneHit, float bonusZoneAttackMult)
     {
         if (weakPointHit) { amount = (int)(amount * weakPointDamageFactor); }
+
+        if (bonusZoneHit) { amount = (int)(amount * bonusZoneAttackMult); }
 
         Debug.Log("DAMAGE: " + amount);
 

@@ -10,6 +10,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using UnityEditor.Rendering;
+using UnityEditor.Search;
 
 public class PlayerController : MonoBehaviour
 {
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip hurtSound;
     public AudioClip blockSound;
 
+
     [Header("Blocking/Parrying/Dodging")]
     public GameObject blockAndParryHitbox;
     public bool blocking = false;
@@ -122,10 +124,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInputDir;
 
     [Header("Power Bar")]
-    //public float power = 0;
+    [SerializeField] private PowerBar powerBar;
     [SerializeField] private float powerTimeFactor = 5; //Times the attack delay
     [SerializeField] private float powerDamageFactor = 4;
     [SerializeField] private float powerBarSpeedupFactor = 1.2f;
+    [SerializeField] private float bonusZoneAttackMult = 1.8f;
     public bool attackPowerBuilding = true;
 
     [Header("Knock Back")]
@@ -162,6 +165,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool waiting = false;
     private bool paused = false;
     
+    private float startX;
+    private float endX;
+    
     public float maxDontTakeDamageTime = 0.8f;
     private float dontTakeDamageTime = 0;
     public float maxKnockBackTime = 0.45f;
@@ -195,11 +201,14 @@ public class PlayerController : MonoBehaviour
         healthBarUI.fillAmount = 1;
         momentumBarUI.fillAmount = 0;
         dragonPointBarUI.fillAmount = 1;
-        powerBarUI.fillAmount = 0;
+        powerTime = maxPowerTime;
+
+        //powerBar.SpawnPowerBar();
+        //powerBarUI.fillAmount = 0;
 
         statusMessage.text = "";
 
-        moveSpeedDefault = moveSpeed;
+        moveSpeedDefault = moveSpeed;      
         // animator.speed += 2;
 
         //Set required elements to inactive
@@ -213,6 +222,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerAnimation>().WeaponAnimationChange(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponClass, this);
 
         maxPowerTime = equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDelay * powerTimeFactor;
+        //powerBar.powBarSpeed = maxPowerTime;
 
         currentSpell = GetComponent<PlayerSpell>();
 
@@ -347,7 +357,13 @@ public class PlayerController : MonoBehaviour
         {
             powerTime += Time.deltaTime;
             
-            powerBarUI.fillAmount = powerTime / maxPowerTime;
+            powerBar.powBarSpeed = powerTime / maxPowerTime;
+            //powerBarUI.fillAmount = powerTime / maxPowerTime;
+        }
+        else if (powerTime >= maxPowerTime)
+        {
+            powerBar.powBarSpeed = 0;
+            powerBar.DestroyPowerBar();
         }
         
         // If durability on weapon has run out, break the weapon to a weaker version
@@ -610,6 +626,10 @@ public class PlayerController : MonoBehaviour
             ChangeAnimationState(SWINGBACK);
             attackCount = 0;
         }
+
+        powerTime = 0;
+        powerBar.DestroyPowerBar();
+        powerBar.SpawnPowerBar();
     }
 
     public void ResetAttack()
@@ -626,8 +646,6 @@ public class PlayerController : MonoBehaviour
         {
             maxPowerTime /= moveSpeed / powerBarSpeedupFactor;
         }
-
-        powerTime = 0;
     }
 
     private void AttackRaycast()
@@ -720,7 +738,7 @@ public class PlayerController : MonoBehaviour
                 //Damage depends on how full the power bar is
                 //powerMultiplier = (1 + powerBarUI.fillAmount) * powerDamageFactor;
 
-                enemy.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerBarUI.fillAmount * powerDamageFactor), weakPoint, weakPointDamageFactor); 
+                enemy.TakeDamage((int)(equippedWeapon.GetComponent<PlayerWeaponValues>().weaponAttackDamage * powerDamageFactor), weakPoint, weakPointDamageFactor, powerBar.bonusZoneHit, bonusZoneAttackMult); 
 
                 // Knock back enemy slightly if enemy is not currently attacking
                 if (!enemy.GetComponent<Enemy>().enemyAttackProcess)
@@ -874,7 +892,9 @@ public class PlayerController : MonoBehaviour
                 //Reset power time and prevent it from increasing
                 attackPowerBuilding = false;
                 powerTime = 0;
-                powerBarUI.fillAmount = 0;
+                
+                powerBar.DestroyPowerBar();
+                //powerBarUI.fillAmount = 0;
 
                 audioSource.PlayOneShot(sheatheSound);
             }
@@ -1087,7 +1107,7 @@ public class PlayerController : MonoBehaviour
             if (!parryIncrease)
             {
                 // If the power bar is higher, gain slightly more momentum
-                currMomentumValue += momentumIncrease + (powerBarUI.fillAmount / 10);
+                //currMomentumValue += momentumIncrease + (powerBarUI.fillAmount / 10);
 
             }
             else

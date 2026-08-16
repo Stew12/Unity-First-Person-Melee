@@ -88,7 +88,7 @@ Transform:
   m_GameObject: {fileID: 2193332089957568720}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 1.9646909, z: 0}
-  m_LocalScale: {x: 21.108152, y: 21.108152, z: 21.108152}
+  m_LocalScale: {x: 30.997322, y: 30.997322, z: 30.997322}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7075933641429308997}
@@ -158,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 2193332090426056283}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 1.9646909, z: 0}
-  m_LocalScale: {x: 35.06272, y: 35.06272, z: 35.06272}
+  m_LocalScale: {x: 39.399982, y: 39.399982, z: 39.399982}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7075933641429308997}
@@ -345,7 +345,8 @@ MonoBehaviour:
   enemyAOE: {fileID: 0}
   enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
     type: 3}
-  attackMarkers: []
+  attackMarkers:
+  - {fileID: 3937243831462665012, guid: 72645b07de60ab642ac98b6fb36ef7cc, type: 3}
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
   enemyHPBarBG: {fileID: 7299311440119378575}
@@ -353,7 +354,7 @@ MonoBehaviour:
   weakPointHitboxes:
   - {fileID: 7494433022655274447}
   audioSource: {fileID: 0}
-  maxHealth: 150
+  maxHealth: 400
   attackDamage: 10
   bronze: 3
   roamSpeed: 0
@@ -365,10 +366,10 @@ MonoBehaviour:
   slashOffset: 0.6
   attackWarningSpriteScale: 1.1
   attackWarningHeightUp: 0.05
-  attackWarningRadYOffset: 0.6
-  attackMoveTowardsSpeed: 9
+  attackWarningRadYOffset: 10
+  attackMoveTowardsSpeed: 7
   attackDistance: 0
-  aggroAttackDistance: 2.4
+  aggroAttackDistance: 3
   enemyAttackProcess: 0
   enemyAttacking: 0
   canFireProjectile: 1

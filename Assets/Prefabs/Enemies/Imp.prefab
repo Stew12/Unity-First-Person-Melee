@@ -338,7 +338,7 @@ MonoBehaviour:
   enemyAttackWarningSource: {fileID: 5060536713214739164, guid: 8181b6fb69323534ca22925a0b2f0d51,
     type: 3}
   attackMarkers:
-  - {fileID: 0}
+  - {fileID: 3937243831462665012, guid: 72645b07de60ab642ac98b6fb36ef7cc, type: 3}
   - {fileID: 3937243831462665012, guid: 03a40108982bcdc46b0abf50726c8539, type: 3}
   enemyDeathEffect: {fileID: 8229638969799045344, guid: c1e49756fce4d1f4c855ace72ce29a15,
     type: 3}
@@ -359,7 +359,7 @@ MonoBehaviour:
   slashOffset: 0.2
   attackWarningSpriteScale: 0.05
   attackWarningHeightUp: 0.05
-  attackWarningRadYOffset: 0.6
+  attackWarningRadYOffset: 10
   attackMoveTowardsSpeed: 10
   attackDistance: 0
   aggroAttackDistance: 2.6

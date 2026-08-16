@@ -41,6 +41,9 @@ public class PlayerWeaponValues : MonoBehaviour
     public int maxWeaponDurability = 10;
     public int currentWeaponDurability = 0;
 
+    public float bonusHitZoneStart = 0.1f;
+    public float bonusHitZoneEnd = 0.3f;
+
     public AudioClip unsheatheSound;
 
     void Awake()

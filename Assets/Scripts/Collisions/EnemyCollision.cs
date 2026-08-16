@@ -31,11 +31,11 @@ public class EnemyCollision : Collision
     {
         if (col.gameObject.tag == "Player Projectile")
         {
-            enemy.TakeDamage((int) col.GetComponent<PlayerProjectile>().projectileDamage, false, 0);
+            enemy.TakeDamage((int) col.GetComponent<PlayerProjectile>().projectileDamage, false, 0, false, 0);
         }
         else if (col.gameObject.tag == "Player AOE")
         {
-            enemy.TakeDamage((int) col.GetComponent<PlayerAOEAttack>().projectileDamage, false, 0);
+            enemy.TakeDamage((int) col.GetComponent<PlayerAOEAttack>().projectileDamage, false, 0, false, 0);
             enemy.EnemyKnockBack(col.GetComponent<PlayerAOEAttack>().caster, false);
         }
     }
